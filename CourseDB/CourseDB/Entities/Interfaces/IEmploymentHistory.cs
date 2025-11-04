@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CourseDB
 {
-    internal interface IEmploymentHistory
+    public interface IEmploymentHistory
     {
         Post Post { get; set; }
         string NameOrganization { get; set; }

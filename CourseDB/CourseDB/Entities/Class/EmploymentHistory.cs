@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CourseDB
 {
-    internal class EmploymentHistory : IEmploymentHistory
+    public class EmploymentHistory : IEmploymentHistory
     {
         private Post _post;
         private string _nameOrganization;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CourseDB.Entities.Class;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,8 +16,11 @@ namespace CourseDB
         string Patronymic { get; set; }
         Gender Gender { get; set; }
         DateTime Birthday { get; set; }
-
-
-
+        Address Address { get; set; }
+        Post Post { get; set; }
+        int TimeWork { get; set; }
+        int ClassDriver { get; set; }
+        List<IEmploymentHistory> GetSortedByTypeEvent(string typeEvent);
+        List<IEmploymentHistory> GetSortedByTypeEvent(TypeEvent typeEvent);
     }
 }

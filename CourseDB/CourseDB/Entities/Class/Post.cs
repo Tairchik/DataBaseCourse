@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CourseDB.Entities.Class
 {
-    internal class Post
+    public class Post
     {
         private decimal _salary;
         private string _namePost;

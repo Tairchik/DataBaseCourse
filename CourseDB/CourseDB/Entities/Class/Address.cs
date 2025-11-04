@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CourseDB
 {
-    internal class Address
+    public class Address
     {
+        public Address() { }
     }
 }
