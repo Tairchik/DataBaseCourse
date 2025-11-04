@@ -43,8 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Class\Address.cs" />
     <Compile Include="Entities\Class\Bus.cs" />
+    <Compile Include="Entities\Class\BusSchedule.cs" />
     <Compile Include="Entities\Class\Employee.cs" />
+    <Compile Include="Entities\Class\EmploymentHistory.cs" />
+    <Compile Include="Entities\Class\FinancialReport.cs" />
+    <Compile Include="Entities\Class\Model.cs" />
+    <Compile Include="Entities\Class\Post.cs" />
+    <Compile Include="Entities\Class\Route.cs" />
+    <Compile Include="Entities\Class\Station.cs" />
+    <Compile Include="Entities\Class\Trip.cs" />
+    <Compile Include="Entities\Enums\BusState.cs" />
+    <Compile Include="Entities\Enums\Gender.cs" />
+    <Compile Include="Entities\Enums\TypeEvent.cs" />
     <Compile Include="Entities\Interfaces\IBus.cs" />
     <Compile Include="Entities\Interfaces\IEmployee.cs" />
     <Compile Include="Entities\Interfaces\IEmploymentHistory.cs" />
@@ -56,8 +68,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
