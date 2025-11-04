@@ -8,5 +8,6 @@ namespace CourseDB.Entities.Class
 {
     internal class BusSchedule
     {
+
     }
 }

@@ -28,8 +28,6 @@ namespace CourseDB
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("ID не может быть пустым");
-                if (value.Length > 20)
-                    throw new ArgumentException("ID не может превышать 20 символов");
                 _id = value.Trim();
             }
         }
@@ -41,8 +39,6 @@ namespace CourseDB
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Имя не может быть пустым");
-                if (value.Length > 50)
-                    throw new ArgumentException("Имя не может превышать 50 символов");
                 if (!value.All(char.IsLetter))
                     throw new ArgumentException("Имя может содержать только буквы");
                 _name = value.Trim();
@@ -56,8 +52,6 @@ namespace CourseDB
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Фамилия не может быть пустой");
-                if (value.Length > 50)
-                    throw new ArgumentException("Фамилия не может превышать 50 символов");
                 if (!value.All(char.IsLetter))
                     throw new ArgumentException("Фамилия может содержать только буквы");
                 _surname = value.Trim();
@@ -71,8 +65,6 @@ namespace CourseDB
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    if (value.Length > 50)
-                        throw new ArgumentException("Отчество не может превышать 50 символов");
                     if (!value.All(char.IsLetter))
                         throw new ArgumentException("Отчество может содержать только буквы");
                 }
@@ -98,7 +90,7 @@ namespace CourseDB
         public Address Address
         { 
             get => _address;
-            set => _address = value ?? throw new ArgumentNullException(nameof(Address), "Должность не может быть пустой");
+            set => _address = value ?? throw new ArgumentNullException(nameof(Address), "Адрес не может быть пустым");
         }
 
         public Post Post
@@ -114,8 +106,8 @@ namespace CourseDB
             {
                 if (value < 0)
                     throw new ArgumentException("Стаж работы не может быть отрицательным");
-                if (value > 60)
-                    throw new ArgumentException("Стаж работы не может превышать 60 лет");
+                if (value > 80)
+                    throw new ArgumentException("Стаж работы не может превышать 80 лет");
                 _timeWork = value;
             }
         }
