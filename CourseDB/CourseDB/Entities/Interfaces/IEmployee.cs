@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CourseDB
 {
-    internal class Bus: IBus
+    internal interface IEmployee
     {
 
     }
