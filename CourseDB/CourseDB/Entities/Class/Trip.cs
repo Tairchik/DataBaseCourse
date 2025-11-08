@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CourseDB.Entities.Class
 {
-    internal class Trip
+    public class Trip: ITrip
     {
     }
 }

@@ -1,15 +1,12 @@
-﻿using CourseDB.Entities.Class;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 
 namespace CourseDB
 {
+    /// <summary>
+    /// Класс Bus - вся информация об автобусе
+    /// </summary>
     public class Bus : IBus
     {
         private string _inventoryNumber;
@@ -23,7 +20,9 @@ namespace CourseDB
         private DateTime? _lastOverhaulDate;
         private Model _model;
         private BusState _state;
-
+        /// <summary>
+        /// InventoryNumber - инвентарный номер автобуса
+        /// </summary>
         public string InventoryNumber
         {
             get => _inventoryNumber;
@@ -37,13 +36,18 @@ namespace CourseDB
                 _inventoryNumber = value.Trim().ToUpper();
             }
         }
-
+        /// <summary>
+        /// Model - Модель автобуса 
+        /// </summary>
         public Model Model
         {
             get => _model;
             set => _model = value ?? throw new ArgumentNullException(nameof(Model), "Модель автобуса обязательна");
         }
 
+        /// <summary>
+        /// Color - Цвет автобуса
+        /// </summary>
         public string Color
         {
             get => _color;
@@ -58,6 +62,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// State - состояние автобуса
+        /// </summary>
         public BusState State
         {
             get => _state;
@@ -67,6 +74,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// State_str - состояние автобуса в строчном представлении
+        /// </summary>
         public string State_str 
         {
             get 
@@ -79,6 +89,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// RegistrationNumber - регистрационный номер. Вида Б111БББ111 
+        /// </summary>
         public string RegistrationNumber
         {
             get => _registrationNumber;
@@ -95,6 +108,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// EngineNumber - номер двигателя
+        /// </summary>
         public string EngineNumber
         {
             get => _engineNumber;
@@ -108,7 +124,9 @@ namespace CourseDB
                 _engineNumber = value.Trim().ToUpper();
             }
         }
-
+        /// <summary>
+        /// BodyNumber - номер кузова
+        /// </summary>
         public string BodyNumber
         {
             get => _bodyNumber;
@@ -122,7 +140,9 @@ namespace CourseDB
                 _bodyNumber = value.Trim().ToUpper();
             }
         }
-
+        /// <summary>
+        /// ChassisNumber - Номер шасси
+        /// </summary>
         public string ChassisNumber
         {
             get => _chassisNumber;
@@ -136,7 +156,9 @@ namespace CourseDB
                 _chassisNumber = value.Trim().ToUpper();
             }
         }
-
+        /// <summary>
+        /// Дата производства
+        /// </summary>
         public DateTime ManufactureDate
         {
             get => _manufactureDate;
@@ -148,7 +170,9 @@ namespace CourseDB
                 _manufactureDate = value;
             }
         }
-
+        /// <summary>
+        /// Пробег
+        /// </summary>
         public int Mileage
         {
             get => _mileage;
@@ -160,7 +184,10 @@ namespace CourseDB
                 _mileage = value;
             }
         }
-
+        
+        /// <summary>
+        /// Дата последнего капремонта
+        /// </summary>
         public DateTime? LastOverhaulDate
         {
             get => _lastOverhaulDate;

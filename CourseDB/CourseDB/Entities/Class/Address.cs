@@ -1,31 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CourseDB
 {
+    /// <summary>
+    /// Класс адрес - хранит информацию о месте проживания сотрудников 
+    /// </summary>
     public class Address
     {
-        private string _city;
-        private string _street;
+        private string _street; 
         private string _house;
         private string _apartment;
 
-        public string City
-        {
-            get => _city;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Город не может быть пустым");
-                if (!value.All(c => char.IsLetter(c) || c == '-' || c == ' '))
-                    throw new ArgumentException("Название города может содержать только буквы, дефисы и пробелы");
-                _city = value.Trim();
-            }
-        }
-
+        /// <summary>
+        /// Улица
+        /// </summary>
         public string Street
         {
             get => _street;
@@ -39,6 +29,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Дом
+        /// </summary>
         public string House
         {
             get => _house;
@@ -54,6 +47,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Квартира
+        /// </summary>
         public string Apartment
         {
             get => _apartment;
@@ -70,11 +66,15 @@ namespace CourseDB
             }
         }
 
-
+        /// <summary>
+        /// Возвращает: Улица, дом, кв. №кв
+        /// <summary>
         public override string ToString()
         {
-            return $"{City}, {Street}, {House}" +
+            return $"{Street}, {House}" +
                    (string.IsNullOrEmpty(Apartment) ? "" : $", кв. {Apartment}");
         }
+
+        public Address() { }
     }
 }

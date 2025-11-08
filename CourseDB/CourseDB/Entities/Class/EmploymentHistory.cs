@@ -24,6 +24,9 @@ namespace CourseDB
             set => _post = value ?? throw new ArgumentNullException(nameof(Post), "Должность не может быть пустой");
         }
 
+        /// <summary>
+        /// Место работы
+        /// </summary>
         public string NameOrganization
         {
             get => _nameOrganization;
@@ -36,6 +39,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Тип мероприятия: Прием, Увольнение, Перевод
+        /// </summary>
         public TypeEvent TypeEvent
         {
             get => _typeEvent;
@@ -45,6 +51,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Тип мероприятия: Прием, Увольнение, Перевод. В строковом представлении.
+        /// </summary>
         public string TypeEventStr 
         {
             get
@@ -56,19 +65,23 @@ namespace CourseDB
                 _typeEvent = TypeEventExtensions.GetEnumByString(value);
             }
         }
-
+        /// <summary>
+        /// Дата вступления в силу мероприятия 
+        /// </summary>
         public DateTime DateEvent
         {
             get => _dateEvent;
             set
             {
                 if (value > DateTime.Now)
-                    throw new ArgumentException("Дата события не может быть в будущем");
+                    throw new ArgumentException("Дата мероприятия не может быть в будущем");
 
                 _dateEvent = value;
             }
         }
-
+        /// <summary>
+        /// Дата подписания документа 
+        /// </summary>
         public DateTime DateDocument
         {
             get => _dateDocument;
@@ -81,6 +94,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Тип документа, например, Приказ, Записка 
+        /// </summary>
         public string TypeDocument
         {
             get => _typeDocument;
@@ -93,6 +109,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Номер документа.
+        /// </summary>
         public string NumberDocument
         {
             get => _numberDocument;
@@ -107,6 +126,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Причина прекращения трудового договора
+        /// </summary>
         public string Reasons
         {
             get => _reasons;
@@ -121,6 +143,17 @@ namespace CourseDB
 
         public EmploymentHistory() { }
 
+        /// <summary>
+        /// Если увольнение
+        /// </summary>
+        /// <param name="post">Должность</param>
+        /// <param name="organization">Место работы</param>
+        /// <param name="typeEvent">Тип мероприятия</param>
+        /// <param name="dateEvent">Дата вступления в силу мероприятия</param>
+        /// <param name="dateDocument">Дата подписания договора</param>
+        /// <param name="numberDocument">Номер договора</param>
+        /// <param name="typeDocument">Тип документа</param>
+        /// <param name="reason">Причина об увольнении</param>
         public EmploymentHistory(Post post, string organization, TypeEvent typeEvent, DateTime dateEvent, DateTime dateDocument, string numberDocument, string typeDocument, string reason)
         {
             Post = post;
@@ -132,7 +165,16 @@ namespace CourseDB
             TypeDocument = typeDocument;
             Reasons = reason;
         }
-
+        /// <summary>
+        /// Все кроме увольнения
+        /// </summary>
+        /// <param name="post">Должность</param>
+        /// <param name="organization">Место работы</param>
+        /// <param name="typeEvent">Тип мероприятия</param>
+        /// <param name="dateEvent">Дата вступления в силу мероприятия</param>
+        /// <param name="dateDocument">Дата подписания договора</param>
+        /// <param name="numberDocument">Номер договора</param>
+        /// <param name="typeDocument">Тип документа</param>
         public EmploymentHistory(Post post, string organization, TypeEvent typeEvent, DateTime dateEvent, DateTime dateDocument, string numberDocument, string typeDocument)
         {
             Post = post;

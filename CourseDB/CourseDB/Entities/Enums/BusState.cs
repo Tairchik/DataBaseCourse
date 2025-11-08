@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CourseDB
 {
+    /// <summary>
+    /// BusState - коллекция хранит 4 состояния автобуса: исправен, не исправен, в ремонте, списан
+    /// </summary>
     public enum BusState
     {
         /// <summary>

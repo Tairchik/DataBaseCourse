@@ -36,6 +36,8 @@ namespace CourseDB
             {
                 case "мужской": return Gender.M;
                 case "женский": return Gender.W;
+                case "м": return Gender.M;
+                case "ж": return Gender.W;
             }
             throw new ArgumentException("Такого состояния не существует");
         }

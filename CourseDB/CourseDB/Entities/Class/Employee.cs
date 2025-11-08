@@ -1,6 +1,7 @@
 ﻿using CourseDB.Entities.Class;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,11 @@ namespace CourseDB
         private Post _post;
         private Address _address;
         public List<IEmploymentHistory> _employmentHistories;
+        private Gender _gender;
 
-
+        /// <summary>
+        /// Уникальный индетификатор сотрудника
+        /// </summary>
         public string ID
         {
             get => _id;
@@ -32,6 +36,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Имя
+        /// </summary>
         public string Name
         {
             get => _name;
@@ -45,6 +52,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Фамилия
+        /// </summary>
         public string Surname
         {
             get => _surname;
@@ -58,6 +68,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Отчество
+        /// </summary>
         public string Patronymic
         {
             get => _patronymic;
@@ -71,9 +84,35 @@ namespace CourseDB
                 _patronymic = value?.Trim();
             }
         }
+        /// <summary>
+        /// Пол
+        /// </summary>
+        public Gender Gender 
+        {
+            get => _gender;
+            set
+            {
+                _gender = value;
+            }
+        }
+        /// <summary>
+        /// Пол в строковом представлении. Возвращает: "Мужской", "Женский"
+        /// </summary>
+        public string GenderStr
+        {
+            get
+            {
+                return GenderExtensions.GetStringByEnum(_gender);
+            }
+            set 
+            {
+                _gender = GenderExtensions.GetEnumByString(value);
+            }
+        }
 
-        public Gender Gender { get; set; }
-
+        /// <summary>
+        /// Дата рождения
+        /// </summary>
         public DateTime Birthday
         {
             get => _birthday;
@@ -87,18 +126,27 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Адрес проживания
+        /// </summary>
         public Address Address
         { 
             get => _address;
             set => _address = value ?? throw new ArgumentNullException(nameof(Address), "Адрес не может быть пустым");
         }
 
+        /// <summary>
+        /// Должность в компании
+        /// </summary>
         public Post Post
         {
             get => _post;
             set => _post = value ?? throw new ArgumentNullException(nameof(Post), "Должность не может быть пустой");
         }
         
+        /// <summary>
+        /// Стаж работы в компании
+        /// </summary>
         public int TimeWork
         {
             get => _timeWork;
@@ -112,6 +160,9 @@ namespace CourseDB
             }
         }
 
+        /// <summary>
+        /// Класс водителя от 0 до 3
+        /// </summary>
         public int ClassDriver
         {
             get => _classDriver;
@@ -125,13 +176,27 @@ namespace CourseDB
             }
         }
 
-
+        /// <summary>
+        /// Возвращает список трудовых записей с сортировкой по мероприятию:
+        /// уволен
+        /// прием
+        /// перевод
+        /// </summary>
+        /// <param name="typeEvent"></param>
+        /// <returns></returns>
         public List<IEmploymentHistory> GetSortedByTypeEvent(string typeEvent)
         {
             var typeEventEnum = TypeEventExtensions.GetEnumByString(typeEvent);
             return GetSortedByTypeEvent(typeEventEnum);
         }
-
+        /// <summary>
+        /// Возвращает список трудовых записей с сортировкой по мероприятию:
+        /// уволен
+        /// прием
+        /// перевод
+        /// </summary>
+        /// <param name="typeEvent"></param>
+        /// <returns></returns>
         public List<IEmploymentHistory> GetSortedByTypeEvent(TypeEvent typeEvent)
         {
             return _employmentHistories
@@ -140,6 +205,10 @@ namespace CourseDB
                 .ToList();
         }
 
+        /// <summary>
+        /// Возраст сотрудника
+        /// </summary>
+        /// <returns>Целое число</returns>
         public int GetAge()
         {
             var today = DateTime.Today;
@@ -148,11 +217,20 @@ namespace CourseDB
             return age;
         }
 
+        /// <summary>
+        /// ФИО 
+        /// </summary>
+        /// <returns>Строка вида Фамилия Имя Отчество</returns>
         public string GetFullName()
         {
             return $"{Surname} {Name} {Patronymic}".Trim();
         }
 
+        /// <summary>
+        /// Имеет ли водитель право вождения
+        /// </summary>
+        /// <returns>True если класс водителя больше нуля
+        /// False - в остальных случаях</returns>
         public bool HasDriverLicense()
         {
             return ClassDriver > 0;

@@ -45,14 +45,13 @@
   <ItemGroup>
     <Compile Include="Entities\Class\Address.cs" />
     <Compile Include="Entities\Class\Bus.cs" />
-    <Compile Include="Entities\Class\BusSchedule.cs" />
+    <Compile Include="Entities\Class\Schedule.cs" />
     <Compile Include="Entities\Class\Employee.cs" />
     <Compile Include="Entities\Class\EmploymentHistory.cs" />
-    <Compile Include="Entities\Class\FinancialReport.cs" />
     <Compile Include="Entities\Class\Model.cs" />
     <Compile Include="Entities\Class\Post.cs" />
     <Compile Include="Entities\Class\Route.cs" />
-    <Compile Include="Entities\Class\Station.cs" />
+    <Compile Include="Entities\Class\ScheduleList.cs" />
     <Compile Include="Entities\Class\Trip.cs" />
     <Compile Include="Entities\Enums\BusState.cs" />
     <Compile Include="Entities\Enums\Gender.cs" />
