@@ -21,9 +21,10 @@ namespace CourseDB
         private Address _address;
         public List<IEmploymentHistory> _employmentHistories;
         private Gender _gender;
+        private decimal _bonus;
 
         /// <summary>
-        /// Уникальный индетификатор сотрудника
+        /// Уникальный ID сотрудника
         /// </summary>
         public string ID
         {
@@ -173,6 +174,16 @@ namespace CourseDB
                 if (value > 3)
                     throw new ArgumentException("Класс водителя должен быть в диапазоне от 0 до 3");
                 _classDriver = value;
+            }
+        }
+
+        public decimal Bonus
+        {
+            get => _bonus;
+            set
+            {
+                if (value < 0m) throw new ArgumentException("Премия не может быть меньше нуля");
+                _bonus = value;
             }
         }
 

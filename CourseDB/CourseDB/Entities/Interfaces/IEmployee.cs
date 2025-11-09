@@ -14,6 +14,7 @@ namespace CourseDB
         string Name { get; set; }
         string Surname { get; set; }
         string Patronymic { get; set; }
+        decimal Bonus { get; set; }
         Gender Gender { get; set; }
         DateTime Birthday { get; set; }
         Address Address { get; set; }

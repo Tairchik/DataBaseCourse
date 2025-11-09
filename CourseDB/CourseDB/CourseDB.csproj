@@ -50,7 +50,7 @@
     <Compile Include="Entities\Class\EmploymentHistory.cs" />
     <Compile Include="Entities\Class\Model.cs" />
     <Compile Include="Entities\Class\Post.cs" />
-    <Compile Include="Entities\Class\Route.cs" />
+    <Compile Include="Entities\Class\Rout.cs" />
     <Compile Include="Entities\Class\ScheduleList.cs" />
     <Compile Include="Entities\Class\Trip.cs" />
     <Compile Include="Entities\Enums\BusState.cs" />

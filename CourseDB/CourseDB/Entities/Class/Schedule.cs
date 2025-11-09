@@ -17,7 +17,7 @@ namespace CourseDB
             get => _startHour;
             set
             {
-                if (value < 0 || value > 23)
+                if (value < 0 || value >= 23)
                     throw new ArgumentException("Час начала должен быть в диапазоне от 0 до 23");
                 _startHour = value;
             }
@@ -28,7 +28,7 @@ namespace CourseDB
             get => _endHour;
             set
             {
-                if (value < 0 || value > 23)
+                if (value < 0 || value >= 23)
                     throw new ArgumentException("Час окончания должен быть в диапазоне от 0 до 23");
                 _endHour = value;
             }
@@ -45,6 +45,16 @@ namespace CourseDB
                     throw new ArgumentException("Интервал не может превышать 1440 минут (24 часа)");
                 _interval = value;
             }
+        }
+        public Schedule() { }
+
+        public Schedule (int startHour, int endHour, int interval)
+        {
+            StartHour = startHour;
+            EndHour = endHour;
+            if (StartHour > EndHour && EndHour != 0) throw new Exception($"Час старта: {StartHour} не может произойти раньше {EndHour}.\n " +
+                $"Перезапишите в виде двух промежутков: от 0 до {EndHour} и от {StartHour} до 0");
+            Interval = interval;
         }
 
         public int CompareTo(Schedule other)
