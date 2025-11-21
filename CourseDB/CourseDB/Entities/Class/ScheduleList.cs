@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Runtime.ExceptionServices;
 
 namespace CourseDB
 {
@@ -24,15 +21,16 @@ namespace CourseDB
                 return schedules; 
             } 
         }
-
-        // Добавить с проверкой, что графики не пересекаются и в порядке возрастания от 0 до 23
+        /// <summary>
+        /// Добавить с проверкой, что графики не пересекаются и в порядке возрастания от 0 до 23
+        /// </summary>
+        /// <param name="schedule">Добавляемый график</param>
         public void Add(Schedule schedule)
         {
             if (schedule == null)
                 throw new ArgumentNullException(nameof(schedule), "Расписание не может быть null");
 
             bool fl = false;
-
 
             foreach (var existingSchedule in schedules)
             {
@@ -53,6 +51,24 @@ namespace CourseDB
             }
 
             if (fl == false) schedules.Add(schedule);
+        }
+
+        /// <summary>
+        /// Проверка пересечения двух расписаний.
+        /// schedule1 - Эталонный,
+        /// schedule2 - Сравниваемый
+        /// </summary>
+        /// <param name="schedule1"></param>
+        /// <param name="schedule2"></param>
+        /// <returns>True - пересекаются. Примечание: если один график начинается когда второй заканчивается это значит,
+        /// что они не пересекаются, вернется false</returns>
+        public static bool DoSchedulesOverlap(Schedule schedule1, Schedule schedule2)
+        {
+            if (schedule1.StartHour <= schedule2.StartHour && schedule1.EndHour > schedule2.StartHour) return true;
+            else if (schedule1.StartHour < schedule2.EndHour && schedule1.EndHour >= schedule2.EndHour) return true;
+            if (schedule2.StartHour <= schedule1.StartHour && schedule2.EndHour > schedule1.StartHour) return true;
+            else if (schedule2.StartHour < schedule1.EndHour && schedule2.EndHour >= schedule1.EndHour) return true;
+            return false;
         }
 
         /// <summary>
@@ -80,75 +96,41 @@ namespace CourseDB
             Add(schedule);
         }
 
-        public int GetStartHourScheduleBy(int hour)
+        public int GetHourSchedule(int hour)
         {
             foreach (var schedule in schedules)
             {
-                if (hour <= schedule.StartHour) return schedule.StartHour;
-                else if (hour <= schedule.EndHour) return hour;
+                if (hour <= schedule.EndHour && hour >= schedule.StartHour) return hour;
             }
-            throw new ArgumentException($"Неверно задан час начала движения автобусов {hour}");
+            throw new ArgumentException($"Неверно задан час начала или конца движения автобусов: {hour} часов");
         }
-        public int GetEndHourSchedule(int hour)
-        {
-            for (int i = schedules.Count - 1; i > 0; i--) 
-            {
-                if (hour >= schedules[i].EndHour) return schedules[i].EndHour;
-                else if (hour >= schedules[i].StartHour) return hour;
-            }
-            throw new ArgumentException($"Неверно задан час конца движения автобусов {hour}");
-        }
+         
 
         public List<TimeSpan> GetFullSchedule(TimeSpan start, TimeSpan end)
         {
-            int start_hour = GetStartHourScheduleBy(start.Hours);
-            int end_hour = GetEndHourSchedule(end.Hours);
+            GetHourSchedule(start.Hours);
+            GetHourSchedule(end.Hours);
+
+            int fl_start;
+            int fl_end;
 
             List<TimeSpan> result = new List<TimeSpan>();
 
             foreach (var schedule in schedules)
             {
-                if (start_hour >= schedule.StartHour && end_hour <= schedule.EndHour)
-                {
-                    if (end_hour == schedule.EndHour)
-                    {
-                        TimeSpan time = new TimeSpan();
-                        for (int minute = start.Minutes; minute < (schedule.EndHour - schedule.StartHour) * 60; minute+= schedule.Interval)
-                        {
-                            time = TimeSpan.FromMinutes(minute + schedule.StartHour * 60);
-                            result.Add(time);
-                        }
-                    }
-                    else
-                    {
-                        TimeSpan time = new TimeSpan();
-                        for (int minute = start.Minutes; minute < (schedule.EndHour - schedule.StartHour) * 60 - ; minute += schedule.Interval)
-                        {
-                            time = TimeSpan.FromMinutes(minute + schedule.StartHour * 60);
-                            result.Add(time);
-                        }
-                    }
-                    return result;
-                }    
-                else if (start_hour >= schedule.StartHour && start_hour <= schedule.EndHour)
-                {
-                    TimeSpan time = new TimeSpan();
-                    for (int minute = start.Minutes;  minute < (schedule.EndHour - schedule.StartHour) * 60; minute+=schedule.Interval)
-                    {
-                        time = TimeSpan.FromMinutes(minute + schedule.StartHour * 60);
-                        result.Add(time);
-                    }
-                }
-                else if (end_hour >= schedule.StartHour && end_hour <= schedule.EndHour) 
-                {
+                if (schedule.StartHour * 60 > end.TotalMinutes) break;
 
-                }
-                else
-                {
+                fl_start = schedule.StartHour * 60;
+                fl_end = schedule.EndHour * 60;
 
+                if (schedule.StartHour * 60 <= start.TotalMinutes && start.TotalMinutes < schedule.EndHour * 60) fl_start = (int)start.TotalMinutes;
+                if (schedule.StartHour * 60 < end.TotalMinutes && end.TotalMinutes <= schedule.EndHour * 60) fl_end = (int)end.TotalMinutes;
+
+                for (int c = fl_start; c < fl_end; c += schedule.Interval) 
+                {
+                    result.Add(TimeSpan.FromMinutes(c));
                 }
             }
-
             return result;
         }
 
@@ -166,23 +148,6 @@ namespace CourseDB
             throw new InvalidOperationException("Указанное расписание не найдено в списке");
         }
 
-        /// <summary>
-        /// Проверка пересечения двух расписаний.
-        /// schedule1 - Эталонный,
-        /// schedule2 - Сравниваемый
-        /// </summary>
-        /// <param name="schedule1"></param>
-        /// <param name="schedule2"></param>
-        /// <returns>True - пересекаются. Примечание: если один график начинается когда второй заканчивается это значит,
-        /// что они не пересекаются, вернется false</returns>
-        public static bool DoSchedulesOverlap(Schedule schedule1, Schedule schedule2)
-        {
-            if (schedule1.StartHour <= schedule2.StartHour && schedule1.EndHour > schedule2.StartHour) return true;
-            else if (schedule1.StartHour < schedule2.EndHour && schedule1.EndHour >= schedule2.EndHour) return true;
-            if(schedule2.StartHour <= schedule1.StartHour && schedule2.EndHour > schedule1.StartHour) return true;
-            else if (schedule2.StartHour < schedule1.EndHour && schedule2.EndHour >= schedule1.EndHour) return true;
-            return false;
-        }
 
         // Получение расписания для указанного часа
         public Schedule GetScheduleForHour(int start, int end)

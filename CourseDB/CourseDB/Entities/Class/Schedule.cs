@@ -46,6 +46,7 @@ namespace CourseDB
                 _interval = value;
             }
         }
+
         public Schedule() { }
 
         public Schedule (int startHour, int endHour, int interval)

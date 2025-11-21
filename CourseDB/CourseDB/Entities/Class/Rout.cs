@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseDB.Entities.Class
+namespace CourseDB
 {
     internal class Rout: IRout
     {
@@ -17,6 +17,7 @@ namespace CourseDB.Entities.Class
         private TimeSpan _endTimeDirectRout;
         private TimeSpan _startTimeReversDirectRout;
         private TimeSpan _endTimeReversDirectRout;
+        private List<string> _stations;
 
         public int ID_rout
         {
@@ -48,6 +49,8 @@ namespace CourseDB.Entities.Class
             set
             {
                 if (value <= TimeSpan.Zero)
+                    throw new ArgumentException("Время маршрута должно быть положительным");
+                if (value.Minutes < 0) 
                     throw new ArgumentException("Время маршрута должно быть положительным");
                 if (value > TimeSpan.FromHours(24))
                     throw new ArgumentException("Время маршрута не может превышать 24 часа");
@@ -82,7 +85,6 @@ namespace CourseDB.Entities.Class
             {
                 if (value < TimeSpan.Zero)
                     throw new ArgumentException($"Время начала прямого маршрута должно быть положительным числом");
-                
                 if (value > TimeSpan.FromHours(24))
                     throw new ArgumentException("Время начала прямого маршрута не может превышать 24 часа");
                 _startTimeDirectRout = value;
@@ -107,8 +109,7 @@ namespace CourseDB.Entities.Class
             get => _startTimeReversDirectRout;
             set
             {
-
-                if (value < TimeSpan.Zero)
+                if (value < TimeSpan.Zero || value.Minutes < 0)
                     throw new ArgumentException($"Время начала обратного маршрута должно быть положительным числом");
                 if (value > TimeSpan.FromHours(24))
                     throw new ArgumentException("Время начала обратного маршрута не может превышать 24 часа");
@@ -121,7 +122,7 @@ namespace CourseDB.Entities.Class
             get => _endTimeReversDirectRout;
             set
             {
-                if (value < TimeSpan.Zero)
+                if (value < TimeSpan.Zero || value.Minutes < 0)
                     throw new ArgumentException($"Время начала обратного маршрута должно быть положительным числом");
                 if (value > TimeSpan.FromHours(24))
                     throw new ArgumentException("Время начала обратного маршрута не может превышать 24 часа"); 
@@ -129,10 +130,38 @@ namespace CourseDB.Entities.Class
             }
         }
 
+        public List<string> Stations
+        {
+            get => _stations;
+            set
+            {
+
+            }
+        }
+
+        public string StartStation
+        {
+            get
+            {
+                if (Stations.Count == 0) throw new ArgumentException("Не задан список автобусов.");
+                return Stations.First();
+            } 
+        }
+
+        public string EndStation
+        {
+            get
+            {
+                if (Stations.Count == 0) throw new ArgumentException("Не задан список автобусов.");
+                return Stations.Last();
+            }
+        }
+
         // Конструктор по умолчанию
         public Rout()
         {
             _schedule = new ScheduleList();
+            _stations = new List<string>();
         }
 
         // Конструктор с параметрами
@@ -153,28 +182,122 @@ namespace CourseDB.Entities.Class
             ValidateTimes();
         }
 
+        // Добавление станции с проверкой на дубликат
+        public bool AddStation(string stationName)
+        {
+            if (string.IsNullOrWhiteSpace(stationName))
+            {
+                throw new ArgumentException("Название станции не может быть пустым");
+            }
+
+            // Проверяем, существует ли уже такая станция (без учета регистра)
+            if (Stations.Any(s => s.Equals(stationName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return false; // Станция уже существует
+            }
+
+            Stations.Add(stationName);
+            return true;
+        }
+
+        // Удаление станции по порядковому номеру (индексу)
+        public bool RemoveStationByIndex(int index)
+        {
+            if (index < 0 || index >= Stations.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index),
+                    $"Индекс должен быть в диапазоне от 0 до {Stations.Count - 1}");
+            }
+
+            Stations.RemoveAt(index);
+            return true;
+        }
+
+        // Альтернативный метод удаления по индексу с проверкой существования
+        public bool TryRemoveStationByIndex(int index)
+        {
+            if (index >= 0 && index < Stations.Count)
+            {
+                Stations.RemoveAt(index);
+                return true;
+            }
+            return false;
+        }
+
+        // Поиск станции по названию (с учетом регистра или без)
+        public bool ContainsStation(string stationName, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        {
+            return Stations.Any(s => s.Equals(stationName, comparison));
+        }
+
+        // Получение индекса станции по названию
+        public int GetStationIndex(string stationName, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        {
+            return Stations.FindIndex(s => s.Equals(stationName, comparison));
+        }
+
+        // Получение количества станций
+        public int StationsCount => Stations.Count;
+
+        // Очистка всех станций
+        public void ClearAllStations()
+        {
+            Stations.Clear();
+        }
+
+
         private void ValidateTimes()
         {
-            if (StartTimeDirectRout >= EndTimeDirectRout)
+            if (StartTimeDirectRout > EndTimeDirectRout)
                 throw new ArgumentException("Время начала прямого маршрута должно быть раньше времени окончания");
-            if (StartTimeReversDirectRout >= EndTimeReversDirectRout)
+            if (StartTimeReversDirectRout > EndTimeReversDirectRout)
                 throw new ArgumentException("Время начала обратного маршрута должно быть раньше времени окончания");
 
         }
 
         public List<TimeSpan> GetStartTimesTimeSpan(bool direct)
         {
-            List<TimeSpan> result = new List<TimeSpan>();
             // Прямое направление
             if (direct == true)
             {
-               
+                return Schedule.GetFullSchedule(StartTimeDirectRout, EndTimeDirectRout);
             }
             // Обратное направление
             else
             {
-
+                return Schedule.GetFullSchedule(StartTimeReversDirectRout, EndTimeReversDirectRout);
             }
-        } 
+        }
+
+        public List<string> GetStartTimesString(bool direct)
+        {
+            List<string> result = new List<string>();
+            // Прямое направление
+            if (direct == true)
+            {
+                foreach (TimeSpan val in Schedule.GetFullSchedule(StartTimeDirectRout, EndTimeDirectRout))
+                {
+                    result.Add(val.ToString(@"hh\:mm"));
+                }
+
+                return result;
+            }
+            // Обратное направление
+            else
+            {
+                foreach (TimeSpan val in Schedule.GetFullSchedule(StartTimeReversDirectRout, EndTimeReversDirectRout))
+                {
+                    result.Add(val.ToString(@"hh\:mm"));
+                }
+
+                return result;
+            }
+        }
+
+        public string[] GetStartEndStationByDirect(bool direct) 
+        {
+            if (direct == true) return new string[] {StartStation, EndStation};
+            return new string[] {EndStation, StartStation};
+        }
     }
 }
