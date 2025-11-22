@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CourseDB
 {
-    internal class Schedule: IComparable<Schedule>
+    public class Schedule: IComparable<Schedule>
     {
         private int _startHour;
         private int _endHour;

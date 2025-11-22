@@ -5,7 +5,7 @@ using System.Runtime.ExceptionServices;
 
 namespace CourseDB
 {
-    internal class ScheduleList
+    public class ScheduleList
     {
         private List<Schedule> schedules;
 

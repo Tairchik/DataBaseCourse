@@ -18,6 +18,7 @@ namespace CourseDB
         private TimeSpan _startTimeReversDirectRout;
         private TimeSpan _endTimeReversDirectRout;
         private List<string> _stations;
+        private decimal _revenue;
 
         public int ID_rout
         {
@@ -43,6 +44,15 @@ namespace CourseDB
             }
         }
 
+        public decimal Revenue
+        {
+            get => _revenue;
+            set 
+            {
+                if (value < 0) throw new ArgumentException("Плановая выручка не может быть отрицательной.");
+                _revenue = value;
+            }
+        }
         public TimeSpan TimeRoute
         {
             get => _timeRoute;
@@ -133,10 +143,6 @@ namespace CourseDB
         public List<string> Stations
         {
             get => _stations;
-            set
-            {
-
-            }
         }
 
         public string StartStation
@@ -244,7 +250,6 @@ namespace CourseDB
         {
             Stations.Clear();
         }
-
 
         private void ValidateTimes()
         {

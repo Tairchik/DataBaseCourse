@@ -1,5 +1,4 @@
-﻿using CourseDB.Entities.Class;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CourseDB
 {
-    internal interface IEmployee
+    public interface IEmployee
     {
         string ID { get; set; }
         string Name { get; set; }

@@ -1,5 +1,4 @@
-﻿using CourseDB.Entities.Class;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CourseDB
 {
-    internal interface IBus
+    public interface IBus
     {
         string InventoryNumber { get; set; }
         Model Model { get; set; }

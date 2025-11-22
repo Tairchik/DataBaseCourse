@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace CourseDB
 {
-    internal interface IRout
+    public interface IRout
     {
         int ID_rout { get; set; }
         string Name_Route { get; set; }
         TimeSpan TimeRoute { get; set; }
         int Distance {  get; set; }
+        decimal Revenue { get;}
         ScheduleList Schedule { get; set; }
         TimeSpan StartTimeDirectRout { get; set; }
         TimeSpan EndTimeDirectRout { get; set; }
