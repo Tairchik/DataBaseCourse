@@ -257,7 +257,6 @@ namespace CourseDB
                 throw new ArgumentException("Время начала прямого маршрута должно быть раньше времени окончания");
             if (StartTimeReversDirectRout > EndTimeReversDirectRout)
                 throw new ArgumentException("Время начала обратного маршрута должно быть раньше времени окончания");
-
         }
 
         public List<TimeSpan> GetStartTimesTimeSpan(bool direct)

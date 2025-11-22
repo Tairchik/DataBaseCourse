@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseDB
 {
@@ -18,5 +15,7 @@ namespace CourseDB
         bool DirectRout { get; set; }
         decimal ActualRevenue { get; set; }
         int DirectRoutInt { set; }
+        void RemoveControlTripById(string id);
+        List<IControlTrip> ControlTrips { get; }
     }
 }

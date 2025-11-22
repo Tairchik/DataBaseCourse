@@ -18,35 +18,12 @@ namespace CourseDB
         private IEmployee _driver;
         private IEmployee _conductor;
         private IBus _bus;
+        public List<IControlTrip> _controlTrips;
 
-        public Trip(string id, DateTime dateStart, TimeSpan timeStart, bool directRout, 
-            decimal actualRevenue, IRout rout, IEmployee driver, IEmployee conductor, IBus bus)
+        public List<IControlTrip> ControlTrips
         {
-            Id = id;
-            DateStart = dateStart;
-            TimeStart = timeStart;
-            DirectRout = directRout;
-            ActualRevenue = actualRevenue;
-            _rout = rout;
-            _driver = driver;
-            _conductor = conductor;
-            _bus = bus;
+            get { return _controlTrips; }
         }
-
-        public Trip(DateTime dateStart, TimeSpan timeStart, bool directRout,
-           decimal actualRevenue, IRout rout, IEmployee driver, IEmployee conductor, IBus bus)
-        {
-            DateStart = dateStart;
-            TimeStart = timeStart;
-            DirectRout = directRout;
-            ActualRevenue = actualRevenue;
-            _rout = rout;
-            _driver = driver;
-            _conductor = conductor;
-            _bus = bus;
-        }
-
-        public Trip() { }
 
         public string Id 
         { 
@@ -60,7 +37,7 @@ namespace CourseDB
         }
         public DateTime DateStart 
         { 
-            get => DateStart;
+            get => _dateStart;
             set
             {
                 if (value < DateTime.Now.AddYears(-100))
@@ -146,6 +123,48 @@ namespace CourseDB
                 _bus = value ?? throw new ArgumentNullException("Не инициализирован кондуктор.");
             }
         }
-  
+
+        public Trip(string id, DateTime dateStart, TimeSpan timeStart, bool directRout,
+            decimal actualRevenue, IRout rout, IEmployee driver, IEmployee conductor, IBus bus)
+        {
+            Id = id;
+            DateStart = dateStart;
+            TimeStart = timeStart;
+            DirectRout = directRout;
+            ActualRevenue = actualRevenue;
+            _rout = rout;
+            _driver = driver;
+            _conductor = conductor;
+            _bus = bus;
+            _controlTrips = new List<IControlTrip>();
+        }
+
+        public Trip(DateTime dateStart, TimeSpan timeStart, bool directRout,
+           decimal actualRevenue, IRout rout, IEmployee driver, IEmployee conductor, IBus bus)
+        {
+            DateStart = dateStart;
+            TimeStart = timeStart;
+            DirectRout = directRout;
+            ActualRevenue = actualRevenue;
+            _rout = rout;
+            _driver = driver;
+            _conductor = conductor;
+            _bus = bus;
+            _controlTrips = new List<IControlTrip>();
+        }
+
+        public Trip() { _controlTrips = new List<IControlTrip>(); }
+
+        public void RemoveControlTripById(string id) 
+        {
+            foreach (var trip in _controlTrips) 
+            {
+                if (trip.Id == id) 
+                { 
+                    _controlTrips.Remove(trip); 
+                    break; 
+                }
+            }
+        }
     }
 }

@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Entities\Class\Address.cs" />
     <Compile Include="Entities\Class\Bus.cs" />
+    <Compile Include="Entities\Class\ControlTrip.cs" />
     <Compile Include="Entities\Class\Schedule.cs" />
     <Compile Include="Entities\Class\Employee.cs" />
     <Compile Include="Entities\Class\EmploymentHistory.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Entities\Enums\Gender.cs" />
     <Compile Include="Entities\Enums\TypeEvent.cs" />
     <Compile Include="Entities\Interfaces\IBus.cs" />
+    <Compile Include="Entities\Interfaces\IControlTrip.cs" />
     <Compile Include="Entities\Interfaces\IEmployee.cs" />
     <Compile Include="Entities\Interfaces\IEmploymentHistory.cs" />
     <Compile Include="Entities\Interfaces\IRout.cs" />
