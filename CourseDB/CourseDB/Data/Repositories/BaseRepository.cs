@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
 
 namespace CourseDB.Data
 {
-
     public abstract class BaseRepository
     {
-        // Название таблицы
-        protected abstract string TableName { get; }
         // Имя файла БД
         protected static string DatabaseFileName = "company_data.db";
 
@@ -43,19 +40,7 @@ namespace CourseDB.Data
             }
         }
 
-        public int Delete(int id)
-        {
-            using (var connection = GetConnection())
-            {
-                var command = connection.CreateCommand();
 
-                // Используем интерполяцию строки для подстановки имени таблицы
-                command.CommandText = $"DELETE FROM {TableName} WHERE Id = @Id;";
-                command.Parameters.AddWithValue("@Id", id);
-
-                return command.ExecuteNonQuery();
-            }
-        }
         protected SqliteConnection GetConnection()
         {
             var connection = new SqliteConnection(ConnectionString);
@@ -76,16 +61,25 @@ namespace CourseDB.Data
                 connection.Open();
                 var command = connection.CreateCommand();
 
-                // 1. Создание таблицы Brands
-                command.CommandText = @"
-                    CREATE TABLE IF NOT EXISTS Brands (
-                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        BrandName TEXT NOT NULL UNIQUE
-                    );";
-                command.ExecuteNonQuery();
+                string[][] names_simple_tables = new string[][] 
+                {
+                    new string[] {"Brands", "BrandName"},
+                    new string[] {"Streets", "StreetName"},
+                    new string[] {"Stations", "StationName"},
+                    new string[] {"Colors", "ColorName"},
+                };
+
+                // 1-4. Создание типовых таблиц
+                foreach (var name in names_simple_tables)
+                {
+                    command.CommandText = $@"
+                        CREATE TABLE IF NOT EXISTS {name[0]} (
+                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            {name[1]} TEXT NOT NULL UNIQUE
+                        );";
+                    command.ExecuteNonQuery();
+                }
             }
         }
-
-
     }
 }
