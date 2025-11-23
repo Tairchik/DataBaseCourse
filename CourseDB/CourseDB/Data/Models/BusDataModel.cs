@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseDB.Data.Models
+namespace CourseDB.Data
 {
-    internal class BusDataModel
+    public class BusDataModel
     {
+
     }
 }

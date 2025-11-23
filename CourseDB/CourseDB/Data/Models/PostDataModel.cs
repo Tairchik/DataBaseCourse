@@ -8,6 +8,8 @@ namespace CourseDB.Data
 {
     public class PostDataModel
     {
-
+        public int Id { get; set; }
+        public string PostName { get; set; }
+        public decimal Salary { get; set; }
     }
 }
