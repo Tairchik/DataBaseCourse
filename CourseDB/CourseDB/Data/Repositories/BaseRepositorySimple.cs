@@ -74,6 +74,11 @@ namespace CourseDB.Data
                 return (int)newIdLong;
             }
         }
+        /// <summary>
+        /// Удаляет строку из БД по ключу.
+        /// </summary>
+        /// <param name="id">Id для удаления.</param>
+        /// <returns>Количество удаленных строк (0 или 1).</returns>
         public int Delete(int id)
         {
             using (var connection = GetConnection())

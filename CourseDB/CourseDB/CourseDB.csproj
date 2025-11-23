@@ -108,6 +108,9 @@
     <Compile Include="Data\Repositories\BaseRepository.cs" />
     <Compile Include="Data\Repositories\BaseRepositorySimple.cs" />
     <Compile Include="Data\Repositories\BrandRepository.cs" />
+    <Compile Include="Data\Repositories\ColorRepository.cs" />
+    <Compile Include="Data\Repositories\StationRepository.cs" />
+    <Compile Include="Data\Repositories\StreetRepository.cs" />
     <Compile Include="Entities\Class\Address.cs" />
     <Compile Include="Entities\Class\Bus.cs" />
     <Compile Include="Entities\Class\ControlTrip.cs" />
