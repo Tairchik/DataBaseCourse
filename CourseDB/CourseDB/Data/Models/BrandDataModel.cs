@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CourseDB.Data
 {
-    public class StreetDataModel
+    public class BrandDataModel
     {
         public int Id { get; set; }
-        public string StreetName { get; set; }  
+        public string BrandName { get; set; }
     }
 }

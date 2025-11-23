@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseDB.Data.Models
+namespace CourseDB.Data
 {
-    internal class BusStationDataModel
+    public class BusStationDataModel
     {
+        public int Id { get; set; }
+        public string StationName { get; set; }
     }
 }

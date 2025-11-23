@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseDB.Data.Models
+namespace CourseDB.Data
 {
-    internal class ColorDataModel
+    public class ColorDataModel
     {
+        public int Id { get; set; }
+        public string ColorName { get; set; }
     }
 }

@@ -49,7 +49,7 @@
     <Compile Include="Data\Models\ControlTripDataModel.cs" />
     <Compile Include="Data\Models\EmployeeDataModel.cs" />
     <Compile Include="Data\Models\EmploymentHistoryDataModel.cs" />
-    <Compile Include="Data\Models\MarkDataModel.cs" />
+    <Compile Include="Data\Models\BrandDataModel.cs" />
     <Compile Include="Data\Models\ModelDataModel.cs" />
     <Compile Include="Data\Models\PostDataModel.cs" />
     <Compile Include="Data\Models\RoutDataModel.cs" />

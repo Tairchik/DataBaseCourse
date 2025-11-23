@@ -4,9 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseDB.Data.Models
+namespace CourseDB.Data
 {
-    internal class RoutStationsDataModel
+    public class RoutStationsDataModel
     {
+        public int Id { get; set; }
+        public int SequenceNumber { get; set; }
+
+        // Foreign Keys
+        public int RouteId { get; set; }
+        public int StopId { get; set; }
     }
 }
