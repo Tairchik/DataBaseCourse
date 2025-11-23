@@ -79,6 +79,15 @@ namespace CourseDB.Data
                         );";
                     command.ExecuteNonQuery();
                 }
+
+                // 5. Должность
+                command.CommandText = $@"
+                        CREATE TABLE IF NOT EXISTS Posts (
+                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            PostName TEXT NOT NULL UNIQUE,
+                            Salary REAL
+                        );";
+                command.ExecuteNonQuery();
             }
         }
     }

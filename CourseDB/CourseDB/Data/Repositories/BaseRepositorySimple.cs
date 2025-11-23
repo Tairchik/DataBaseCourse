@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
@@ -9,7 +10,7 @@ using Microsoft.Data.Sqlite;
 namespace CourseDB.Data
 {
 
-    public abstract class BaseRepositorySimple : BaseRepository
+    public abstract class BaseRepositorySimple<T> : BaseRepository
     {
         // Название таблицы
         protected abstract string TableName { get; }
@@ -109,5 +110,29 @@ namespace CourseDB.Data
                 return command.ExecuteNonQuery();
             }
         }
+        public List<T> GetAll()
+        {
+            var Data = new Dictionary<int, string>();
+
+            using (var connection = GetConnection())
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = $"SELECT Id, {Name} FROM {TableName};";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);                
+                        Data.Add(id, name);
+                    }
+                }
+            }
+            return Converter(Data);
+        }
+        protected abstract List<T> Converter(Dictionary<int, string> data);
+        public abstract T GetDataModelById(int Id);
+        public abstract int Update(T model);
     }
 }
