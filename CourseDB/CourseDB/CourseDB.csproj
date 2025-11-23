@@ -43,6 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Models\BusDataModel.cs" />
+    <Compile Include="Data\Models\BusStationDataModel.cs" />
+    <Compile Include="Data\Models\ColorDataModel.cs" />
+    <Compile Include="Data\Models\ControlTripDataModel.cs" />
+    <Compile Include="Data\Models\EmployeeDataModel.cs" />
+    <Compile Include="Data\Models\EmploymentHistoryDataModel.cs" />
+    <Compile Include="Data\Models\MarkDataModel.cs" />
+    <Compile Include="Data\Models\ModelDataModel.cs" />
+    <Compile Include="Data\Models\PostDataModel.cs" />
+    <Compile Include="Data\Models\RoutDataModel.cs" />
+    <Compile Include="Data\Models\RoutStationsDataModel.cs" />
+    <Compile Include="Data\Models\ScheduleDataModel.cs" />
+    <Compile Include="Data\Models\StreetDataModel.cs" />
+    <Compile Include="Data\Models\TripDataModel.cs" />
     <Compile Include="Entities\Class\Address.cs" />
     <Compile Include="Entities\Class\Bus.cs" />
     <Compile Include="Entities\Class\ControlTrip.cs" />
@@ -71,7 +85,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\Models\" />
+    <Folder Include="Data\DataFiles\" />
     <Folder Include="Data\Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
