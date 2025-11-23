@@ -10,8 +10,7 @@ namespace CourseDB
     {
         static void Main(string[] args)
         {
-            BrandRepository repository = new BrandRepository();
-            repository.GetOrCreateBrandId("Водитель 2");
+           
         }
     }
 }

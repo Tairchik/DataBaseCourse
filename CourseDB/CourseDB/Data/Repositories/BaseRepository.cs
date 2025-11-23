@@ -8,8 +8,11 @@ using Microsoft.Data.Sqlite;
 
 namespace CourseDB.Data
 {
+
     public abstract class BaseRepository
     {
+        // Название таблицы
+        protected abstract string TableName { get; }
         // Имя файла БД
         protected static string DatabaseFileName = "company_data.db";
 
@@ -37,6 +40,20 @@ namespace CourseDB.Data
                 EnsureDatabaseSchema();
 
                 _schemaChecked = true; // Устанавливаем флаг после успешного выполнения
+            }
+        }
+
+        public int Delete(int id)
+        {
+            using (var connection = GetConnection())
+            {
+                var command = connection.CreateCommand();
+
+                // Используем интерполяцию строки для подстановки имени таблицы
+                command.CommandText = $"DELETE FROM {TableName} WHERE Id = @Id;";
+                command.Parameters.AddWithValue("@Id", id);
+
+                return command.ExecuteNonQuery();
             }
         }
         protected SqliteConnection GetConnection()
@@ -68,5 +85,7 @@ namespace CourseDB.Data
                 command.ExecuteNonQuery();
             }
         }
+
+
     }
 }

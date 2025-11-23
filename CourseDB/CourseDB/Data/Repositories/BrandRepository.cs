@@ -8,6 +8,7 @@ namespace CourseDB.Data
 {
     public class BrandRepository : BaseRepository
     {
+        protected override string TableName => "Brands";
         /// <summary>
         /// Находит ID марки по имени или создает новую запись.
         /// </summary>
@@ -67,5 +68,25 @@ namespace CourseDB.Data
                 return (int)newIdLong;
             }
         }
+        /// <summary>
+        /// Удаляет марку из БД по ее имени. Поиск нечувствителен к регистру (COLLATE NOCASE).
+        /// </summary>
+        /// <param name="brandName">Имя марки для удаления.</param>
+        /// <returns>Количество удаленных строк (0 или 1).</returns>
+        public int Delete(string brandName)
+        {
+            using (var connection = GetConnection())
+            {
+                var command = connection.CreateCommand();
+
+                // Удаляем запись, используя COLLATE NOCASE для поиска без учета регистра.
+                command.CommandText = "DELETE FROM Brands WHERE BrandName = @BrandName COLLATE NOCASE;";
+                command.Parameters.AddWithValue("@BrandName", brandName);
+
+                return command.ExecuteNonQuery();
+            }
+        }
+
+
     }
 }
