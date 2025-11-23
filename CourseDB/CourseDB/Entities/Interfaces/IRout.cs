@@ -10,7 +10,6 @@ namespace CourseDB
 {
     public interface IRout
     {
-        int ID_rout { get; set; }
         string Name_Route { get; set; }
         TimeSpan TimeRoute { get; set; }
         int Distance {  get; set; }

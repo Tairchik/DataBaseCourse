@@ -9,7 +9,6 @@ namespace CourseDB
 {
     public class Employee : IEmployee
     {
-        private string _id;
         private string _name;
         private string _surname;
         private string _patronymic;
@@ -21,20 +20,6 @@ namespace CourseDB
         public List<IEmploymentHistory> _employmentHistories;
         private Gender _gender;
         private decimal _bonus;
-
-        /// <summary>
-        /// Уникальный ID сотрудника
-        /// </summary>
-        public string ID
-        {
-            get => _id;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("ID не может быть пустым");
-                _id = value.Trim();
-            }
-        }
 
         /// <summary>
         /// Имя

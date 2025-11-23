@@ -9,7 +9,6 @@ namespace CourseDB
 {
     public class Trip : ITrip
     {
-        private string _id;
         private DateTime _dateStart;
         private TimeSpan _timeStart;
         private bool _directRout;
@@ -25,16 +24,6 @@ namespace CourseDB
             get { return _controlTrips; }
         }
 
-        public string Id 
-        { 
-            get => _id;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("ID не может быть пустым");
-                _id = value.Trim();
-            }
-        }
         public DateTime DateStart 
         { 
             get => _dateStart;
@@ -127,7 +116,6 @@ namespace CourseDB
         public Trip(string id, DateTime dateStart, TimeSpan timeStart, bool directRout,
             decimal actualRevenue, IRout rout, IEmployee driver, IEmployee conductor, IBus bus)
         {
-            Id = id;
             DateStart = dateStart;
             TimeStart = timeStart;
             DirectRout = directRout;
@@ -154,17 +142,5 @@ namespace CourseDB
         }
 
         public Trip() { _controlTrips = new List<IControlTrip>(); }
-
-        public void RemoveControlTripById(string id) 
-        {
-            foreach (var trip in _controlTrips) 
-            {
-                if (trip.Id == id) 
-                { 
-                    _controlTrips.Remove(trip); 
-                    break; 
-                }
-            }
-        }
     }
 }

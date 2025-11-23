@@ -8,22 +8,11 @@ namespace CourseDB
 {
     public class ControlTrip : IControlTrip
     {
-        private string _id;
         private TimeSpan _timeLeave;
         private TimeSpan _timeComingStation;
         private string _reasonLeave;
         private int _numRides;
 
-        public string Id 
-        {
-            get => _id;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("ID не может быть пустым");
-                _id = value.Trim();
-            }
-        }
         public TimeSpan TimeLeave 
         {
             get => _timeLeave;
@@ -69,17 +58,15 @@ namespace CourseDB
             }
         }
 
-        public ControlTrip(string id, TimeSpan timeLeave, TimeSpan timeComingStation, string reasonLeave, int numRides)
+        public ControlTrip(TimeSpan timeLeave, TimeSpan timeComingStation, string reasonLeave, int numRides)
         {
-            Id = id;
             TimeLeave = timeLeave;
             TimeComingStation = timeComingStation;
             ReasonLeave = reasonLeave;
             NumRides = numRides;
         }
-        public ControlTrip(string id, TimeSpan timeComingStation, int numRides)
+        public ControlTrip(TimeSpan timeComingStation, int numRides)
         {
-            Id = id;
             TimeComingStation = timeComingStation;
             NumRides = numRides;
         }

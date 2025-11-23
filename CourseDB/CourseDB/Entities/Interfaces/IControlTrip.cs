@@ -8,7 +8,6 @@ namespace CourseDB
 {
     public interface IControlTrip
     {
-        string Id { get; set; }
         TimeSpan TimeLeave { get; set; }
         TimeSpan TimeComingStation { get; set; }
         string ReasonLeave { get; set; }

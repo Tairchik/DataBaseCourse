@@ -5,7 +5,6 @@ namespace CourseDB
 {
     public interface ITrip
     {
-        string Id { get; set; }
         IRout Rout_ { get; set; }
         IEmployee Driver { get; set; }
         IEmployee Conductor { get; set; }
@@ -15,7 +14,6 @@ namespace CourseDB
         bool DirectRout { get; set; }
         decimal ActualRevenue { get; set; }
         int DirectRoutInt { set; }
-        void RemoveControlTripById(string id);
         List<IControlTrip> ControlTrips { get; }
     }
 }

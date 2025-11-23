@@ -8,7 +8,6 @@ namespace CourseDB
 {
     internal class Rout: IRout
     {
-        private int _id_rout;
         private string _name_Route;
         private TimeSpan _timeRoute;
         private int _distance;
@@ -19,17 +18,6 @@ namespace CourseDB
         private TimeSpan _endTimeReversDirectRout;
         private List<string> _stations;
         private decimal _revenue;
-
-        public int ID_rout
-        {
-            get => _id_rout;
-            set
-            {
-                if (value < 0)
-                    throw new ArgumentException("ID маршрута должен быть положительным числом");
-                _id_rout = value;
-            }
-        }
 
         public string Name_Route
         {
@@ -171,11 +159,10 @@ namespace CourseDB
         }
 
         // Конструктор с параметрами
-        public Rout(int id, string name, TimeSpan timeRoute, int distance,
+        public Rout(string name, TimeSpan timeRoute, int distance,
                    TimeSpan startDirect, TimeSpan endDirect,
                    TimeSpan startReverse, TimeSpan endReverse, ScheduleList schedule)
         {
-            ID_rout = id;
             Name_Route = name;
             TimeRoute = timeRoute;
             Distance = distance;
