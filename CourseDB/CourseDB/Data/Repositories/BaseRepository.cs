@@ -24,15 +24,15 @@ namespace CourseDB.Data
             if (!_schemaChecked)
             {
                 string appBaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                string projectRootPath = Path.GetFullPath(Path.Combine(appBaseDirectory, "..\\..\\"));
+                string projectRootPath = Path.GetFullPath(Path.Combine(appBaseDirectory, "..\\..\\..\\"));
                 string dbFilePath = Path.Combine(projectRootPath, RelativeDbPath, DatabaseFileName);
 
-                string folder = Path.GetDirectoryName(RelativeDbPath);
+                string folder = Path.GetDirectoryName(dbFilePath);
                 if (!Directory.Exists(folder))
                 {
                     Directory.CreateDirectory(folder);
                 }
-                ConnectionString = $"Data Source={RelativeDbPath}";
+                ConnectionString = $"Data Source={dbFilePath}";
 
                 EnsureDatabaseSchema();
 
@@ -63,7 +63,7 @@ namespace CourseDB.Data
                 command.CommandText = @"
                     CREATE TABLE IF NOT EXISTS Brands (
                         Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        BrandName TEXT NOT NULL UNIQUE,
+                        BrandName TEXT NOT NULL UNIQUE
                     );";
                 command.ExecuteNonQuery();
             }
