@@ -24,7 +24,7 @@ namespace CourseDB.Data
         /// <summary>
         /// Получает запись станции по ее ID и переводит ее в объект BusStationDataModel.
         /// </summary>
-        public override BrandDataModel GetDataModelById(int id)
+        public override BrandDataModel GetById(int id)
         {
             using (var connection = GetConnection())
             {

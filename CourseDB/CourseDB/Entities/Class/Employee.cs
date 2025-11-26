@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -234,6 +235,26 @@ namespace CourseDB
         public override string ToString()
         {
             return $"{GetFullName()} - {Post?.NamePost}";
+        }
+
+        public Employee(string name, string surname, Gender gender, DateTime birthday, Address address, Post post, int timeWork, string patronymic="", decimal bonus=0, int classDriver=0)
+        {
+            Name = name;
+            Surname = surname;
+            Patronymic = patronymic;
+            Gender = gender;
+            Birthday = birthday;
+            Address = address;
+            Post = post;
+            TimeWork = timeWork;
+            Bonus = bonus;
+            ClassDriver = classDriver;
+            _employmentHistories = new List<IEmploymentHistory>();
+        }
+
+        public Employee() 
+        {
+            _employmentHistories = new List<IEmploymentHistory>();
         }
     }
 }

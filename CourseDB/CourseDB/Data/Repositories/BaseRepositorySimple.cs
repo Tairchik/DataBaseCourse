@@ -9,7 +9,6 @@ using Microsoft.Data.Sqlite;
 
 namespace CourseDB.Data
 {
-
     public abstract class BaseRepositorySimple<T> : BaseRepository
     {
         // Название таблицы
@@ -31,6 +30,18 @@ namespace CourseDB.Data
 
             // 2. Если не найдено, создаем новую запись и получаем новый int ID
             return CreateNew(name);
+        }
+        public int GetIdByName(string name)
+        {
+            // 1. Поиск ID по имени
+            int existingId = FindIdByName(name);
+
+            if (existingId > 0)
+            {
+                return existingId;
+            }
+
+            throw new Exception($"Такого объекта не существует: {name}");
         }
         private int FindIdByName(string name)
         {
@@ -132,7 +143,7 @@ namespace CourseDB.Data
             return Converter(Data);
         }
         protected abstract List<T> Converter(Dictionary<int, string> data);
-        public abstract T GetDataModelById(int Id);
+        public abstract T GetById(int Id);
         public abstract int Update(T model);
     }
 }

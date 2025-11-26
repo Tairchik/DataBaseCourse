@@ -46,6 +46,11 @@ namespace CourseDB
             _salary = salary;
         }
 
+        public Post(string name)
+        {
+            _namePost = name;
+        }
+
         public Post() { }
     }
 }

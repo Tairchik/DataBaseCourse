@@ -16,6 +16,6 @@ namespace CourseDB
         string NumberDocument { get; set; }
         string TypeDocument { get; set; }
         string Reasons { get; set; }
-       
+        string TypeEventStr { get; set; }
     }
 }

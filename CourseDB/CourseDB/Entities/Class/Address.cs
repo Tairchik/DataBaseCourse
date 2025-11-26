@@ -75,6 +75,13 @@ namespace CourseDB
                    (string.IsNullOrEmpty(Apartment) ? "" : $", кв. {Apartment}");
         }
 
+        public Address(string street, string house, string apartment)
+        {
+            Street = street;
+            House = house;
+            Apartment = apartment;
+        }
+
         public Address() { }
     }
 }

@@ -3,16 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CourseDB.Data
 {
     public class PostRepository: BaseRepository
     {
         public string TableName { get => "Posts"; }
-        // 🗺️ Identity Map: Связывает объект Post (ключ) с его ID в БД (значение)
+        // Identity Map: Связывает объект Post (ключ) с его ID в БД (значение)
         // Это нужно, потому что в самом классе Post нет свойства Id.
         private readonly Dictionary<Post, int> _identityMap = new Dictionary<Post, int>();
+
+        public PostRepository() 
+        {
+            GetAll();
+        }
         
+        public int GetByPost(Post post)
+        {
+            foreach (var item in _identityMap.Keys)
+            {
+                if (post.NamePost == item.NamePost) return _identityMap[item];
+            }
+            throw new Exception($"Объект по значению: {post.NamePost} не найден.");
+        }
+
+        public Post GetById(int id)
+        {
+            return _identityMap.FirstOrDefault(x => x.Value == id).Key;
+        }
+
         /// <summary>
         /// Чтение
         /// </summary>
@@ -53,9 +73,10 @@ namespace CourseDB.Data
             return posts;
         }
 
-        // ----------------------------------------------------
-        // 2. СОХРАНЕНИЕ (Save - Create или Update)
-        // ----------------------------------------------------
+        /// <summary>
+        /// Сохранение или создание
+        /// </summary>
+        /// <param name="post"></param>
         public void Save(Post post)
         {
             using (var connection = GetConnection())
@@ -102,9 +123,10 @@ namespace CourseDB.Data
             }
         }
 
-        // ----------------------------------------------------
-        // 3. УДАЛЕНИЕ (Delete)
-        // ----------------------------------------------------
+        /// <summary>
+        /// Удаление
+        /// </summary>
+        /// <param name="post"></param>
         public void Delete(Post post)
         {
             // Мы не можем удалить объект, если не знаем его ID

@@ -22,7 +22,7 @@ namespace CourseDB.Data.Repositories
         /// <summary>
         /// Получает запись станции по ее ID и переводит ее в объект BusStationDataModel.
         /// </summary>
-        public override StreetDataModel GetDataModelById(int id)
+        public override StreetDataModel GetById(int id)
         {
             using (var connection = GetConnection())
             {

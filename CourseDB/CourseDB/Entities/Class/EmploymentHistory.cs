@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -133,14 +134,9 @@ namespace CourseDB
             get => _reasons;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Причина об увольнении не может быть пустой");
-
                 _reasons = value.Trim();
             }
         }
-
-        public EmploymentHistory() { }
 
         /// <summary>
         /// Если увольнение
@@ -153,7 +149,7 @@ namespace CourseDB
         /// <param name="numberDocument">Номер договора</param>
         /// <param name="typeDocument">Тип документа</param>
         /// <param name="reason">Причина об увольнении</param>
-        public EmploymentHistory(Post post, string organization, TypeEvent typeEvent, DateTime dateEvent, DateTime dateDocument, string numberDocument, string typeDocument, string reason)
+        public EmploymentHistory(Post post, string organization, TypeEvent typeEvent, DateTime dateEvent, DateTime dateDocument, string numberDocument, string typeDocument, string reason="")
         {
             Post = post;
             NameOrganization = organization;
@@ -162,27 +158,12 @@ namespace CourseDB
             NumberDocument = numberDocument;
             DateDocument = dateDocument; 
             TypeDocument = typeDocument;
-            Reasons = reason;
-        }
-        /// <summary>
-        /// Все кроме увольнения
-        /// </summary>
-        /// <param name="post">Должность</param>
-        /// <param name="organization">Место работы</param>
-        /// <param name="typeEvent">Тип мероприятия</param>
-        /// <param name="dateEvent">Дата вступления в силу мероприятия</param>
-        /// <param name="dateDocument">Дата подписания договора</param>
-        /// <param name="numberDocument">Номер договора</param>
-        /// <param name="typeDocument">Тип документа</param>
-        public EmploymentHistory(Post post, string organization, TypeEvent typeEvent, DateTime dateEvent, DateTime dateDocument, string numberDocument, string typeDocument)
-        {
-            Post = post;
-            NameOrganization = organization;
-            TypeEvent = typeEvent;
-            DateEvent = dateEvent;
-            NumberDocument = numberDocument;
-            DateDocument = dateDocument;
-            TypeDocument = typeDocument;
+            if (TypeEvent == TypeEvent.Dismissal)
+            {
+                if (string.IsNullOrWhiteSpace(reason))
+                    throw new ArgumentException("Причина об увольнении не может быть пустой");
+                Reasons = reason;
+            }
         }
     }
 }

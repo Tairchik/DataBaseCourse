@@ -88,6 +88,71 @@ namespace CourseDB.Data
                             Salary REAL
                         );";
                 command.ExecuteNonQuery();
+
+                // 6. Employee
+                command.CommandText = $@"
+                        CREATE TABLE IF NOT EXISTS Employees (
+                            -- Primary Key
+                            EmployeeId INTEGER PRIMARY KEY AUTOINCREMENT,
+
+                            -- Foreign Keys (Внешние ключи)
+                            PostId INTEGER NOT NULL,            -- ID Должности в компании
+                            StreetId INTEGER NOT NULL,          -- ID Улица (для адреса)
+
+                            -- Personal Info (Личная информация)
+                            Surname TEXT NOT NULL,              -- Фамилия
+                            FirstName TEXT NOT NULL,            -- Имя
+                            Patronymic TEXT,                    -- Отчество (может быть NULL)
+                            Gender TEXT NOT NULL,               -- Пол (e.g., 'Male', 'Female')
+                            BirthDate TEXT NOT NULL,            -- Дата рождения (TEXT для SQLite даты)
+    
+                            -- Address Details (Детали адреса)
+                            House TEXT NOT NULL,                -- Дом
+                            Apartment TEXT,                     -- Квартира (может быть NULL)
+
+                            -- Professional Details (Профессиональные детали)
+                            TimeWork INTEGER NOT NULL DEFAULT 0,-- Трудовой стаж (в годах, INTEGER)
+                            DriverClass INTEGER NOT NULL DEFAULT 0, -- Класс водителя (0-3)
+                            Bonus REAL NOT NULL DEFAULT 0.0,    -- Премия (REAL или NUMERIC для денег)
+
+                            -- Internal Flags
+                            IsArchive INTEGER NOT NULL DEFAULT 0,   -- Флаг Архив (IsArchive / Flag Archive)
+                            DeletionDate TEXT,                      -- Дата Удаления (DeletionDate)
+
+                            -- Constraints (Ограничения)
+                            FOREIGN KEY (PostId) REFERENCES Posts (Id) ON DELETE RESTRICT,
+                            FOREIGN KEY (StreetId) REFERENCES Streets (Id) ON DELETE RESTRICT
+                        );";
+                command.ExecuteNonQuery();
+
+                // 7. EmploymentHistory
+                command.CommandText = $@"
+                        CREATE TABLE IF NOT EXISTS EmploymentHistory (
+                            -- Primary Key
+                            HistoryId INTEGER PRIMARY KEY AUTOINCREMENT,
+
+                            -- Foreign Key 
+                            EmployeeId INTEGER NOT NULL,
+                            PostId INTEGER NOT NULL, 
+
+                            -- Event Details 
+                            TypeEvent TEXT NOT NULL,                -- Тип мероприятия (Прием, Увольнение, Перевод)
+                            Organization TEXT NOT NULL,             -- Место работы (NameOrganization)
+                            DateEvent TEXT NOT NULL,                -- Дата вступления в силу мероприятия (DateEvent)
+    
+                            -- Document Details
+                            DateDocument TEXT NOT NULL,             -- Дата подписания документа
+                            NumberDocument TEXT NOT NULL,           -- Номер кадрового мероприятия
+                            TypeDocument TEXT NOT NULL,             -- Вид документа (Приказ, Записка и т.д.)
+    
+                            -- Dismissal Details
+                            Reasons TEXT,                           -- Причины прекращения трудового договора (может быть NULL)
+
+                            -- Constraints (Ограничения)
+                            FOREIGN KEY (EmployeeId) REFERENCES Employees (EmployeeId) ON DELETE CASCADE,
+                            FOREIGN KEY (PostId) REFERENCES Posts (Id) ON DELETE RESTRICT
+                        );";
+                command.ExecuteNonQuery();
             }
         }
     }
