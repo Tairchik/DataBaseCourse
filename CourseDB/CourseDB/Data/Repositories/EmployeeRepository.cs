@@ -31,6 +31,10 @@ namespace CourseDB.Data
 
         protected string TableName => "Employees";
 
+        /// <summary>
+        /// Возвращает актуальную таблицу и обновляет словари актуальными записями
+        /// </summary>
+        /// <returns></returns>
         public List<Employee> GetAll()
         {
             // Если данные уже загружены в кэш, можно вернуть их (опционально)
@@ -81,6 +85,11 @@ namespace CourseDB.Data
             return result;
         }
 
+        /// <summary>
+        /// Возвращает сотрудника по его Id в БД
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Employee GetById(int id)
         {
             if (_entitiesById.TryGetValue(id, out Employee employee))
@@ -155,6 +164,10 @@ namespace CourseDB.Data
                command.ExecuteNonQuery();
             }
         }
+        /// <summary>
+        /// Сохраняет уже существующего сотрудника или создает нового сотрудника
+        /// </summary>
+        /// <param name="employee"></param>
         public void Save(Employee employee)
         {
             using (var connection = GetConnection())
@@ -219,6 +232,10 @@ namespace CourseDB.Data
             }
         }
         
+        /// <summary>
+        /// Удаление сотрудника по id в таблице
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(int id)
         {
             // 1. Удаление из БД
@@ -239,6 +256,10 @@ namespace CourseDB.Data
                 _identityMap.Remove(employee);
             }
         }
+        /// <summary>
+        /// Удаление сотрудника по экземпляру из словаря
+        /// </summary>
+        /// <param name="employee"></param>
         public void Delete(Employee employee)
         {
             if (_identityMap.TryGetValue(employee, out int existingId))
@@ -273,6 +294,11 @@ namespace CourseDB.Data
                 }
             }
         }
+
+        /// <summary>
+        /// Установить время удаления из БД 
+        /// </summary>
+        /// <param name="employee"></param>
         public void SetStatusOfArchive(Employee employee)
         {
             if (_identityMap.TryGetValue(employee, out int existingId))
