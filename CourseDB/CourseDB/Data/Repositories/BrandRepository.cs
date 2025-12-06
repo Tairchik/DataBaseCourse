@@ -22,7 +22,7 @@ namespace CourseDB.Data
         }
 
         /// <summary>
-        /// Получает запись станции по ее ID и переводит ее в объект BusStationDataModel.
+        /// Получает запись марки по ее ID и переводит ее в объект BrandDataModel.
         /// </summary>
         public override BrandDataModel GetById(int id)
         {
@@ -48,14 +48,14 @@ namespace CourseDB.Data
                         };
                         // ------------------------
                     }
-                    return null; // Возвращаем null, если станция не найдена
+                    return null; // Возвращаем null, если марка не найдена
                 }
             }
         }
         /// <summary>
-        /// Обновляет существующую запись Station в базе данных по ее ID.
+        /// Обновляет существующую запись Brand в базе данных по ее ID.
         /// </summary>
-        /// <param name="station">Объект BusStationDataModel с заполненными Id и StationName.</param>
+        /// <param name="station">Объект BrandDataModel с заполненными Id и BrandName.</param>
         /// <returns>Количество измененных строк (0 или 1).</returns>
         public override int Update(BrandDataModel model)
         {
