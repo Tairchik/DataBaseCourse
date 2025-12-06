@@ -198,6 +198,49 @@ namespace CourseDB.Data
                         );";
                 command.ExecuteNonQuery();
 
+                // 10. Routs (Маршруты)
+                command.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS Routs (
+                        RoutId INTEGER PRIMARY KEY AUTOINCREMENT,
+                        RoutNumber TEXT NOT NULL UNIQUE,                  -- Номер маршрута
+                        FullTurnoverTime TEXT NOT NULL,                  -- Время полного оборота
+                        FirstBusStartTime TEXT NOT NULL,                 -- Время выхода на маршрут первого автобуса
+                        LastBusStartTime TEXT NOT NULL,                  -- Время выхода на маршрут последнего автобуса
+                        FirstBusDepartureFromTerminal TEXT NOT NULL,     -- Время отправления с конечной остановки первого автобуса
+                        LastBusDepartureFromTerminal TEXT NOT NULL,      -- Время отправления с конечной остановки последнего автобуса
+                        Distance INTEGER NOT NULL,                       -- Протяженность
+                        PlannedRevenue REAL NOT NULL                     -- Плановая выручка
+                    );";
+                command.ExecuteNonQuery();
+
+                // 11. ListStations (Список остановок маршрута)
+                command.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS ListStations (
+                        ListStationId INTEGER PRIMARY KEY AUTOINCREMENT,
+                        RoutId INTEGER NOT NULL,                         -- ID Маршрута
+                        StationId INTEGER NOT NULL,                      -- ID Остановки
+                        OrderNumber INTEGER NOT NULL,                    -- Порядковый номер
+                        FOREIGN KEY (RoutId) REFERENCES Routs (RoutId) ON DELETE CASCADE,
+                        FOREIGN KEY (StationId) REFERENCES Stations (Id) ON DELETE RESTRICT,
+                        UNIQUE (RoutId, StationId, OrderNumber)
+                    );";
+                command.ExecuteNonQuery();
+
+                // 12. Schedules (График движения)
+                command.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS Schedules (
+                        ScheduleId INTEGER PRIMARY KEY AUTOINCREMENT,
+                        RoutId INTEGER NOT NULL,                         -- ID Маршрута
+                        Interval INTEGER NOT NULL,                       -- Интервал движения (в минутах)
+                        StartHour INTEGER NOT NULL,                      -- Начальный час (0-23)
+                        EndHour INTEGER NOT NULL,                        -- Конечный час (0-23)
+                        FOREIGN KEY (RoutId) REFERENCES Routs (RoutId) ON DELETE CASCADE,
+                        CHECK (StartHour >= 0 AND StartHour <= 23),
+                        CHECK (EndHour >= 0 AND EndHour <= 23),
+                        CHECK (StartHour < EndHour)
+                    );";
+                command.ExecuteNonQuery();
+
             }
         }
     }
