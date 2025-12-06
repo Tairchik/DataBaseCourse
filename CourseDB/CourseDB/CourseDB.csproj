@@ -111,6 +111,7 @@
     <Compile Include="Data\Repositories\ColorRepository.cs" />
     <Compile Include="Data\Repositories\EmployeeRepository.cs" />
     <Compile Include="Data\Repositories\EmploymentHistoryRepository.cs" />
+    <Compile Include="Data\Repositories\ModelRepository.cs" />
     <Compile Include="Data\Repositories\PostRepository.cs" />
     <Compile Include="Data\Repositories\StationRepository.cs" />
     <Compile Include="Data\Repositories\StreetRepository.cs" />
