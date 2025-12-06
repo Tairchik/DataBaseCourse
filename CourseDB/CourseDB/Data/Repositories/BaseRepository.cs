@@ -151,6 +151,27 @@ namespace CourseDB.Data
                             FOREIGN KEY (PostId) REFERENCES Posts (Id) ON DELETE RESTRICT
                         );";
                 command.ExecuteNonQuery();
+
+                // 8. Models
+                command.CommandText = $@"
+                        CREATE TABLE IF NOT EXISTS Models (
+                            -- Primary key
+                            ModelId INTEGER PRIMARY KEY AUTOINCREMENT,
+
+                            -- Foreign key
+                            BrandId INTEGER NOT NULL,
+                            
+                            -- Auto details
+                            ModelName TEXT NOT NULL,                -- Название модели
+                            TotalCapacity INTEGER NOT NULL,         -- Полная посадка
+                            SeatCapacity INTEGER NOT NULL,          -- Сидячие места
+                            
+                            -- Constraints
+                            FOREIGN KEY (BrandId) REFERENCES Brands (Id) ON DELETE CASCADE
+                        );";
+                command.ExecuteNonQuery();
+
+                
             }
         }
     }
