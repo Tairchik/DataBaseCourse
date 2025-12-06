@@ -65,10 +65,17 @@ namespace CourseDB
             }
         }
 
-
         public override string ToString()
         {
             return $"{NameBrand} {NameModel} - {FullCapacity} мест ({SeatingCapacity} сидячих)";
+        }
+
+        public Model(string nameBrand, string nameModel, int totalCapacity, int seatCapacity)
+        {
+            NameBrand = nameBrand;
+            NameModel = nameModel;
+            FullCapacity = totalCapacity;
+            SeatingCapacity = seatCapacity;
         }
     }
 }

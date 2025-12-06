@@ -32,7 +32,7 @@ namespace CourseDB.Data
         protected string TableName => "Employees";
 
         /// <summary>
-        /// Возвращает актуальную таблицу и обновляет словари актуальными записями
+        /// Возвращает актуальную таблицу и обновляет словари с актуальными записями
         /// </summary>
         /// <returns></returns>
         public List<Employee> GetAll()
@@ -60,25 +60,8 @@ namespace CourseDB.Data
                 {
                     while (reader.Read())
                     {
-                        // Проверяем, не является ли значение DeletionDate NULL
-                        if (!reader.IsDBNull(reader.GetOrdinal("DeletionDate"))) 
-                        {
-                            // Проверяем, что дата удаления из бд еще не истекло  
-                            if (DateTime.Parse(reader.GetString(reader.GetOrdinal("DeletionDate"))) < DateTime.Now)
-                            {
-                                Delete(reader.GetInt32(reader.GetOrdinal("EmployeeId")));
-                            }
-                            else
-                            {
-                                var employee = MapToEmployee(reader);
-                                result.Add(employee);
-                            }
-                        }
-                        else 
-                        {
-                            var employee = MapToEmployee(reader);
-                            result.Add(employee);
-                        }   
+                        var employee = MapToEmployee(reader);
+                        result.Add(employee);
                     }
                 }
             }
@@ -191,9 +174,15 @@ namespace CourseDB.Data
                 {
                     command.CommandText = $@"
                         INSERT INTO {TableName} (
-                            PostId, StreetId, Surname, FirstName, Patronymic, Gender, BirthDate, House, Apartment, TimeWork, DriverClass, Bonus
+                            PostId, StreetId, Surname, 
+                            FirstName, Patronymic, Gender, 
+                            BirthDate, House, Apartment, 
+                            TimeWork, DriverClass, Bonus
                         ) VALUES (
-                            @PostId, @StreetId, @Surname, @FirstName, @Patronymic, @Gender, @BirthDate, @House, @Apartment, @TimeWork, @DriverClass, @Bonus
+                            @PostId, @StreetId, @Surname, 
+                            @FirstName, @Patronymic, @Gender, 
+                            @BirthDate, @House, @Apartment, 
+                            @TimeWork, @DriverClass, @Bonus
                         );
                         SELECT last_insert_rowid();";
                 }

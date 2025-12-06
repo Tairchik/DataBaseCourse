@@ -40,6 +40,7 @@ namespace CourseDB.Data
         public List<Post> GetAll()
         {
             var posts = new List<Post>();
+            _identityMap.Clear();
 
             using (var connection = GetConnection())
             {

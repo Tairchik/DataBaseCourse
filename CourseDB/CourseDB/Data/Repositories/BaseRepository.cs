@@ -162,7 +162,7 @@ namespace CourseDB.Data
                             BrandId INTEGER NOT NULL,
                             
                             -- Auto details
-                            ModelName TEXT NOT NULL,                -- Название модели
+                            ModelName TEXT NOT NULL UNIQUE,         -- Название модели
                             TotalCapacity INTEGER NOT NULL,         -- Полная посадка
                             SeatCapacity INTEGER NOT NULL,          -- Сидячие места
                             
