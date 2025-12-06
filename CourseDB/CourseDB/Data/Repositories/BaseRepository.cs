@@ -198,11 +198,11 @@ namespace CourseDB.Data
                         );";
                 command.ExecuteNonQuery();
 
-                // 10. Routs (Маршруты)
+               // 10. Routs (Маршруты)
                 command.CommandText = @"
                     CREATE TABLE IF NOT EXISTS Routs (
                         RoutId INTEGER PRIMARY KEY AUTOINCREMENT,
-                        RoutNumber TEXT NOT NULL UNIQUE,                  -- Номер маршрута
+                        RoutNumber TEXT NOT NULL UNIQUE,                 -- Номер маршрута
                         FullTurnoverTime TEXT NOT NULL,                  -- Время полного оборота
                         FirstBusStartTime TEXT NOT NULL,                 -- Время выхода на маршрут первого автобуса
                         LastBusStartTime TEXT NOT NULL,                  -- Время выхода на маршрут последнего автобуса
@@ -240,7 +240,6 @@ namespace CourseDB.Data
                         CHECK (StartHour < EndHour)
                     );";
                 command.ExecuteNonQuery();
-
             }
         }
     }

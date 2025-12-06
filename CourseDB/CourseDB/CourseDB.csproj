@@ -115,6 +115,8 @@
     <Compile Include="Data\Repositories\ListStationsRepository.cs" />
     <Compile Include="Data\Repositories\ModelRepository.cs" />
     <Compile Include="Data\Repositories\PostRepository.cs" />
+    <Compile Include="Data\Repositories\RoutRepository.cs" />
+    <Compile Include="Data\Repositories\ScheduleRepository.cs" />
     <Compile Include="Data\Repositories\StationRepository.cs" />
     <Compile Include="Data\Repositories\StreetRepository.cs" />
     <Compile Include="Entities\Class\Address.cs" />
