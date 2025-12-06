@@ -167,11 +167,37 @@ namespace CourseDB.Data
                             SeatCapacity INTEGER NOT NULL,          -- Сидячие места
                             
                             -- Constraints
-                            FOREIGN KEY (BrandId) REFERENCES Brands (Id) ON DELETE CASCADE
+                            FOREIGN KEY (BrandId) REFERENCES Brands (Id) ON DELETE RESTRICT
                         );";
                 command.ExecuteNonQuery();
 
-                
+                // 9. Buses
+                command.CommandText = $@"
+                        CREATE TABLE IF NOT EXISTS Buses (
+                            -- Primary key
+                            BusId INTEGER PRIMARY KEY AUTOINCREMENT,
+                             
+                            -- Foreign key
+                            ModelId INTEGER NOT NULL,
+                            ColorId INTEGER NOT NULL,                            
+
+                            -- Bus details
+                            InventoryNumber TEXT NOT NULL UNIQUE,   -- Инвентарный номер
+                            StateBus TEXT NOT NULL,                 -- Состояние автобуса
+                            RegistrationNumber TEXT NOT NULL,       -- Регистрационный номер
+                            EngineNumber TEXT NOT NULL,             -- Номер двигателя                            EngineNumber TEXT NOT NULL,             -- Номер двигателя
+                            BodyNumber TEXT NOT NULL,               -- Номер кузова
+                            ChassisNumber TEXT NOT NULL,            -- Номер шасси
+                            ManufactureDate TEXT NOT NULL,          -- Дата производства
+                            Mileage INT NOT NULL,                   -- Пробег
+                            LastOverhaulDate TEXT,                  -- Дата последнего капремонта (необязательно)
+                            
+                            -- Constraints
+                            FOREIGN KEY (ModelId) REFERENCES Models (ModelId) ON DELETE RESTRICT,
+                            FOREIGN KEY (ColorId) REFERENCES Colors (Id) ON DELETE RESTRICT
+                        );";
+                command.ExecuteNonQuery();
+
             }
         }
     }
