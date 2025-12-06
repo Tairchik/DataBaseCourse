@@ -40,7 +40,6 @@ namespace CourseDB.Data
             }
         }
 
-
         protected SqliteConnection GetConnection()
         {
             var connection = new SqliteConnection(ConnectionString);
@@ -116,7 +115,6 @@ namespace CourseDB.Data
                             Bonus REAL NOT NULL DEFAULT 0.0,    -- Премия (REAL или NUMERIC для денег)
 
                             -- Internal Flags
-                            IsArchive INTEGER NOT NULL DEFAULT 0,   -- Флаг Архив (IsArchive / Flag Archive)
                             DeletionDate TEXT,                      -- Дата Удаления (DeletionDate)
 
                             -- Constraints (Ограничения)

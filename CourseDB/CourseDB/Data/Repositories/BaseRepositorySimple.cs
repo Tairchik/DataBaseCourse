@@ -9,7 +9,7 @@ using Microsoft.Data.Sqlite;
 
 namespace CourseDB.Data
 {
-    public abstract class BaseRepositorySimple<T> : BaseRepository
+    public abstract class BaseRepositorySimple<T> : BaseRepository where T : class
     {
         // Название таблицы
         protected abstract string TableName { get; }

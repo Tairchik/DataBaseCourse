@@ -25,7 +25,7 @@ namespace CourseDB.Data
             _postRepository = postRepo;
             _streetRepository = streetRepo;
             _historyRepository = historyRepo;
-
+            DeleteExpiredEmployees();
             GetAll();
         }
 
@@ -49,15 +49,32 @@ namespace CourseDB.Data
                         Surname, FirstName, Patronymic, 
                         Gender, BirthDate, 
                         House, Apartment, 
-                        TimeWork, DriverClass, Bonus
+                        TimeWork, DriverClass, Bonus, DeletionDate
                     FROM {TableName}";
 
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        var employee = MapToEmployee(reader);
-                        result.Add(employee);
+                        // Проверяем, не является ли значение DeletionDate NULL
+                        if (!reader.IsDBNull(reader.GetOrdinal("DeletionDate"))) 
+                        {
+                            // Проверяем, что дата удаления из бд еще не истекло  
+                            if (DateTime.Parse(reader.GetString(reader.GetOrdinal("DeletionDate"))) < DateTime.Now)
+                            {
+                                Delete(reader.GetInt32(reader.GetOrdinal("EmployeeId")));
+                            }
+                            else
+                            {
+                                var employee = MapToEmployee(reader);
+                                result.Add(employee);
+                            }
+                        }
+                        else 
+                        {
+                            var employee = MapToEmployee(reader);
+                            result.Add(employee);
+                        }   
                     }
                 }
             }
@@ -76,6 +93,7 @@ namespace CourseDB.Data
 
         private Employee MapToEmployee(SqliteDataReader reader)
         {
+
             int employeeId = reader.GetInt32(reader.GetOrdinal("EmployeeId"));
             int postId = reader.GetInt32(reader.GetOrdinal("PostId"));
             int streetId = reader.GetInt32(reader.GetOrdinal("StreetId"));
@@ -118,7 +136,25 @@ namespace CourseDB.Data
 
             return employee;
         }
+        /// <summary>
+        /// Удаляет всех сотрудников, у которых дата удаления уже наступила
+        /// </summary>
+        private void DeleteExpiredEmployees()
+        {
+            using (var connection = GetConnection())
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = $@"
+                    DELETE FROM {TableName} 
+                    WHERE DeletionDate IS NOT NULL 
+                    AND DeletionDate < @CurrentDate";
 
+                command.Parameters.AddWithValue("@CurrentDate",
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+
+               command.ExecuteNonQuery();
+            }
+        }
         public void Save(Employee employee)
         {
             using (var connection = GetConnection())
@@ -132,7 +168,7 @@ namespace CourseDB.Data
                 {
                     command.CommandText = $@"
                         UPDATE {TableName} 
-                        SET PostId=@PostId, StreetId=@StreetId, Surname=@Surname, FirstName=@FirstName, 
+                        SET PostId=@PostId, StreetId=@StreetId, Surname=@Surname, FirstName=@FirstName,
                             Patronymic=@Patronymic, Gender=@Gender, BirthDate=@BirthDate, House=@House, 
                             Apartment=@Apartment, TimeWork=@TimeWork, DriverClass=@DriverClass, Bonus=@Bonus
                         WHERE EmployeeId = @Id";
@@ -182,6 +218,7 @@ namespace CourseDB.Data
                 }
             }
         }
+        
         public void Delete(int id)
         {
             // 1. Удаление из БД
@@ -207,6 +244,40 @@ namespace CourseDB.Data
             if (_identityMap.TryGetValue(employee, out int existingId))
             {
                 Delete(existingId);
+            }
+        }
+
+        /// <summary>
+        /// Установить статус удаления из БД по id сотрудника
+        /// </summary>
+        /// <param name="idEmployee"></param>
+        public void SetStatusOfArchive(int idEmployee) 
+        {
+            using (var connection = GetConnection())
+            {
+                var command = connection.CreateCommand();
+                if (_entitiesById.TryGetValue(idEmployee, out Employee employee))
+                {
+                    DateTime dateOfDelete = DateTime.Now.AddYears(5);
+                    command.CommandText = $@"
+                        UPDATE {TableName} 
+                        SET DeletionDate=@DelDay 
+                        WHERE EmployeeId = @Id";
+                    command.Parameters.AddWithValue("@Id", idEmployee);
+                    command.Parameters.AddWithValue("@DelDay", dateOfDelete.ToString("yyyy-MM-dd"));
+                    command.ExecuteNonQuery();
+                }
+                else
+                {
+                    throw new Exception("Сотрудник не найден");
+                }
+            }
+        }
+        public void SetStatusOfArchive(Employee employee)
+        {
+            if (_identityMap.TryGetValue(employee, out int existingId))
+            {
+                SetStatusOfArchive(existingId);
             }
         }
     }
