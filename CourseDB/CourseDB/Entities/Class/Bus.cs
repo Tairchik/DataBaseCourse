@@ -204,17 +204,21 @@ namespace CourseDB
                 _lastOverhaulDate = value;
             }
         }
-
-        // Конструкторы
-        public Bus() { }
-
-        public Bus(string inventoryNumber, Model model, string registrationNumber, DateTime manufactureDate)
+        public Bus(string inventoryNumber, string registrationNumber, Model model, string engineNumber,
+            string bodyNumber, string chassisNumber, int mileage, string color, DateTime manufactureDate,
+            BusState state, DateTime? lastOverhaulDate)
         {
             InventoryNumber = inventoryNumber;
             Model = model;
             RegistrationNumber = registrationNumber;
+            EngineNumber = engineNumber;
+            BodyNumber = bodyNumber;
+            ChassisNumber = chassisNumber;
+            Color = color;
             ManufactureDate = manufactureDate;
-            State = BusState.InOperation;
+            State = state;
+            LastOverhaulDate = lastOverhaulDate;
+            Mileage = mileage;
         }
     }
 }
