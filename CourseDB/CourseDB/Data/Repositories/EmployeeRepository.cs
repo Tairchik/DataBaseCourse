@@ -155,8 +155,8 @@ namespace CourseDB.Data
         {
             using (var connection = GetConnection())
             {
-                int postId = _postRepository.GetByPost(employee.Post);
-                int streetId = _streetRepository.GetIdByName(employee.Address.Street);
+                int postId = _postRepository.GetIdByObject(employee.Post);
+                int streetId = _streetRepository.GetOrCreate(employee.Address.Street);
 
                 var command = connection.CreateCommand();
 

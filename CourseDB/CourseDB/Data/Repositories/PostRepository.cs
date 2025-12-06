@@ -19,7 +19,7 @@ namespace CourseDB.Data
             GetAll();
         }
         
-        public int GetByPost(Post post)
+        public int GetIdByObject(Post post)
         {
             foreach (var item in _identityMap.Keys)
             {

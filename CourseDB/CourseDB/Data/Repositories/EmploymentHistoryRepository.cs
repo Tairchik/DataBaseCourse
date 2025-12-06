@@ -93,7 +93,7 @@ namespace CourseDB.Data
         private void InsertSingleHistory(SqliteConnection connection, IEmploymentHistory history, int employeeId)
         {
             // Сначала получаем ID должности, так как Post - это сложный объект
-            int postId = _postRepository.GetByPost(history.Post);
+            int postId = _postRepository.GetIdByObject(history.Post);
 
             var insertCommand = connection.CreateCommand();
             insertCommand.CommandText = $@"

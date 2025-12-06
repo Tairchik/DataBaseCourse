@@ -10,7 +10,7 @@ namespace CourseDB
 {
     public interface IRout
     {
-        string Name_Route { get; set; }
+        string NameRoute { get; set; }
         TimeSpan TimeRoute { get; set; }
         int Distance {  get; set; }
         decimal Revenue { get;}
@@ -21,7 +21,6 @@ namespace CourseDB
         TimeSpan EndTimeReversDirectRout { get; set; }
         string StartStation { get;}
         string EndStation { get;}
-        List<string> Stations { get; }
         List<string> GetStartTimesString(bool direct);
         List<TimeSpan> GetStartTimesTimeSpan(bool direct);
         string[] GetStartEndStationByDirect(bool direct);

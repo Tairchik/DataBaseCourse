@@ -18,7 +18,7 @@ namespace CourseDB
             _brandRepository = brandRepository;
             GetAll();
         }
-        public int GetByPost(Model model)
+        public int GetIdByObject(Model model)
         {
             foreach (var item in _identityMap.Keys)
             {
@@ -85,7 +85,7 @@ namespace CourseDB
         {
             using (var connection = GetConnection())
             {
-                int brandId = _brandRepository.GetIdByName(model.NameBrand);
+                int brandId = _brandRepository.GetOrCreate(model.NameBrand);
                 var command = connection.CreateCommand();
 
                 // Проверяем, есть ли этот объект уже в нашей карте (Identity Map)

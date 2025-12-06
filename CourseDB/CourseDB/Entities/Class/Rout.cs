@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CourseDB
 {
     internal class Rout: IRout
     {
-        private string _name_Route;
+        private string _nameRoute;
         private TimeSpan _timeRoute;
         private int _distance;
         private ScheduleList _schedule;
@@ -19,16 +18,16 @@ namespace CourseDB
         private List<string> _stations;
         private decimal _revenue;
 
-        public string Name_Route
+        public string NameRoute
         {
-            get => _name_Route;
+            get => _nameRoute;
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Название маршрута не может быть пустым");
                 if (value.Length > 100)
                     throw new ArgumentException("Название маршрута не может превышать 100 символов");
-                _name_Route = value.Trim();
+                _nameRoute = value.Trim();
             }
         }
 
@@ -128,7 +127,7 @@ namespace CourseDB
             }
         }
 
-        public List<string> Stations
+        private List<string> Stations
         {
             get => _stations;
         }
@@ -149,30 +148,6 @@ namespace CourseDB
                 if (Stations.Count == 0) throw new ArgumentException("Не задан список автобусов.");
                 return Stations.Last();
             }
-        }
-
-        // Конструктор по умолчанию
-        public Rout()
-        {
-            _schedule = new ScheduleList();
-            _stations = new List<string>();
-        }
-
-        // Конструктор с параметрами
-        public Rout(string name, TimeSpan timeRoute, int distance,
-                   TimeSpan startDirect, TimeSpan endDirect,
-                   TimeSpan startReverse, TimeSpan endReverse, ScheduleList schedule)
-        {
-            Name_Route = name;
-            TimeRoute = timeRoute;
-            Distance = distance;
-            StartTimeDirectRout = startDirect;
-            EndTimeDirectRout = endDirect;
-            StartTimeReversDirectRout = startReverse;
-            EndTimeReversDirectRout = endReverse;
-            Schedule = schedule;
-
-            ValidateTimes();
         }
 
         // Добавление станции с проверкой на дубликат
@@ -289,6 +264,30 @@ namespace CourseDB
         {
             if (direct == true) return new string[] {StartStation, EndStation};
             return new string[] {EndStation, StartStation};
+        }
+
+        // Конструктор по умолчанию
+        public Rout()
+        {
+            _schedule = new ScheduleList();
+            _stations = new List<string>();
+        }
+
+        // Конструктор с параметрами
+        public Rout(string name, TimeSpan timeRoute, int distance,
+                   TimeSpan startDirect, TimeSpan endDirect,
+                   TimeSpan startReverse, TimeSpan endReverse, ScheduleList schedule)
+        {
+            NameRoute = name;
+            TimeRoute = timeRoute;
+            Distance = distance;
+            StartTimeDirectRout = startDirect;
+            EndTimeDirectRout = endDirect;
+            StartTimeReversDirectRout = startReverse;
+            EndTimeReversDirectRout = endReverse;
+            Schedule = schedule;
+            _stations = new List<string>();
+            ValidateTimes();
         }
     }
 }

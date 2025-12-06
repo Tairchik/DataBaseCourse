@@ -108,9 +108,11 @@
     <Compile Include="Data\Repositories\BaseRepository.cs" />
     <Compile Include="Data\Repositories\BaseRepositorySimple.cs" />
     <Compile Include="Data\Repositories\BrandRepository.cs" />
+    <Compile Include="Data\Repositories\BusRepository.cs" />
     <Compile Include="Data\Repositories\ColorRepository.cs" />
     <Compile Include="Data\Repositories\EmployeeRepository.cs" />
     <Compile Include="Data\Repositories\EmploymentHistoryRepository.cs" />
+    <Compile Include="Data\Repositories\ListStationsRepository.cs" />
     <Compile Include="Data\Repositories\ModelRepository.cs" />
     <Compile Include="Data\Repositories\PostRepository.cs" />
     <Compile Include="Data\Repositories\StationRepository.cs" />
