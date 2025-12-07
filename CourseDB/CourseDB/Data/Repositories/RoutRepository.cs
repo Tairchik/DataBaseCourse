@@ -38,7 +38,7 @@ namespace CourseDB
                 var command = connection.CreateCommand();
 
                 // Проверяем, есть ли маршрут в identity map
-                if (_identityMap.TryGetValue(rout, out int existingId))
+                if (_identityMap.TryGetValue(GetById(GetIdByNumber(rout.NameRoute)), out int existingId))
                 {
                     // UPDATE существующего маршрута
                     command.CommandText = $@"
@@ -91,7 +91,7 @@ namespace CourseDB
                 command.Parameters.AddWithValue("@Distance", rout.Distance);
                 command.Parameters.AddWithValue("@PlannedRevenue", rout.Revenue);
 
-                if (_identityMap.ContainsKey(rout))
+                if (_identityMap.ContainsKey(GetById(GetIdByNumber(rout.NameRoute))))
                 {
                     // UPDATE: выполняем команду и сохраняем связанные данные
                     command.ExecuteNonQuery();
@@ -157,8 +157,6 @@ namespace CourseDB
         {
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $@"
                     SELECT 
@@ -279,8 +277,6 @@ namespace CourseDB
         {
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $"DELETE FROM {TableName} WHERE RoutId = @RoutId";
                 command.Parameters.AddWithValue("@RoutId", id);
@@ -326,8 +322,6 @@ namespace CourseDB
             // Если нет в кэше, ищем в БД
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $@"
                     SELECT RoutId 
@@ -356,7 +350,7 @@ namespace CourseDB
                 return id;
             }
 
-            throw new Exception($"Маршрут '{rout.NameRoute}' не найден в репозитории");
+            throw new Exception($"Маршрут '{rout.NameRoute}' не найден в БД");
         }
 
         /// <summary>

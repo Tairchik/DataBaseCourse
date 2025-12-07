@@ -12,20 +12,11 @@ using System.Xml.Linq;
 namespace CourseDB
 {
     internal class Program
-    {   
+    {
         static void Main(string[] args)
         {
-            // Создание репозиториев
-            var stationRepository = new StationRepository();
-            var scheduleRepository = new ScheduleRepository();
-            var listStationRepository = new ListStationRepository(stationRepository);
-            var routRepository = new RoutRepository(scheduleRepository, listStationRepository);
-
-            foreach (var v in stationRepository.GetAll()) 
-            {
-                stationRepository.Delete(v.Id);
-            }
 
         }
+
     }
 }

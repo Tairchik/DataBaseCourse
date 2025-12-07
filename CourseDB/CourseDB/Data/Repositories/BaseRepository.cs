@@ -240,6 +240,43 @@ namespace CourseDB.Data
                         CHECK (StartHour < EndHour)
                     );";
                 command.ExecuteNonQuery();
+
+                // 13. Trips (Рейсы)
+                command.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS Trips (
+                        TripId INTEGER PRIMARY KEY AUTOINCREMENT,
+                        RoutId INTEGER NOT NULL,                     -- ID Маршрута
+                        DriverId INTEGER NOT NULL,                   -- ID Водитель
+                        BusId INTEGER NOT NULL,                      -- ID Автобус
+                        ConductorId INTEGER,                         -- ID Кондуктор (может быть NULL)
+                        TripDate TEXT NOT NULL,                      -- Дата выезда
+                        StartTime TEXT NOT NULL,                     -- Время выезда
+                        Direction INTEGER NOT NULL,                  -- Направление маршрута (0 - обратное, 1 - прямое)
+                        ActualRevenue REAL DEFAULT 0.0,              -- Итоговая выручка
+        
+                        -- Constraints
+                        FOREIGN KEY (RoutId) REFERENCES Routs (RoutId) ON DELETE RESTRICT,
+                        FOREIGN KEY (DriverId) REFERENCES Employees (EmployeeId) ON DELETE RESTRICT,
+                        FOREIGN KEY (BusId) REFERENCES Buses (BusId) ON DELETE RESTRICT,
+                        FOREIGN KEY (ConductorId) REFERENCES Employees (EmployeeId) ON DELETE SET NULL,
+                        CHECK (Direction IN (0, 1))
+                    );";
+                command.ExecuteNonQuery();
+
+                // 14. ControlTrips (Оперативный контроль графика)
+                command.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS ControlTrips (
+                        ControlTripId INTEGER PRIMARY KEY AUTOINCREMENT,
+                        TripId INTEGER NOT NULL,                     -- ID Рейс
+                        LeaveTime TEXT NOT NULL,                     -- Время снятия с маршрута
+                        ArrivalTime TEXT NOT NULL,                   -- Время прибытия на конечную
+                        LeaveReason TEXT,                            -- Причина снятия с маршрута (может быть NULL)
+                        RidesCount INTEGER NOT NULL DEFAULT 0,       -- Число ездок
+        
+                        -- Constraints
+                        FOREIGN KEY (TripId) REFERENCES Trips (TripId) ON DELETE CASCADE
+                    );";
+                command.ExecuteNonQuery();
             }
         }
     }

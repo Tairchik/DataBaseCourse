@@ -39,8 +39,6 @@ namespace CourseDB.Data
         {
             // Если данные уже загружены в кэш, можно вернуть их (опционально)
             // Но для надежности при старте чистим и грузим заново
-            _identityMap.Clear();
-            _entitiesById.Clear();
 
             var result = new List<Employee>();
 
@@ -81,6 +79,16 @@ namespace CourseDB.Data
             }
 
             return null;
+        }
+
+        public int GetIdByObject(Employee employee) 
+        {
+            if (_identityMap.TryGetValue(employee, out int id))
+            {
+                return id;
+            }
+
+            throw new Exception($"Сотрудник '{employee.Name}' не найден в БД");
         }
 
         private Employee MapToEmployee(SqliteDataReader reader)

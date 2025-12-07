@@ -187,7 +187,7 @@ namespace CourseDB.Data.Repositories
                 command.Parameters.AddWithValue("@LastOverhaulDate", DBNull.Value);
         }
 
-        public object GetIdByObject(Bus bus)
+        public int GetIdByObject(Bus bus)
         {
             using (var connection = GetConnection())
             {
@@ -197,9 +197,12 @@ namespace CourseDB.Data.Repositories
                     SELECT BusId FROM {TableName} 
                     WHERE InventoryNumber = @InventoryNumber";
                 checkCommand.Parameters.AddWithValue("@InventoryNumber", bus.InventoryNumber);
-                return checkCommand.ExecuteScalar();
+                object result = checkCommand.ExecuteScalar();
+                if (result == null && result != DBNull.Value) throw new Exception($"Автобус с данным инвентарным номером {bus.InventoryNumber} не найден в БД");
+                return Convert.ToInt32(result);
             }
         }
+        
 
         public Bus GetObjectById(int id)
         {

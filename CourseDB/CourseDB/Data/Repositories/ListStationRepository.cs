@@ -79,8 +79,6 @@ namespace CourseDB
 
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $@"
                     SELECT s.StationName 
@@ -112,8 +110,6 @@ namespace CourseDB
 
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $@"
                     SELECT StationId 
@@ -142,8 +138,6 @@ namespace CourseDB
         {
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $"DELETE FROM {TableName} WHERE RoutId = @RoutId";
                 command.Parameters.AddWithValue("@RoutId", routId);
@@ -161,8 +155,6 @@ namespace CourseDB
 
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $@"
                     SELECT DISTINCT RoutId 
@@ -190,8 +182,6 @@ namespace CourseDB
         {
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $@"
                     SELECT OrderNumber 

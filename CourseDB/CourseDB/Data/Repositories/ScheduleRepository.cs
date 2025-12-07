@@ -18,8 +18,6 @@ namespace CourseDB
         {
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 using (var transaction = connection.BeginTransaction())
                 {
                     try
@@ -69,8 +67,6 @@ namespace CourseDB
 
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $@"
                     SELECT Interval, StartHour, EndHour 
@@ -105,8 +101,6 @@ namespace CourseDB
         {
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $"DELETE FROM {TableName} WHERE RoutId = @RoutId";
                 command.Parameters.AddWithValue("@RoutId", routId);
@@ -124,8 +118,6 @@ namespace CourseDB
 
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
                 command.CommandText = $@"
                     SELECT RoutId, Interval, StartHour, EndHour 

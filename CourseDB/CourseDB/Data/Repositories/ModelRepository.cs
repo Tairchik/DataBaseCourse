@@ -26,6 +26,14 @@ namespace CourseDB
             }
             throw new Exception($"Объект по значению: {model.NameModel} не найден.");
         }
+        public int GetIdByObject(string model)
+        {
+            foreach (var item in _identityMap.Keys)
+            {
+                if (model == item.NameModel) return _identityMap[item];
+            }
+            throw new Exception($"Объект по значению: {model} не найден.");
+        }
 
         public Model GetById(int id)
         {
@@ -89,7 +97,7 @@ namespace CourseDB
                 var command = connection.CreateCommand();
 
                 // Проверяем, есть ли этот объект уже в нашей карте (Identity Map)
-                if (_identityMap.TryGetValue(model, out int id))
+                if (_identityMap.TryGetValue(GetById(GetIdByObject(model.NameModel)), out int id))
                 {
                     // --- UPDATE (Обновление) ---
                     // Если ID найден, значит запись уже есть в БД -> обновляем её
