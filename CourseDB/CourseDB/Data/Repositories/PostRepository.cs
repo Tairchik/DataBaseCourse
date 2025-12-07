@@ -71,10 +71,8 @@ namespace CourseDB.Data
                         var post = new Post(name, salary);
 
                         // 3. Сохраняем связь "Объект <-> ID" в Identity Map
-                        if (!_identityMap.ContainsKey(post))
-                        {
-                            _identityMap[post] = id;
-                        }
+                        _identityMap[post] = id;
+                        
 
                         posts.Add(post);
                     }

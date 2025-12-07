@@ -71,12 +71,7 @@ namespace CourseDB
 
                         // 2. Создаем объект Model
                         var model = new Model(brand.BrandName, modelName, totalCapacity, seatCapacity);
-
-                        // 3. Заполняем словарь соответствий
-                        if (!_identityMap.ContainsKey(model))
-                        {
-                            _identityMap[model] = modelId;
-                        }
+                        _identityMap[model] = modelId;
 
                         models.Add(model);
                     }
