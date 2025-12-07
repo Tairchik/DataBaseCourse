@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CourseDB
 {
-    internal class Rout: IRout
+    public class Rout: IRout
     {
         private string _nameRoute;
         private TimeSpan _timeRoute;
@@ -127,9 +127,16 @@ namespace CourseDB
             }
         }
 
-        private List<string> Stations
+        public List<string> Stations
         {
             get => _stations;
+            set 
+            {
+                foreach (var stat in value) 
+                {
+                    _stations.Add(stat);
+                }
+            }
         }
 
         public string StartStation
@@ -265,12 +272,21 @@ namespace CourseDB
             if (direct == true) return new string[] {StartStation, EndStation};
             return new string[] {EndStation, StartStation};
         }
-
-        // Конструктор по умолчанию
-        public Rout()
+        // Конструктор с параметрами
+        public Rout(string name, TimeSpan timeRoute, int distance,
+                   TimeSpan startDirect, TimeSpan endDirect,
+                   TimeSpan startReverse, TimeSpan endReverse)
         {
-            _schedule = new ScheduleList();
+            NameRoute = name;
+            TimeRoute = timeRoute;
+            Distance = distance;
+            StartTimeDirectRout = startDirect;
+            EndTimeDirectRout = endDirect;
+            StartTimeReversDirectRout = startReverse;
+            EndTimeReversDirectRout = endReverse;
+            Schedule = new ScheduleList();
             _stations = new List<string>();
+            ValidateTimes();
         }
 
         // Конструктор с параметрами
@@ -287,6 +303,24 @@ namespace CourseDB
             EndTimeReversDirectRout = endReverse;
             Schedule = schedule;
             _stations = new List<string>();
+            ValidateTimes();
+        }
+
+
+        // Конструктор с параметрами
+        public Rout(string name, TimeSpan timeRoute, int distance,
+                   TimeSpan startDirect, TimeSpan endDirect,
+                   TimeSpan startReverse, TimeSpan endReverse, ScheduleList schedule, List<string> stations)
+        {
+            NameRoute = name;
+            TimeRoute = timeRoute;
+            Distance = distance;
+            StartTimeDirectRout = startDirect;
+            EndTimeDirectRout = endDirect;
+            StartTimeReversDirectRout = startReverse;
+            EndTimeReversDirectRout = endReverse;
+            Schedule = schedule;
+            Stations = stations;
             ValidateTimes();
         }
     }
