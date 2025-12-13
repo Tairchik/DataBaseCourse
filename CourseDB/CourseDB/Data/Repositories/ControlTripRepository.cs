@@ -18,15 +18,10 @@ namespace CourseDB
         {
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 using (var transaction = connection.BeginTransaction())
                 {
-                    try
-                    {
                         // Удаляем старые контрольные точки
                         var deleteCommand = connection.CreateCommand();
-                        deleteCommand.Transaction = transaction;
                         deleteCommand.CommandText = $"DELETE FROM {TableName} WHERE TripId = @TripId";
                         deleteCommand.Parameters.AddWithValue("@TripId", tripId);
                         deleteCommand.ExecuteNonQuery();
@@ -35,7 +30,7 @@ namespace CourseDB
                         foreach (var controlTrip in controlTrips)
                         {
                             var insertCommand = connection.CreateCommand();
-                            insertCommand.Transaction = transaction;
+                           
                             insertCommand.CommandText = $@"
                                 INSERT INTO {TableName} (
                                     TripId, LeaveTime, ArrivalTime, LeaveReason, RidesCount
@@ -44,26 +39,35 @@ namespace CourseDB
                                 )";
 
                             insertCommand.Parameters.AddWithValue("@TripId", tripId);
-                            insertCommand.Parameters.AddWithValue("@LeaveTime", controlTrip.TimeLeave.ToString(@"hh\:mm"));
-                            insertCommand.Parameters.AddWithValue("@ArrivalTime", controlTrip.TimeComingStation.ToString(@"hh\:mm"));
-
-                            if (!string.IsNullOrEmpty(controlTrip.ReasonLeave))
-                                insertCommand.Parameters.AddWithValue("@LeaveReason", controlTrip.ReasonLeave);
-                            else
-                                insertCommand.Parameters.AddWithValue("@LeaveReason", DBNull.Value);
-
                             insertCommand.Parameters.AddWithValue("@RidesCount", controlTrip.NumRides);
-
+                            if (controlTrip.TimeLeave != null) 
+                            {
+                                TimeSpan timeLeave = (TimeSpan) controlTrip.TimeLeave;
+                                insertCommand.Parameters.AddWithValue("@LeaveTime", timeLeave.ToString(@"hh\:mm"));
+                                if (controlTrip.TimeComingStation != null) 
+                                {
+                                    TimeSpan arrivalTime = (TimeSpan) controlTrip.TimeComingStation;
+                                    insertCommand.Parameters.AddWithValue("@ArrivalTime", arrivalTime.ToString(@"hh\:mm"));
+                                }
+                                else 
+                                {
+                                    insertCommand.Parameters.AddWithValue("@ArrivalTime", DBNull.Value);
+                                }
+                            }
+                            else 
+                            {
+                                TimeSpan arrivalTime = (TimeSpan)controlTrip.TimeComingStation;
+                                insertCommand.Parameters.AddWithValue("@LeaveTime", DBNull.Value);
+                                insertCommand.Parameters.AddWithValue("@ArrivalTime", arrivalTime.ToString(@"hh\:mm"));
+                            }
+                            if (controlTrip.ReasonLeave == null)
+                                insertCommand.Parameters.AddWithValue("@LeaveReason", DBNull.Value);
+                            else 
+                                insertCommand.Parameters.AddWithValue("@LeaveReason", controlTrip.ReasonLeave);
                             insertCommand.ExecuteNonQuery();
                         }
 
                         transaction.Commit();
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
                 }
             }
         }
@@ -92,26 +96,34 @@ namespace CourseDB
                 {
                     while (reader.Read())
                     {
-                        TimeSpan leaveTime = TimeSpan.Parse(reader.GetString(reader.GetOrdinal("LeaveTime")));
-                        TimeSpan arrivalTime = TimeSpan.Parse(reader.GetString(reader.GetOrdinal("ArrivalTime")));
-
-                        string leaveReason = null;
-                        int leaveReasonOrdinal = reader.GetOrdinal("LeaveReason");
-                        if (!reader.IsDBNull(leaveReasonOrdinal))
+                        TimeSpan? arrivalTime = null;
+                        if (!reader.IsDBNull(reader.GetOrdinal("ArrivalTime")))
                         {
-                            leaveReason = reader.GetString(leaveReasonOrdinal);
+                            arrivalTime = TimeSpan.Parse(reader.GetString(reader.GetOrdinal("ArrivalTime")));
                         }
-
+                        int leaveReasonOrdinal = reader.GetOrdinal("LeaveReason");
                         int ridesCount = reader.GetInt32(reader.GetOrdinal("RidesCount"));
 
-                        var controlTrip = new ControlTrip(
-                            timeLeave: leaveTime,
-                            timeComingStation: arrivalTime,
-                            reasonLeave: leaveReason,
-                            numRides: ridesCount
-                        );
-
-                        result.Add(controlTrip);
+                        if (!reader.IsDBNull(leaveReasonOrdinal))
+                        {
+                            string leaveReason = reader.GetString(leaveReasonOrdinal);
+                            TimeSpan leaveTime = TimeSpan.Parse(reader.GetString(reader.GetOrdinal("LeaveTime")));
+                            var controlTrip = new ControlTrip(
+                                timeLeave: leaveTime,
+                                timeComingStation: arrivalTime,
+                                reasonLeave: leaveReason,
+                                numRides: ridesCount
+                            );
+                            result.Add(controlTrip);
+                        }
+                        else 
+                        {
+                            var controlTrip = new ControlTrip(
+                                timeComingStation: (TimeSpan) arrivalTime,
+                                numRides: ridesCount
+                            );
+                            result.Add(controlTrip);
+                        }
                     }
                 }
             }

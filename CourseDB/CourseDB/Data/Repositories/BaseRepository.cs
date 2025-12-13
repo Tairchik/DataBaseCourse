@@ -268,8 +268,8 @@ namespace CourseDB.Data
                     CREATE TABLE IF NOT EXISTS ControlTrips (
                         ControlTripId INTEGER PRIMARY KEY AUTOINCREMENT,
                         TripId INTEGER NOT NULL,                     -- ID Рейс
-                        LeaveTime TEXT NOT NULL,                     -- Время снятия с маршрута
-                        ArrivalTime TEXT NOT NULL,                   -- Время прибытия на конечную
+                        LeaveTime TEXT,                              -- Время снятия с маршрута
+                        ArrivalTime TEXT,                            -- Время прибытия на конечную
                         LeaveReason TEXT,                            -- Причина снятия с маршрута (может быть NULL)
                         RidesCount INTEGER NOT NULL DEFAULT 0,       -- Число ездок
         

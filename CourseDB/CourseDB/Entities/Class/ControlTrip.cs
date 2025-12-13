@@ -8,12 +8,12 @@ namespace CourseDB
 {
     public class ControlTrip : IControlTrip
     {
-        private TimeSpan _timeLeave;
-        private TimeSpan _timeComingStation;
+        private TimeSpan? _timeLeave;
+        private TimeSpan? _timeComingStation;
         private string _reasonLeave;
         private int _numRides;
 
-        public TimeSpan TimeLeave 
+        public TimeSpan? TimeLeave 
         {
             get => _timeLeave;
             set
@@ -25,7 +25,8 @@ namespace CourseDB
                 _timeLeave = value;
             }
         }
-        public TimeSpan TimeComingStation 
+
+        public TimeSpan? TimeComingStation 
         {
             get => _timeComingStation;
             set
@@ -58,7 +59,7 @@ namespace CourseDB
             }
         }
 
-        public ControlTrip(TimeSpan timeLeave, TimeSpan timeComingStation, string reasonLeave, int numRides)
+        public ControlTrip(TimeSpan? timeLeave, TimeSpan? timeComingStation, string reasonLeave, int numRides)
         {
             TimeLeave = timeLeave;
             TimeComingStation = timeComingStation;

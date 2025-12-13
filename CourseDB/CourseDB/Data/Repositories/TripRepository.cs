@@ -40,8 +40,6 @@ namespace CourseDB.Data.Repositories
         {
             using (var connection = GetConnection())
             {
-                connection.Open();
-
                 var command = connection.CreateCommand();
 
                 // Проверяем, есть ли рейс в identity map
@@ -97,7 +95,7 @@ namespace CourseDB.Data.Repositories
                     command.ExecuteNonQuery();
 
                     // Сохраняем контрольные точки
-                    _controlTripRepository.SaveForTrip(existingId, GetControlTripsFromTrip(trip));
+                    _controlTripRepository.SaveForTrip(existingId, trip._controlTrips);
                 }
                 else
                 {
@@ -110,7 +108,7 @@ namespace CourseDB.Data.Repositories
                     _entitiesById[newIdInt] = trip;
 
                     // Сохраняем контрольные точки
-                    _controlTripRepository.SaveForTrip(newIdInt, GetControlTripsFromTrip(trip));
+                    _controlTripRepository.SaveForTrip(newIdInt, trip.ControlTrips);
                 }
             }
         }
@@ -230,13 +228,7 @@ namespace CourseDB.Data.Repositories
             var controlTrips = _controlTripRepository.GetByTripId(tripId);
 
             // Добавляем контрольные точки в объект Trip через рефлексию
-            var controlTripsField = typeof(Trip).GetField("_controlTrips",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-
-            if (controlTripsField != null)
-            {
-                controlTripsField.SetValue(trip, controlTrips);
-            }
+            trip._controlTrips = controlTrips;
         }
 
         /// <summary>
