@@ -142,7 +142,6 @@
     <Compile Include="Entities\Interfaces\IEmploymentHistory.cs" />
     <Compile Include="Entities\Interfaces\IRout.cs" />
     <Compile Include="Entities\Interfaces\ITrip.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
