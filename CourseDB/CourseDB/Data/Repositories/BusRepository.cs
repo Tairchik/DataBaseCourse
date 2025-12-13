@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using CourseDB.Data;
+using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace CourseDB.Data.Repositories
+namespace CourseDB
 {
     public class BusRepository: BaseRepository
     {
