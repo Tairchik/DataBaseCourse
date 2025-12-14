@@ -60,6 +60,10 @@ namespace LoginWindow
             {
                 menu.Click += (sender, args) => MenuItemClick?.Invoke(sender, args);
             }
+            else if (status.W == 1 || status.R == 1 || status.D == 1 || status.E == 1)
+            {
+
+            }
             else
             {
                 menu.Visible = false;

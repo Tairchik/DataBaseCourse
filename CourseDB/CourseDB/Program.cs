@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MenuLibrary;
+using AuthorizationLibrary;
 
 namespace CourseDB
 {
@@ -10,7 +12,18 @@ namespace CourseDB
     {
         static void Main(string[] args) 
         {
-            InitRepos initRepos = new InitRepos();
+            int choice = 1;
+            choice = int.Parse(Console.ReadLine());
+            if (choice == 1)
+            {
+                ConsoleInterface.Run();
+
+            }
+            else if (choice == 2)
+            {
+                Authorization name = new Authorization();
+                AuthorizationInterface.Run(name);
+            }
         }
     }
 }

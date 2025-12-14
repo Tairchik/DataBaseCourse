@@ -172,6 +172,16 @@
   <ItemGroup>
     <Folder Include="Data\DataFiles\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AuthorizationLibrary\AuthorizationLibrary.csproj">
+      <Project>{b8896610-e636-41e0-98cb-f7c3dadc694d}</Project>
+      <Name>AuthorizationLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuLibrary\MenuLibrary.csproj">
+      <Project>{4238d5a7-51ef-4ff8-88e4-70d4245b1b0f}</Project>
+      <Name>MenuLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

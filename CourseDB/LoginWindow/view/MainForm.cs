@@ -26,5 +26,6 @@ namespace LoginWindow
         {
             MessageBox.Show(sender.ToString(), "Обработчик меню");
         }
+
     }
 }
