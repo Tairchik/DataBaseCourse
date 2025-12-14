@@ -132,11 +132,12 @@ namespace AuthorizationLibrary
                         users[username] = currUser;
 
                         var command_get_roots = connection.CreateCommand();
-                        command_get_roots.CommandText = @"SELECT 
-                                                              Menu_id, 
-                                                              R, W, E, D 
-                                                          FROM UserRoots 
-                                                          WHERE User_Id = @id";
+                        command_get_roots.CommandText = @"
+                            SELECT 
+                                Menu_id, 
+                                R, W, E, D 
+                            FROM UserRoots 
+                            WHERE User_Id = @id";
                         command_get_roots.Parameters.AddWithValue("@id", id);
                         using (var reader_roots = command_get_roots.ExecuteReader())
                         {

@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
-
+using System.Linq;
+using Microsoft.Data.Sqlite;
 namespace MenuLibrary
 {
     // Класс для представления пункта меню
     public class MenuItem
     {
-        public string Name { get; set; } // Название пункта
+        public int Id { get; set; }
+        public int ParentId { get; set; }
+        public string Name { get; set; }         // MenuName
+        public string DllName { get; set; }      // Имя DLL
+        public string FunctionName { get; set; } // Имя функции/класса
+        public int SortOrder { get; set; }
         public List<MenuItem> SubItems { get; set; } = new List<MenuItem>(); // Подменю
+
+        public bool HasSubItems => DllName == "-" && FunctionName == "-";
+        public bool IsExecutable => !HasSubItems; // Можно ли выполнить (есть DLL/Function)
 
         public MenuItem(string name)
         {
@@ -19,103 +27,117 @@ namespace MenuLibrary
         // Метод для вывода меню (рекурсивно)
         public void PrintMenu(int level = 0)
         {
-            Console.WriteLine(new string(' ', level * 2) + Name);
-            foreach (var subItem in SubItems)
+            string prefix = new string(' ', level * 2);
+
+            Console.WriteLine($"{prefix}{Name}");
+
+            // Сортировка подменю перед выводом по SortOrder
+            foreach (var subItem in SubItems.OrderBy(i => i.SortOrder))
             {
                 subItem.PrintMenu(level + 1);
             }
         }
-    
     }
 
     // Класс для работы с меню
     public class Menu
     {
-        private readonly string menuFileName;
-        private readonly List<MenuItem> rootItems = new List<MenuItem>();
+        // Используем то же имя файла БД для Login, что и в AuthorizationLibrary
+        private readonly string DatabaseFileName = "Login.db";
+        private readonly string RelativeDbPath = "CourseDB\\Data\\DataFiles";
+
+        private string ConnectionString;
+        private List<MenuItem> rootItems = new List<MenuItem>();
 
         // Конструктор класса
-        public Menu(string fileName = "..\\..\\..\\..\\menu.txt.")
+        public Menu()
         {
-            menuFileName = fileName;
+            SetConnectionString();
             LoadMenu();
-            rootItems = FilterMenuByAccess(rootItems);
+            // rootItems теперь уже содержат только те пункты, на которые есть права
         }
 
-        // Рекурсивно фильтруем пункты меню по уровням доступа
-        private List<MenuItem> FilterMenuByAccess(List<MenuItem> items)
+        private void SetConnectionString()
         {
-            var result = new List<MenuItem>();
-
-            foreach (var item in items)
-            {
-                var newItem = new MenuItem(item.Name);
-                newItem.SubItems.AddRange(FilterMenuByAccess(item.SubItems));
-                result.Add(newItem);
-            }
-
-            return result;
+            // Логика получения пути к БД Login.db 
+            string appBaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string projectRootPath = Path.GetFullPath(Path.Combine(appBaseDirectory, "..\\..\\..\\..\\"));
+            string dbFilePath = Path.Combine(projectRootPath, RelativeDbPath, DatabaseFileName);
+            ConnectionString = $"Data Source={dbFilePath}";
         }
 
-        // Метод для загрузки данных меню из файла
+        // Метод для загрузки данных меню из БД
         private void LoadMenu()
         {
-            if (!File.Exists(menuFileName))
+            // 1. Загружаем все пункты меню в плоский список
+            var flatMenu = new Dictionary<int, MenuItem>();
+
+            using (var connection = new SqliteConnection(ConnectionString))
             {
-                throw new FileNotFoundException("Файл меню не найден.", menuFileName);
+                connection.Open();
+                var command = connection.CreateCommand();
+
+                // Сортируем по ParentId и SortOrder, чтобы упростить построение дерева
+                command.CommandText = @"
+                    SELECT Id, ParentId, MenuName, DllName, FunctionName, SortOrder
+                    FROM MenuItems
+                    ORDER BY ParentId, SortOrder";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        var item = new MenuItem(reader.GetString(2))
+                        {
+                            Id = id,
+                            ParentId = reader.GetInt32(1),
+                            DllName = reader.GetString(3),
+                            FunctionName = reader.GetString(4),
+                            SortOrder = reader.GetInt32(5),
+                        };
+
+                        flatMenu.Add(id, item);
+                    }
+                }
             }
 
-            var lines = File.ReadAllLines(menuFileName);
-            var stack = new Stack<(int level, MenuItem item)>();
-            stack.Push((level: -1, item: null)); // Корневой элемент
+            // 2. Строим иерархическое дерево из плоского списка
+            rootItems.Clear();
 
-            foreach (var line in lines)
+            foreach (var item in flatMenu.Values.OrderBy(i => i.SortOrder))
             {
-                if (string.IsNullOrWhiteSpace(line)) continue;
-
-                // Используем регулярное выражение для разбора строки
-                var match = Regex.Match(line, @"^(\d+)\s+(.+?)(?:\s+(\S+))?$");
-                if (!match.Success)
+                if (item.ParentId == 0)
                 {
-                    throw new FormatException($"Некорректный формат строки: {line}");
+                    // Это корневой элемент
+                    rootItems.Add(item);
                 }
-
-                int level = int.Parse(match.Groups[1].Value); // Уровень
-                string name = match.Groups[2].Value.Trim();   // Название пункта
-
-                var newItem = new MenuItem(name);
-
-                // Находим родительский элемент
-                while (stack.Peek().level >= level)
+                else if (flatMenu.TryGetValue(item.ParentId, out var parentItem))
                 {
-                    stack.Pop();
+                    // Добавляем как подпункт
+                    parentItem.SubItems.Add(item);
                 }
-
-                var parent = stack.Peek().item;
-                if (parent == null)
-                {
-                    rootItems.Add(newItem);
-                }
-                else
-                {
-                    parent.SubItems.Add(newItem);
-                }
-
-                // Добавляем текущий элемент в стек
-                stack.Push((level, newItem));
+                // Если ParentId > 0, но родителя нет в flatMenu, значит, 
+                // у родителя нет прав, и этот подпункт тоже не показываем.
             }
         }
 
-        // Метод для вывода всего меню
+        /// <summary>
+        /// Выводит меню в консоль.
+        /// </summary>
         public void PrintMenu()
         {
-            foreach (var rootItem in rootItems)
+            Console.WriteLine("--- ГЛАВНОЕ МЕНЮ ---");
+            foreach (var rootItem in rootItems.OrderBy(i => i.SortOrder))
             {
                 rootItem.PrintMenu();
             }
+            Console.WriteLine("--------------------");
         }
 
-        // Метод для получения корневых пунктов меню
+        /// <summary>
+        /// Возвращает корневые пункты меню с учетом прав доступа.
+        /// </summary>
         public List<MenuItem> GetRootItems()
         {
             return rootItems;
