@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using AuthorizationLibrary;
 
-namespace Login
+namespace LoginWindow
 {
     public class MainController
     {
@@ -13,8 +14,8 @@ namespace Login
         private MainForm _view;
         private string _userName;
         private readonly MenuLibrary.Menu _menu;
-        private Dictionary<string, AuthorizationLibrary.User> users;
-        public MainController(Dictionary<string, AuthorizationLibrary.User> users, string username)
+        private Dictionary<string, User> users;
+        public MainController(Dictionary<string, User> users, string username)
         {
             this.users = users;
             _userName = username;
@@ -22,16 +23,16 @@ namespace Login
         }
 
         // Метод для получения статуса пункта меню для пользователя
-        public int GetMenuStatus(string username, string menuItem)
+        public MenuState GetMenuStatus(string username, int menuItem)
         {
             if (users.TryGetValue(username, out var userData))
             {
-                if (userData.MenuStatus.TryGetValue(menuItem, out int status))
+                if (userData.MenuStatus.TryGetValue(menuItem, out MenuState status))
                 {
                     return status;
                 }
             }
-            return 0; // По умолчанию, если пункт не указан, он виден и доступен
+            return new MenuState() { D = 1, W = 1, E = 1, R = 1 }; // По умолчанию, если пункт не указан, он виден и доступен
         }
 
         // Метод для добавления пунктов в форму
@@ -46,7 +47,7 @@ namespace Login
         // Рекурсивно создаем пункты меню
         private ToolStripMenuItem CreateMenuItem(MenuLibrary.MenuItem menuItem)
         {
-            int status = GetMenuStatus(_userName, menuItem.Name);
+            MenuState status = GetMenuStatus(_userName, menuItem.Id);
 
             var menu = new ToolStripMenuItem(menuItem.Name);
 
@@ -55,16 +56,11 @@ namespace Login
                 menu.DropDownItems.Add(CreateMenuItem(subItem));
             }
 
-            if (status == 0 && menuItem.SubItems.Count == 0)
+            if ((status.W == 1 || status.R == 1 || status.D == 1 || status.E == 1) && menuItem.SubItems.Count == 0)
             {
                 menu.Click += (sender, args) => MenuItemClick?.Invoke(sender, args);
             }
-            if (status == 1)
-            {
-                menu.BackColor = Color.LightGray;
-                menu.Enabled = false;
-            }
-            else if (status == 2)
+            else
             {
                 menu.Visible = false;
             }

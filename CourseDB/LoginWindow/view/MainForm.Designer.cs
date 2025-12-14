@@ -1,7 +1,6 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
-namespace Login
+namespace LoginWindow
 {
     partial class MainForm
     {
@@ -58,6 +57,7 @@ namespace Login
         }
 
         #endregion
+
         private MenuStrip menuStrip;
     }
 }

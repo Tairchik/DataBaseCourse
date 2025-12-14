@@ -117,6 +117,7 @@ namespace AuthorizationLibrary
             users.Clear();
             using (var connection = new SqliteConnection(ConnectionString))
             {
+                connection.Open();
                 var command = connection.CreateCommand();
                 command.CommandText = "SELECT Id, Username, Password FROM Users";
 

@@ -1,9 +1,6 @@
-Ôªøusing System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using AuthorizationLibrary;
 
-namespace Login
+namespace LoginWindow
 {
     public partial class LoginForm : Form
     {
@@ -14,7 +11,7 @@ namespace Login
         public LoginForm()
         {
             InitializeComponent();
-            versionLabel.Text = $"–í–µ—Ä—Å–∏—è: {version}";
+            versionLabel.Text = $"¬ÂÒËˇ: {version}";
 
             loginController = new LoginController(this);
             _keyController = new KeyController();
@@ -58,7 +55,7 @@ namespace Login
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"–û—à–∏–±–∫–∞: {ex.Message}");
+                MessageBox.Show($"Œ¯Ë·Í‡: {ex.Message}");
             }
         }
 

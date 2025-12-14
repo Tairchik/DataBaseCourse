@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace Login
+namespace LoginWindow
 {
     public class KeyController
     {
+
         public event EventHandler<string> CapsLockChanged;
         public event EventHandler<string> InputLanguageChanged;
         public event EventHandler<EventArgs> CloseRequested;

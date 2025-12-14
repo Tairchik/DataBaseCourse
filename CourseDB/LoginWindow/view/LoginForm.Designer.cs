@@ -1,19 +1,18 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
-namespace Login
+namespace LoginWindow
 {
     partial class LoginForm
     {
         /// <summary>
-        /// Обязательная переменная конструктора.
+        ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Освободить все используемые ресурсы.
+        ///  Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -23,11 +22,11 @@ namespace Login
             base.Dispose(disposing);
         }
 
-        #region Код, автоматически созданный конструктором форм Windows
+        #region Windows Form Designer generated code
 
         /// <summary>
-        /// Требуемый метод для поддержки конструктора — не изменяйте 
-        /// содержимое этого метода с помощью редактора кода.
+        ///  Required method for Designer support - do not modify
+        ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -67,7 +66,7 @@ namespace Login
             // keyIcon
             // 
             keyIcon.BackColor = Color.Transparent;
-            keyIcon.Image = Image.FromFile("..\\..\\..\\keys.png");
+            keyIcon.ImageLocation = "C:\\Домашка\\БД\\Course\\CourseDB\\LoginWindow\\keys.png";
             keyIcon.Location = new Point(7, 7);
             keyIcon.Margin = new Padding(4, 3, 4, 3);
             keyIcon.Name = "keyIcon";
@@ -79,7 +78,7 @@ namespace Login
             // label1
             // 
             label1.BackColor = Color.White;
-            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label1.Location = new Point(4, 75);
             label1.Name = "label1";
             label1.Size = new Size(428, 21);
@@ -90,7 +89,7 @@ namespace Login
             // systemNameLabel
             // 
             systemNameLabel.BackColor = Color.LemonChiffon;
-            systemNameLabel.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            systemNameLabel.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             systemNameLabel.Location = new Point(4, 9);
             systemNameLabel.Margin = new Padding(4, 0, 4, 0);
             systemNameLabel.Name = "systemNameLabel";
@@ -102,7 +101,7 @@ namespace Login
             // versionLabel
             // 
             versionLabel.BackColor = Color.FromArgb(255, 215, 2);
-            versionLabel.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            versionLabel.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             versionLabel.Location = new Point(4, 43);
             versionLabel.Margin = new Padding(4, 0, 4, 0);
             versionLabel.Name = "versionLabel";
@@ -114,7 +113,7 @@ namespace Login
             // usernameLabel
             // 
             usernameLabel.AutoSize = true;
-            usernameLabel.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            usernameLabel.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             usernameLabel.Location = new Point(4, 118);
             usernameLabel.Margin = new Padding(4, 0, 4, 0);
             usernameLabel.Name = "usernameLabel";
@@ -133,7 +132,7 @@ namespace Login
             // passwordLabel
             // 
             passwordLabel.AutoSize = true;
-            passwordLabel.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            passwordLabel.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             passwordLabel.Location = new Point(7, 158);
             passwordLabel.Margin = new Padding(4, 0, 4, 0);
             passwordLabel.Name = "passwordLabel";
@@ -205,7 +204,6 @@ namespace Login
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
-            Text = "Вход";
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(436, 238);
@@ -222,11 +220,11 @@ namespace Login
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             Name = "LoginForm";
-            StartPosition = FormStartPosition.CenterScreen;
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Вход";
-            KeyDown += LoginForm_KeyDown;
             InputLanguageChanged += Form_InputLanguageChanged;
+            KeyDown += LoginForm_KeyDown;
             bannerPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)keyIcon).EndInit();
             statusStrip.ResumeLayout(false);
@@ -253,4 +251,3 @@ namespace Login
         #endregion
     }
 }
-

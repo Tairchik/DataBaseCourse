@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using AuthorizationLibrary;
 
-namespace Login
+namespace LoginWindow
 {
     public class LoginController
     {
@@ -12,7 +12,7 @@ namespace Login
         public Dictionary<string, User> users { get { return _users; } }
         public string AuthenticatedUsername { get { return _authenticatedUsername; } }
 
-        public LoginController(LoginForm loginForm)
+        public LoginController(LoginWindow.LoginForm loginForm)
         {
             view = loginForm;
         }
