@@ -13,8 +13,8 @@ namespace Login
         private MainForm _view;
         private string _userName;
         private readonly MenuLibrary.Menu _menu;
-        private Dictionary<string, AuthorizationLb.User> users;
-        public MainController(Dictionary<string, AuthorizationLb.User> users, string username)
+        private Dictionary<string, AuthorizationLibrary.User> users;
+        public MainController(Dictionary<string, AuthorizationLibrary.User> users, string username)
         {
             this.users = users;
             _userName = username;

@@ -67,7 +67,7 @@ namespace Login
             // keyIcon
             // 
             keyIcon.BackColor = Color.Transparent;
-            keyIcon.Image = Image.FromFile("..\\..\\keys.png");
+            keyIcon.Image = Image.FromFile("..\\..\\..\\keys.png");
             keyIcon.Location = new Point(7, 7);
             keyIcon.Margin = new Padding(4, 3, 4, 3);
             keyIcon.Name = "keyIcon";

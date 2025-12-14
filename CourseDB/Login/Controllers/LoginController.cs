@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using AuthorizationLb;
+using AuthorizationLibrary;
 
 namespace Login
 {
     public class LoginController
     {
-        private const string pathUser = "..\\..\\..\\..\\USERS.txt";
         private LoginForm view;
         private string _authenticatedUsername;
         private Dictionary<string, User> _users;
@@ -21,7 +20,7 @@ namespace Login
         public bool AuthorizationData()
         {
             // Создаем объект авторизации
-            var auth = new Authorization(pathUser);
+            var auth = new Authorization();
             _users = auth.users;
             // Тестовая авторизация
             string username = view.GetName();

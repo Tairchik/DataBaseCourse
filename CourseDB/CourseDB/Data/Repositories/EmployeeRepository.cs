@@ -1,4 +1,4 @@
-﻿using CourseDB.Data.Repositories;
+﻿using CourseDB.Data;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
