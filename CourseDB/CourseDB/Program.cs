@@ -12,18 +12,32 @@ namespace CourseDB
     {
         static void Main(string[] args) 
         {
-            int choice = 1;
-            choice = int.Parse(Console.ReadLine());
-            if (choice == 1)
+            while (true) 
             {
-                ConsoleInterface.Run();
+                int choice = 1;
+                Console.WriteLine("1 - Консоль меню");
+                Console.WriteLine("2 - Консоль авторизации");
+                Console.WriteLine("0 - Выход");
 
+
+                Console.Write("Ввод: ");
+                choice = int.Parse(Console.ReadLine());
+
+                if (choice == 1)
+                {
+                    ConsoleInterface.Run();
+                }
+                else if (choice == 2)
+                {
+                    Authorization name = new Authorization();
+                    AuthorizationInterface.Run(name);
+                }
+                else if (choice == 0)
+                {
+                    break;
+                }
             }
-            else if (choice == 2)
-            {
-                Authorization name = new Authorization();
-                AuthorizationInterface.Run(name);
-            }
+            
         }
     }
 }
