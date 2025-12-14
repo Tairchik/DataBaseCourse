@@ -56,19 +56,18 @@ namespace LoginWindow
                 menu.DropDownItems.Add(CreateMenuItem(subItem));
             }
 
-            if ((status.W == 1 || status.R == 1 || status.D == 1 || status.E == 1) && menuItem.SubItems.Count == 0)
+            if ((status.W == 1 || status.R == 1 || status.D == 1 || status.E == 1))
             {
-                menu.Click += (sender, args) => MenuItemClick?.Invoke(sender, args);
-            }
-            else if (status.W == 1 || status.R == 1 || status.D == 1 || status.E == 1)
-            {
-
+                if (menuItem.SubItems.Count == 0)
+                {
+                    menu.Tag = menuItem;
+                    menu.Click += (sender, args) => MenuItemClick?.Invoke(sender, args);
+                }
             }
             else
             {
                 menu.Visible = false;
             }
-
             return menu;
         }
     }
