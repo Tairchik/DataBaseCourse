@@ -13,5 +13,6 @@ namespace MainModule
             _controller.AddMenuItems(menuStrip);
         }
 
+        
     }
 }

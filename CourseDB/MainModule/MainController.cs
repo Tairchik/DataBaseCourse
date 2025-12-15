@@ -18,12 +18,11 @@ namespace MainModule
         private MainForm _view;
         private string _userName;
         private readonly MenuLibrary.Menu _menu;
-        private Dictionary<string, User> users;
+        private User user;
         private InitRepos _initRepos; 
-        public MainController(Dictionary<string, User> users, string username)
+        public MainController(User user)
         {
-            this.users = users;
-            _userName = username;
+            this.user = user;
             _menu = new MenuLibrary.Menu();
             _initRepos = new InitRepos();
         }
@@ -31,13 +30,12 @@ namespace MainModule
         // Метод для получения статуса пункта меню для пользователя
         public MenuState GetMenuStatus(string username, int menuItem)
         {
-            if (users.TryGetValue(username, out var userData))
+
+            if (user.MenuStatus.TryGetValue(menuItem, out MenuState status))
             {
-                if (userData.MenuStatus.TryGetValue(menuItem, out MenuState status))
-                {
-                    return status;
-                }
+                return status;
             }
+            
             return new MenuState() { D = 1, W = 1, E = 1, R = 1 }; // По умолчанию, если пункт не указан, он виден и доступен
         }
 

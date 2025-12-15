@@ -16,7 +16,7 @@ namespace MainModule
             {
                 var users = loginForm.Users;
                 var username = loginForm.AuthenticatedUsername;
-                var mainController = new MainController(users, username);
+                var mainController = new MainController(users[username]);
                 MainForm mainForm = new MainForm(mainController);
                 mainForm.ShowDialog();
             }

@@ -37,7 +37,6 @@ namespace MenuLibrary
     // Класс для работы с меню
     public class Menu
     {
-        // Используем то же имя файла БД для Login, что и в AuthorizationLibrary
         private readonly string DatabaseFileName = "Login.db";
         private readonly string RelativeDbPath = "CourseDB\\Data\\DataFiles";
 

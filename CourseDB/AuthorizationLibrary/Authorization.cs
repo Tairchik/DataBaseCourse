@@ -34,14 +34,14 @@ namespace AuthorizationLibrary
 
         private string ConnectionString;
         public Dictionary<string, User> users { get; private set; } = new Dictionary<string, User>();
-
-        // Конструктор класса
+        public SettingsRepository _settingsRepository;
+        
         public Authorization()
         {
             SQLitePCL.Batteries.Init();
             MakeDataBaseFile();
             LoadUsers();
-
+            _settingsRepository = new SettingsRepository(ConnectionString);
             if (!users.Any())
             {
                 // Если нет пользователей, создаем Admin (пароль 'admin')
@@ -106,6 +106,15 @@ namespace AuthorizationLibrary
                         PRIMARY KEY (User_Id, Menu_id),
                         FOREIGN KEY (User_Id) REFERENCES Users(Id) ON DELETE CASCADE,
                         FOREIGN KEY (Menu_id) REFERENCES MenuItems(Id) ON DELETE CASCADE
+                    );";
+                command.ExecuteNonQuery();
+
+                command.CommandText = $@"
+                    CREATE TABLE IF NOT EXISTS UserSettings (
+                        id_user INTEGER PRIMARY KEY,
+                        font_family TEXT NOT NULL,
+                        font_size INTEGER NOT NULL,
+                        FOREIGN KEY (id_user) REFERENCES Users(Id) ON DELETE CASCADE
                     );";
                 command.ExecuteNonQuery();
             }
@@ -249,6 +258,10 @@ namespace AuthorizationLibrary
                 MenuStatus = menuStates
             };
             users[username] = newUser;
+
+            // 4. Сохраняем настройки пользователя в таблицу
+            _settingsRepository.SaveSettings((int)newUserId);
+
             return true;
         }
 
