@@ -1,12 +1,13 @@
 ﻿using AuthorizationLibrary;
 using HelpModule;
 using CourseDB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OtherModule;
+using DocumentModule;
+using TripModule;
+using ControlBusModule;
+using EmployeeModule;
+using FinancialModule;
+using GuideModule;
 
 namespace MainModule
 {
@@ -102,12 +103,29 @@ namespace MainModule
                 switch (menuItem.DllName)
                 {
                     case "HelpModule":
-                        form = CreateHelpModuleForm(menuItem.FunctionName);
+                        form = CreateHelpModule(menuItem.FunctionName);
                         break;
                     case "OtherModule":
-                        form = CreateOtherModuleForm(menuItem.FunctionName);
+                        form = CreateOtherModule(menuItem.FunctionName);
                         break;
-
+                    case "DocumentModule":
+                        form = CreateDocumentModule(menuItem.FunctionName);
+                        break;
+                    case "ControlBusModule":
+                        form = CreateControlBusModule(menuItem.FunctionName);
+                        break;
+                    case "EmployeeModule":
+                        form = CreateEmployeeModule(menuItem.FunctionName);
+                        break;
+                    case "FinancialModule":
+                        form = CreateFinancialModule(menuItem.FunctionName);
+                        break;
+                    case "GuideModule":
+                        form = CreateGuideModule(menuItem.FunctionName);
+                        break;
+                    case "TripModule":
+                        form = CreateTripModule(menuItem.FunctionName);
+                        break;
                     default:
                         MessageBox.Show($"Модуль '{menuItem.DllName}' не поддерживается", "Ошибка",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -131,7 +149,7 @@ namespace MainModule
             }
         }
 
-        private Form CreateHelpModuleForm(string functionName)
+        private Form CreateHelpModule(string functionName)
         {
             switch (functionName)
             {
@@ -146,16 +164,110 @@ namespace MainModule
             }
         }
 
-        private Form CreateOtherModuleForm(string functionName)
+        private Form CreateOtherModule(string functionName)
         {
             switch (functionName)
             {
                 case "Settings":
                     return new SettingsForm(_initRepos);
-                case "ChangePassport":
+                case "ChangePassword":
                     return new ChangePasswordForm(_initRepos);
                 default:
                     MessageBox.Show($"Функция '{functionName}' не найдена в модуле OtherModule", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+            }
+        }
+        private Form CreateDocumentModule(string functionName)
+        {
+            switch (functionName)
+            {
+                case "BusReport":
+                    return new BusReportForm(_initRepos);
+                case "DriverReport":
+                    return new DriverReport(_initRepos);
+                case "RoutReport":
+                    return new RoutReportForm(_initRepos);
+                case "TripReport":
+                    return new TripReportForm(_initRepos);
+                default:
+                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле DocumentModule", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+            }
+        }
+        private Form CreateTripModule(string functionName)
+        {
+            switch (functionName)
+            {
+                case "Trip":
+                    return new TripForm(_initRepos);
+                default:
+                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле TripModule", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+            }
+        }
+        private Form CreateControlBusModule(string functionName)
+        {
+            switch (functionName)
+            {
+                case "Control":
+                    return new ControlForm(_initRepos);
+                default:
+                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле ControlBusModule", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+            }
+        }
+        private Form CreateEmployeeModule(string functionName)
+        {
+            switch (functionName)
+            {
+                case "Employee":
+                    return new EmployeeForm(_initRepos);
+                default:
+                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле EmployeeModule", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+            }
+        }
+        private Form CreateFinancialModule(string functionName)
+        {
+            switch (functionName)
+            {
+                case "RevenueRout":
+                    return new RevenueRoutForm(_initRepos);
+                case "RevenueTrip":
+                    return new RevenueTripForm(_initRepos);
+                case "Salary":
+                    return new SalaryForm(_initRepos);
+                default:
+                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле FinancialModule", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+            }
+        }
+        private Form CreateGuideModule(string functionName)
+        {
+            switch (functionName)
+            {
+                case "Brand":
+                    return new BrandForm(_initRepos);
+                case "Bus":
+                    return new BusForm(_initRepos);
+                case "Color":
+                    return new ColorForm(_initRepos);
+                case "Model":
+                    return new ModelForm(_initRepos);
+                case "Post":
+                    return new PostForm(_initRepos);
+                case "Rout":
+                    return new RoutForm(_initRepos);
+                case "Station":
+                    return new StationForm(_initRepos);
+                default:
+                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле GuideModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
             }

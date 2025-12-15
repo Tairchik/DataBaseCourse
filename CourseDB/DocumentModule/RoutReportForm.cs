@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CourseDB;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ namespace DocumentModule
 {
     public partial class RoutReportForm : Form
     {
-        public RoutReportForm()
+        public RoutReportForm(InitRepos initRepos)
         {
             InitializeComponent();
         }

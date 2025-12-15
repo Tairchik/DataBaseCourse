@@ -9,10 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ControlBusModule\ControlBusModule.csproj" />
     <ProjectReference Include="..\CourseDB\CourseDB.csproj" />
+    <ProjectReference Include="..\DocumentModule\DocumentModule.csproj" />
+    <ProjectReference Include="..\EmployeeModule\EmployeeModule.csproj" />
+    <ProjectReference Include="..\FinancialModule\FinancialModule.csproj" />
+    <ProjectReference Include="..\GuideModule\GuideModule.csproj" />
     <ProjectReference Include="..\HelpModule\HelpModule.csproj" />
     <ProjectReference Include="..\LoginWindow\LoginWindow.csproj" />
     <ProjectReference Include="..\OtherModule\OtherModule.csproj" />
+    <ProjectReference Include="..\TripModule\TripModule.csproj" />
   </ItemGroup>
 
 </Project>
