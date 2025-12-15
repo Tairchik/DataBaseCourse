@@ -14,7 +14,7 @@ namespace CourseDB.Data
         protected static string DatabaseFileName = "company_data.db";
 
         // Относительный путь от корневой папки проекта до Data/DataFiles
-        protected static string RelativeDbPath = "Data\\DataFiles";
+        protected static string RelativeDbPath = "CourseDB\\Data\\DataFiles";
 
         protected static string ConnectionString;
         private static bool _schemaChecked = false;
@@ -24,7 +24,7 @@ namespace CourseDB.Data
             if (!_schemaChecked)
             {
                 string appBaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                string projectRootPath = Path.GetFullPath(Path.Combine(appBaseDirectory, "..\\..\\..\\"));
+                string projectRootPath = Path.GetFullPath(Path.Combine(appBaseDirectory, "..\\..\\..\\..\\"));
                 string dbFilePath = Path.Combine(projectRootPath, RelativeDbPath, DatabaseFileName);
 
                 string folder = Path.GetDirectoryName(dbFilePath);
