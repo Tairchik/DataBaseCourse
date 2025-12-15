@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace LoginWindow
+﻿namespace MainModule
 {
     partial class MainForm
     {
