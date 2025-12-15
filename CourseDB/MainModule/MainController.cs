@@ -60,6 +60,7 @@ namespace MainModule
             foreach (var subItem in menuItem.SubItems)
             {
                 menu.DropDownItems.Add(CreateMenuItem(subItem));
+                
             }
 
             if ((status.W == 1 || status.R == 1 || status.D == 1 || status.E == 1))
@@ -98,7 +99,7 @@ namespace MainModule
         {
             try
             {
-                Form form = null;
+                Form? form = null;
 
                 switch (menuItem.DllName)
                 {
@@ -149,7 +150,7 @@ namespace MainModule
             }
         }
 
-        private Form CreateHelpModule(string functionName)
+        private Form? CreateHelpModule(string functionName)
         {
             switch (functionName)
             {
@@ -164,7 +165,7 @@ namespace MainModule
             }
         }
 
-        private Form CreateOtherModule(string functionName)
+        private Form? CreateOtherModule(string functionName)
         {
             switch (functionName)
             {
@@ -178,7 +179,7 @@ namespace MainModule
                     return null;
             }
         }
-        private Form CreateDocumentModule(string functionName)
+        private Form? CreateDocumentModule(string functionName)
         {
             switch (functionName)
             {
@@ -196,7 +197,7 @@ namespace MainModule
                     return null;
             }
         }
-        private Form CreateTripModule(string functionName)
+        private Form? CreateTripModule(string functionName)
         {
             switch (functionName)
             {
@@ -208,7 +209,7 @@ namespace MainModule
                     return null;
             }
         }
-        private Form CreateControlBusModule(string functionName)
+        private Form? CreateControlBusModule(string functionName)
         {
             switch (functionName)
             {
@@ -220,7 +221,7 @@ namespace MainModule
                     return null;
             }
         }
-        private Form CreateEmployeeModule(string functionName)
+        private Form? CreateEmployeeModule(string functionName)
         {
             switch (functionName)
             {
@@ -232,7 +233,7 @@ namespace MainModule
                     return null;
             }
         }
-        private Form CreateFinancialModule(string functionName)
+        private Form? CreateFinancialModule(string functionName)
         {
             switch (functionName)
             {
@@ -248,7 +249,7 @@ namespace MainModule
                     return null;
             }
         }
-        private Form CreateGuideModule(string functionName)
+        private Form? CreateGuideModule(string functionName)
         {
             switch (functionName)
             {

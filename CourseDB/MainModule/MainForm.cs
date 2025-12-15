@@ -12,5 +12,6 @@ namespace MainModule
             _controller = controller;
             _controller.AddMenuItems(menuStrip);
         }
+
     }
 }
