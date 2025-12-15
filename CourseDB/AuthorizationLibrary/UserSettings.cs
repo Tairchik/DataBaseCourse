@@ -36,11 +36,21 @@ namespace AuthorizationLibrary
         {
             ConnectionString = connectionString;
         }
+        public SettingsRepository()
+        {
+            string appBaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string projectRootPath = Path.GetFullPath(Path.Combine(appBaseDirectory, "..\\..\\..\\..\\"));
+            string dbFilePath = Path.Combine(projectRootPath, RelativeDbPath, DatabaseFileName);
+
+            string folder = Path.GetDirectoryName(dbFilePath);
+
+            ConnectionString = $"Data Source={dbFilePath}";
+        }
 
         /// <summary>
         /// Проверяет наличие файла БД и создает таблицу UserSettings, если ее нет.
         /// </summary>
-       
+
 
         /// <summary>
         /// Загружает настройки шрифта для указанного пользователя.
@@ -48,9 +58,9 @@ namespace AuthorizationLibrary
         /// </summary>
         /// <param name="userId">ID пользователя</param>
         /// <returns>Объект UserSettingsModel</returns>
-        public UserSettingsModel GetSettings(int userId)
+        public Font GetSettings(int userId)
         {
-            var settings = new UserSettingsModel(); // Настройки по умолчанию
+            Font settings = new Font("Segoe UI", 9, FontStyle.Regular); // Настройки по умолчанию
             string sql = "SELECT font_family, font_size FROM UserSettings WHERE id_user = @UserId";
 
             using (var connection = new SqliteConnection(ConnectionString))
@@ -64,9 +74,9 @@ namespace AuthorizationLibrary
                     {
                         if (reader.Read())
                         {
-                            // Если запись найдена, загружаем значения
-                            settings.FontFamily = reader["font_family"].ToString();
-                            settings.FontSize = Convert.ToInt32(reader["font_size"]);
+                            settings = new Font(reader["font_family"].ToString(), Convert.ToInt32(reader["font_size"]), FontStyle.Regular);
+                            return settings;
+
                         }
                     }
                 }
@@ -95,6 +105,25 @@ namespace AuthorizationLibrary
                     command.Parameters.AddWithValue("@UserId", userId);
                     command.Parameters.AddWithValue("@FontFamily", fontFamily);
                     command.Parameters.AddWithValue("@FontSize", fontSize);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+        public void SaveSettings(int userId, Font font)
+        {
+            string sql = @"
+                    INSERT OR REPLACE INTO UserSettings (id_user, font_family, font_size)
+                    VALUES (@UserId, @FontFamily, @FontSize)";
+
+            using (var connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = new SqliteCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@UserId", userId);
+                    command.Parameters.AddWithValue("@FontFamily", font.FontFamily.ToString());
+                    command.Parameters.AddWithValue("@FontSize", (int)font.Size);
 
                     command.ExecuteNonQuery();
                 }

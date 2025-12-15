@@ -14,6 +14,8 @@ namespace MainModule
     public class MainController
     {
         public event EventHandler<EventArgs> MenuItemClick;
+        public event EventHandler<Font> FontIsChange;
+
 
         private MainForm _view;
         private string _userName;
@@ -25,6 +27,13 @@ namespace MainModule
             this.user = user;
             _menu = new MenuLibrary.Menu();
             _initRepos = new InitRepos();
+        }
+
+        public Font GetFont() 
+        {
+            SettingsRepository rep = new SettingsRepository();
+           
+            return rep.GetSettings(user.Id);
         }
 
         // Метод для получения статуса пункта меню для пользователя
@@ -58,9 +67,7 @@ namespace MainModule
             foreach (var subItem in menuItem.SubItems)
             {
                 menu.DropDownItems.Add(CreateMenuItem(subItem));
-                
             }
-
             if ((status.W == 1 || status.R == 1 || status.D == 1 || status.E == 1))
             {
                 if (menuItem.SubItems.Count == 0)
@@ -138,7 +145,9 @@ namespace MainModule
                     // form.UserRights = status;
 
                     // Показываем форму модально или немодально в зависимости от логики
-                    form.Show();
+                    form.ShowDialog();
+                    FontIsChange?.Invoke(this, GetFont());
+
                 }
             }
             catch (Exception ex)
@@ -168,7 +177,7 @@ namespace MainModule
             switch (functionName)
             {
                 case "Settings":
-                    return new SettingsForm(_initRepos);
+                    return new SettingsForm(user);
                 case "ChangePassword":
                     return new ChangePasswordForm(_initRepos);
                 default:

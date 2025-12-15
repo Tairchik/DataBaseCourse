@@ -1,3 +1,4 @@
+using AuthorizationLibrary;
 using CourseDB;
 
 namespace OtherModule
@@ -6,10 +7,15 @@ namespace OtherModule
     {
         private const int MinFontSize = 8;
         private const int MaxFontSize = 24;
-
+        private User user;
+        private Font oldFont;
         // Конструктор принимает репозиторий, как в вашем MainController
-        public SettingsForm(InitRepos repos)
+        public SettingsForm(User user)
         {
+            this.user = user;
+            SettingsRepository rp = new SettingsRepository();
+            oldFont = rp.GetSettings(user.Id);
+            this.Font = oldFont;
             InitializeComponent();
             LoadSettings();
             PopulateFontFamilies();
@@ -18,12 +24,10 @@ namespace OtherModule
 
         private void LoadSettings()
         {
-            // Здесь должна быть логика загрузки текущих настроек из файла/БД
-            // Для примера, используем текущий шрифт формы:
-
             // Получаем текущий шрифт
-            Font currentFont = this.Font;
+            SettingsRepository settings = new SettingsRepository();
 
+            Font currentFont = settings.GetSettings(user.Id);
             // Сохраняем значения в Tag для дальнейшего использования
             cmbFontFamily.Tag = currentFont.FontFamily.Name;
             cmbFontSize.Tag = (int)currentFont.Size;
@@ -74,24 +78,14 @@ namespace OtherModule
             string selectedFontFamily = cmbFontFamily.SelectedItem.ToString();
             int selectedFontSize = (int)cmbFontSize.SelectedItem;
 
-            // !!! ВАЖНО: Здесь должна быть логика сохранения настроек
-            // Например, запись в файл конфигурации или в реестр.
+            SettingsRepository settings = new SettingsRepository();
+            settings.SaveSettings(user.Id, selectedFontFamily, selectedFontSize);
 
             // Демонстрация: Создаем новый шрифт и применяем его к форме настроек
             try
             {
                 Font newFont = new Font(selectedFontFamily, selectedFontSize, FontStyle.Regular);
                 this.Font = newFont;
-
-                // Здесь же нужно вызвать метод, который применит этот шрифт ко ВСЕМУ приложению
-                // Например, через статический класс FontManager.ApplyFont(newFont);
-
-                MessageBox.Show("Настройки шрифта успешно применены.", "Успех",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Закрываем форму настроек после успешного применения
-                this.DialogResult = DialogResult.OK;
-                this.Close();
             }
             catch (Exception ex)
             {
@@ -102,7 +96,42 @@ namespace OtherModule
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            SettingsRepository settings = new SettingsRepository();
+            settings.SaveSettings(user.Id, oldFont.FontFamily.ToString(), (int) oldFont.Size);
             // Просто закрываем форму, игнорируя изменения
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (cmbFontFamily.SelectedItem == null || cmbFontSize.SelectedItem == null)
+            {
+                MessageBox.Show("Пожалуйста, выберите и шрифт, и размер.", "Ошибка",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Получаем выбранные значения
+            string selectedFontFamily = cmbFontFamily.SelectedItem.ToString();
+            int selectedFontSize = (int)cmbFontSize.SelectedItem;
+
+            SettingsRepository settings = new SettingsRepository();
+            settings.SaveSettings(user.Id, selectedFontFamily, selectedFontSize);
+
+            // Демонстрация: Создаем новый шрифт и применяем его к форме настроек
+            try
+            {
+                Font newFont = new Font(selectedFontFamily, selectedFontSize, FontStyle.Regular);
+                this.Font = newFont;
+                this.DialogResult = DialogResult.Cancel;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Не удалось применить шрифт: {ex.Message}", "Ошибка",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
