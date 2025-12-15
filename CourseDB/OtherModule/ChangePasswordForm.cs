@@ -9,11 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HelpModule
+namespace OtherModule
 {
-    public partial class AboutProgramForm : Form
+    public partial class ChangePasswordForm : Form
     {
-        public AboutProgramForm(InitRepos _initRepos)
+        public ChangePasswordForm(InitRepos initRepos)
         {
             InitializeComponent();
         }

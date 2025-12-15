@@ -1,10 +1,12 @@
 ﻿using AuthorizationLibrary;
 using HelpModule;
+using CourseDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OtherModule;
 
 namespace MainModule
 {
@@ -16,11 +18,13 @@ namespace MainModule
         private string _userName;
         private readonly MenuLibrary.Menu _menu;
         private Dictionary<string, User> users;
+        private InitRepos _initRepos; 
         public MainController(Dictionary<string, User> users, string username)
         {
             this.users = users;
             _userName = username;
             _menu = new MenuLibrary.Menu();
+            _initRepos = new InitRepos();
         }
 
         // Метод для получения статуса пункта меню для пользователя
@@ -79,14 +83,6 @@ namespace MainModule
                 // Проверяем права на этот пункт меню
                 MenuState status = GetMenuStatus(_userName, menuItem.Id);
 
-                // Здесь можно добавить проверку конкретных прав
-                if (status.R == 0) // Пример: если нет прав на чтение
-                {
-                    MessageBox.Show("У вас нет прав для доступа к этой функции", "Ошибка доступа",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
                 // Открываем форму из статически подключенных сборок
                 OpenFormFromMenuItem(menuItem);
             }
@@ -101,8 +97,6 @@ namespace MainModule
         {
             try
             {
-                // Статическое создание форм на основе DllName и FunctionName
-                // Примеры для HelpModule и OtherModule
                 Form form = null;
 
                 switch (menuItem.DllName)
@@ -113,7 +107,7 @@ namespace MainModule
                     case "OtherModule":
                         form = CreateOtherModuleForm(menuItem.FunctionName);
                         break;
-                    // Добавьте другие модули по мере необходимости
+
                     default:
                         MessageBox.Show($"Модуль '{menuItem.DllName}' не поддерживается", "Ошибка",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -139,15 +133,12 @@ namespace MainModule
 
         private Form CreateHelpModuleForm(string functionName)
         {
-            // Пример создания форм из HelpModule
-            // В реальном проекте это будут реальные формы из подключенных библиотек
-
             switch (functionName)
             {
                 case "Content":
-                    return new ContentForm(); // Предполагается, что такая форма существует
+                    return new ContentForm(_initRepos);
                 case "AboutProgram":
-                    return new AboutProgramForm(); // Предполагается, что такая форма существует
+                    return new AboutProgramForm(_initRepos); 
                 default:
                     MessageBox.Show($"Функция '{functionName}' не найдена в модуле HelpModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -157,30 +148,16 @@ namespace MainModule
 
         private Form CreateOtherModuleForm(string functionName)
         {
-            // Пример создания форм из OtherModule
-
             switch (functionName)
             {
                 case "Settings":
-                    return new SettingsForm(); // Предполагается, что такая форма существует
-                // Добавьте другие функции для OtherModule
+                    return new SettingsForm(_initRepos);
+                case "ChangePassport":
+                    return new ChangePasswordForm(_initRepos);
                 default:
                     MessageBox.Show($"Функция '{functionName}' не найдена в модуле OtherModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
-            }
-        }
-        private class SettingsForm : Form
-        {
-            public SettingsForm()
-            {
-                this.Text = "Настройки";
-                this.Size = new System.Drawing.Size(400, 300);
-                var label = new Label();
-                label.Text = "Форма настроек";
-                label.Dock = DockStyle.Fill;
-                label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-                this.Controls.Add(label);
             }
         }
     }

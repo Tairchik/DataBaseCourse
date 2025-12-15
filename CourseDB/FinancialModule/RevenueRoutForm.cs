@@ -9,11 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HelpModule
+namespace FinancialModule
 {
-    public partial class AboutProgramForm : Form
+    public partial class RevenueRoutForm : Form
     {
-        public AboutProgramForm(InitRepos _initRepos)
+        public RevenueRoutForm(InitRepos initRepos)
         {
             InitializeComponent();
         }

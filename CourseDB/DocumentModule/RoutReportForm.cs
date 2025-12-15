@@ -1,5 +1,4 @@
-﻿using CourseDB;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HelpModule
+namespace DocumentModule
 {
-    public partial class AboutProgramForm : Form
+    public partial class RoutReportForm : Form
     {
-        public AboutProgramForm(InitRepos _initRepos)
+        public RoutReportForm()
         {
             InitializeComponent();
         }

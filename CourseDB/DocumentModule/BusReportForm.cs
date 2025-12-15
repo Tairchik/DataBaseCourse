@@ -9,11 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HelpModule
+namespace DocumentModule
 {
-    public partial class AboutProgramForm : Form
+    public partial class BusReportForm : Form
     {
-        public AboutProgramForm(InitRepos _initRepos)
+        public BusReportForm(InitRepos initRepos)
         {
             InitializeComponent();
         }

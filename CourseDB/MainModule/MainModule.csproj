@@ -9,8 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CourseDB\CourseDB.csproj" />
     <ProjectReference Include="..\HelpModule\HelpModule.csproj" />
     <ProjectReference Include="..\LoginWindow\LoginWindow.csproj" />
+    <ProjectReference Include="..\OtherModule\OtherModule.csproj" />
   </ItemGroup>
 
 </Project>
