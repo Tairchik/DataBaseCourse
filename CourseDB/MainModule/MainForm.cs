@@ -1,3 +1,4 @@
+using AuthorizationLibrary;
 using System.Windows.Forms;
 
 namespace MainModule
@@ -6,10 +7,10 @@ namespace MainModule
     {
         private MainController _controller;
 
-        public MainForm(MainController controller)
+        public MainForm(User user)
         {
             InitializeComponent();
-            _controller = controller;
+            _controller = new MainController(user, this);
             _controller.FontIsChange += FontR;
             _controller.AddMenuItems(menuStrip);
             Font f = _controller.GetFont();

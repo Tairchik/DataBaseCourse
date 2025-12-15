@@ -17,17 +17,13 @@ namespace OtherModule
             oldFont = rp.GetSettings(user.Id);
             this.Font = oldFont;
             InitializeComponent();
-            LoadSettings();
+            LoadSettings(oldFont);
             PopulateFontFamilies();
             PopulateFontSizes();
         }
 
-        private void LoadSettings()
+        private void LoadSettings(Font currentFont)
         {
-            // Получаем текущий шрифт
-            SettingsRepository settings = new SettingsRepository();
-
-            Font currentFont = settings.GetSettings(user.Id);
             // Сохраняем значения в Tag для дальнейшего использования
             cmbFontFamily.Tag = currentFont.FontFamily.Name;
             cmbFontSize.Tag = (int)currentFont.Size;
@@ -97,7 +93,7 @@ namespace OtherModule
         private void btnCancel_Click(object sender, EventArgs e)
         {
             SettingsRepository settings = new SettingsRepository();
-            settings.SaveSettings(user.Id, oldFont.FontFamily.ToString(), (int) oldFont.Size);
+            settings.SaveSettings(user.Id, oldFont.FontFamily.Name, (int) oldFont.Size);
             // Просто закрываем форму, игнорируя изменения
             this.DialogResult = DialogResult.Cancel;
             this.Close();

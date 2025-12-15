@@ -1,16 +1,14 @@
-﻿using System.Windows.Forms;
-
-namespace LoginWindow
+﻿namespace LoginWindow
 {
-    partial class LoginForm
+    partial class ChangePassword
     {
         /// <summary>
-        ///  Required designer variable.
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        ///  Clean up any resources being used.
+        /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -25,8 +23,8 @@ namespace LoginWindow
         #region Windows Form Designer generated code
 
         /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -36,14 +34,16 @@ namespace LoginWindow
             systemNameLabel = new Label();
             versionLabel = new Label();
             usernameLabel = new Label();
-            usernameTextBox = new TextBox();
+            oldPasswordTextBox = new TextBox();
             passwordLabel = new Label();
-            passwordTextBox = new TextBox();
-            loginButton = new Button();
+            newPasswordTextBox = new TextBox();
+            acceptButton = new Button();
             cancelButton = new Button();
             statusStrip = new StatusStrip();
             languageLabel = new ToolStripStatusLabel();
             capsLockLabel = new ToolStripStatusLabel();
+            acceptPasswordTextBox = new TextBox();
+            label2 = new Label();
             bannerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)keyIcon).BeginInit();
             statusStrip.SuspendLayout();
@@ -83,7 +83,7 @@ namespace LoginWindow
             label1.Name = "label1";
             label1.Size = new Size(420, 21);
             label1.TabIndex = 3;
-            label1.Text = "Введите имя пользователя или пароль";
+            label1.Text = "Изменить пароль";
             label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // systemNameLabel
@@ -114,20 +114,21 @@ namespace LoginWindow
             // 
             usernameLabel.AutoSize = true;
             usernameLabel.Font = new Font("Arial", 9.75F);
-            usernameLabel.Location = new Point(4, 118);
+            usernameLabel.Location = new Point(7, 118);
             usernameLabel.Margin = new Padding(4, 0, 4, 0);
             usernameLabel.Name = "usernameLabel";
-            usernameLabel.Size = new Size(117, 16);
+            usernameLabel.Size = new Size(106, 16);
             usernameLabel.TabIndex = 4;
-            usernameLabel.Text = "Имя пользователя";
+            usernameLabel.Text = "Прежний пароль";
             // 
-            // usernameTextBox
+            // oldPasswordTextBox
             // 
-            usernameTextBox.Location = new Point(154, 116);
-            usernameTextBox.Margin = new Padding(4, 3, 4, 3);
-            usernameTextBox.Name = "usernameTextBox";
-            usernameTextBox.Size = new Size(268, 23);
-            usernameTextBox.TabIndex = 5;
+            oldPasswordTextBox.Location = new Point(154, 116);
+            oldPasswordTextBox.Margin = new Padding(4, 3, 4, 3);
+            oldPasswordTextBox.Name = "oldPasswordTextBox";
+            oldPasswordTextBox.Size = new Size(268, 23);
+            oldPasswordTextBox.TabIndex = 5;
+            oldPasswordTextBox.UseSystemPasswordChar = true;
             // 
             // passwordLabel
             // 
@@ -136,35 +137,37 @@ namespace LoginWindow
             passwordLabel.Location = new Point(7, 158);
             passwordLabel.Margin = new Padding(4, 0, 4, 0);
             passwordLabel.Name = "passwordLabel";
-            passwordLabel.Size = new Size(51, 16);
+            passwordLabel.Size = new Size(92, 16);
             passwordLabel.TabIndex = 6;
-            passwordLabel.Text = "Пароль";
+            passwordLabel.Text = "Новый пароль";
             // 
-            // passwordTextBox
+            // newPasswordTextBox
             // 
-            passwordTextBox.Location = new Point(154, 156);
-            passwordTextBox.Margin = new Padding(4, 3, 4, 3);
-            passwordTextBox.Name = "passwordTextBox";
-            passwordTextBox.Size = new Size(268, 23);
-            passwordTextBox.TabIndex = 7;
-            passwordTextBox.UseSystemPasswordChar = true;
+            newPasswordTextBox.Location = new Point(154, 156);
+            newPasswordTextBox.Margin = new Padding(4, 3, 4, 3);
+            newPasswordTextBox.Name = "newPasswordTextBox";
+            newPasswordTextBox.Size = new Size(268, 23);
+            newPasswordTextBox.TabIndex = 6;
+            newPasswordTextBox.UseSystemPasswordChar = true;
             // 
-            // loginButton
+            // acceptButton
             // 
-            loginButton.BackColor = SystemColors.ButtonFace;
-            loginButton.Location = new Point(22, 189);
-            loginButton.Margin = new Padding(4, 3, 4, 3);
-            loginButton.Name = "loginButton";
-            loginButton.Size = new Size(91, 24);
-            loginButton.TabIndex = 8;
-            loginButton.Text = "Вход";
-            loginButton.UseVisualStyleBackColor = false;
-            loginButton.Click += LoginButton_Click;
+            acceptButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            acceptButton.BackColor = SystemColors.ButtonFace;
+            acceptButton.Location = new Point(22, 232);
+            acceptButton.Margin = new Padding(4, 3, 4, 3);
+            acceptButton.Name = "acceptButton";
+            acceptButton.Size = new Size(91, 24);
+            acceptButton.TabIndex = 8;
+            acceptButton.Text = "Применить";
+            acceptButton.UseVisualStyleBackColor = false;
+            acceptButton.Click += AcceptButton_Click;
             // 
             // cancelButton
             // 
+            cancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cancelButton.BackColor = SystemColors.ButtonFace;
-            cancelButton.Location = new Point(322, 189);
+            cancelButton.Location = new Point(322, 232);
             cancelButton.Margin = new Padding(4, 3, 4, 3);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(91, 24);
@@ -178,7 +181,7 @@ namespace LoginWindow
             statusStrip.BackColor = SystemColors.GradientActiveCaption;
             statusStrip.GripStyle = ToolStripGripStyle.Visible;
             statusStrip.Items.AddRange(new ToolStripItem[] { languageLabel, capsLockLabel });
-            statusStrip.Location = new Point(0, 216);
+            statusStrip.Location = new Point(0, 259);
             statusStrip.Name = "statusStrip";
             statusStrip.Padding = new Padding(1, 0, 16, 0);
             statusStrip.RenderMode = ToolStripRenderMode.Professional;
@@ -201,17 +204,39 @@ namespace LoginWindow
             capsLockLabel.Size = new Size(258, 17);
             capsLockLabel.Text = "Клавиша CapsLock нажата";
             // 
-            // LoginForm
+            // acceptPasswordTextBox
+            // 
+            acceptPasswordTextBox.Location = new Point(154, 195);
+            acceptPasswordTextBox.Margin = new Padding(4, 3, 4, 3);
+            acceptPasswordTextBox.Name = "acceptPasswordTextBox";
+            acceptPasswordTextBox.Size = new Size(268, 23);
+            acceptPasswordTextBox.TabIndex = 7;
+            acceptPasswordTextBox.UseSystemPasswordChar = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Arial", 9.75F);
+            label2.Location = new Point(7, 197);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(130, 16);
+            label2.TabIndex = 11;
+            label2.Text = "Подтвердите пароль";
+            // 
+            // ChangePassword
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(436, 238);
+            ClientSize = new Size(436, 281);
+            Controls.Add(acceptPasswordTextBox);
+            Controls.Add(label2);
             Controls.Add(cancelButton);
-            Controls.Add(loginButton);
-            Controls.Add(passwordTextBox);
+            Controls.Add(acceptButton);
+            Controls.Add(newPasswordTextBox);
             Controls.Add(passwordLabel);
-            Controls.Add(usernameTextBox);
+            Controls.Add(oldPasswordTextBox);
             Controls.Add(usernameLabel);
             Controls.Add(bannerPanel);
             Controls.Add(statusStrip);
@@ -219,7 +244,7 @@ namespace LoginWindow
             KeyPreview = true;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
-            Name = "LoginForm";
+            Name = "ChangePassword";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Вход";
@@ -238,10 +263,10 @@ namespace LoginWindow
         private System.Windows.Forms.Label systemNameLabel;
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.Label usernameLabel;
-        private System.Windows.Forms.TextBox usernameTextBox;
+        private System.Windows.Forms.TextBox oldPasswordTextBox;
         private System.Windows.Forms.Label passwordLabel;
-        private System.Windows.Forms.TextBox passwordTextBox;
-        private System.Windows.Forms.Button loginButton;
+        private System.Windows.Forms.TextBox newPasswordTextBox;
+        private System.Windows.Forms.Button acceptButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel languageLabel;
@@ -249,5 +274,8 @@ namespace LoginWindow
         private Label label1;
 
         #endregion
+
+        private TextBox acceptPasswordTextBox;
+        private Label label2;
     }
 }

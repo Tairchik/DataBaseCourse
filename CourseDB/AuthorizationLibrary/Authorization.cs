@@ -302,6 +302,38 @@ namespace AuthorizationLibrary
             }
         }
 
+        public bool ChangePasswordSafe(string username, string oldPassword, string newPassword)
+        {
+            if (!users.TryGetValue(username, out var userData))
+            {
+                return false; // Пользователь не найден
+            }
+            if (Authenticate(username, oldPassword) == false) throw new ArgumentException("Неверный старый пароль. Повторите попытку");
+
+            // Хешируем новый пароль
+            string newHashedPassword = HashPassword(newPassword);
+
+            using (var connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "UPDATE Users SET Password = @newHash WHERE Id = @id";
+                    command.Parameters.AddWithValue("@newHash", newHashedPassword);
+                    command.Parameters.AddWithValue("@id", userData.Id);
+
+                    if (command.ExecuteNonQuery() > 0)
+                    {
+                        // Обновляем данные в словаре в памяти
+                        userData.Password = newHashedPassword;
+                        users[username] = userData;
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        }
+
         /// <summary>
         /// Задает или обновляет права доступа для пользователя.
         /// Переименован в EditUserRights для ясности.

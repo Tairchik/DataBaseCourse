@@ -8,6 +8,7 @@ using ControlBusModule;
 using EmployeeModule;
 using FinancialModule;
 using GuideModule;
+using LoginWindow;
 
 namespace MainModule
 {
@@ -22,8 +23,9 @@ namespace MainModule
         private readonly MenuLibrary.Menu _menu;
         private User user;
         private InitRepos _initRepos; 
-        public MainController(User user)
+        public MainController(User user, MainForm view)
         {
+            _view = view;
             this.user = user;
             _menu = new MenuLibrary.Menu();
             _initRepos = new InitRepos();
@@ -145,9 +147,22 @@ namespace MainModule
                     // form.UserRights = status;
 
                     // Показываем форму модально или немодально в зависимости от логики
-                    form.ShowDialog();
-                    FontIsChange?.Invoke(this, GetFont());
 
+                    if (form.GetType() == typeof(ChangePassword))
+                    {
+                        _view.DialogResult = DialogResult.Continue;
+                        _view.Close();
+
+                    }
+                    else if (form.GetType() == typeof(SettingsForm)) 
+                    {
+                        form.ShowDialog();
+                        FontIsChange?.Invoke(this, GetFont());
+                    }
+                    else
+                    {
+                        form.ShowDialog();
+                    }
                 }
             }
             catch (Exception ex)
@@ -179,7 +194,7 @@ namespace MainModule
                 case "Settings":
                     return new SettingsForm(user);
                 case "ChangePassword":
-                    return new ChangePasswordForm(_initRepos);
+                    return new ChangePassword(user);
                 default:
                     MessageBox.Show($"Функция '{functionName}' не найдена в модуле OtherModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
