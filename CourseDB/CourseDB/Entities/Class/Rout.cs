@@ -145,7 +145,7 @@ namespace CourseDB
         {
             get
             {
-                if (Stations.Count == 0) throw new ArgumentException("Не задан список автобусов.");
+                if (Stations.Count == 0) throw new ArgumentException("Не задана начальная остановка.");
                 return Stations.First();
             } 
         }
@@ -154,7 +154,7 @@ namespace CourseDB
         {
             get
             {
-                if (Stations.Count == 0) throw new ArgumentException("Не задан список автобусов.");
+                if (Stations.Count == 0) throw new ArgumentException("Не задана конечная остановка.");
                 return Stations.Last();
             }
         }
@@ -164,7 +164,7 @@ namespace CourseDB
         {
             if (string.IsNullOrWhiteSpace(stationName))
             {
-                throw new ArgumentException("Название станции не может быть пустым");
+                throw new ArgumentException("Название станции не может быть пустым.");
             }
 
             // Проверяем, существует ли уже такая станция (без учета регистра)

@@ -366,11 +366,7 @@ namespace GuideModule
                     ResultModel.Schedule = schedule;
 
                     // Обновление остановок
-                    ResultModel.Stations.Clear();
-                    foreach (var station in stationsList)
-                    {
-                        ResultModel.AddStation(station);
-                    }
+                    ResultModel.Stations = stationsList;
                 }
 
                 this.DialogResult = DialogResult.OK;
