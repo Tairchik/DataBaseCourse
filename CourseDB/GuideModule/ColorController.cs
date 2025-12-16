@@ -4,17 +4,17 @@ using CourseDB.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace GuideModule
 {
-    public class BrandController : GuideController
+    public class ColorController : GuideController
     {
-        private BindingList<BrandDataModel> bindingList;
-        public BrandController(BaseForm form, int user_id, InitRepos initRepos, MenuState menuState) : base (form, user_id, initRepos, menuState)
+        private BindingList<ColorDataModel> bindingList;
+        public ColorController(BaseForm form, int user_id, InitRepos initRepos, MenuState menuState) : base(form, user_id, initRepos, menuState)
         {
             view.dataGridView.DataBindingComplete += DataGridView_DataBindingComplete;
             view.textBoxSearch.KeyDown += TextBoxSearch_KeyDown;
@@ -22,33 +22,67 @@ namespace GuideModule
             UpdateRowTable();
             SetupAutoComplete();
         }
+
         public override void CreateRowTable()
         {
-            string brandName = Microsoft.VisualBasic.Interaction.InputBox(
-            "Введите название бренда:",
-            "Новый бренд",
+            string colorName = Microsoft.VisualBasic.Interaction.InputBox(
+            "Введите название цвета:",
+            "Новый цвет",
             "");
 
-            BrandDataModel newBrand = new BrandDataModel
+            ColorDataModel newColor = new ColorDataModel
             {
-                BrandName = brandName
+                ColorName = colorName,
             };
-            
-            newBrand.Id = dataBase.brandRep.GetOrCreate(newBrand.BrandName);
-            bindingList.Add(newBrand);
+
+            newColor.Id = dataBase.colorRep.GetOrCreate(newColor.ColorName);
+            bindingList.Add(newColor);
 
             SetupAutoComplete();
         }
 
-        // Метод поиска
-        public override void Search() 
+        public override void EditRowTable()
+        {
+            if (view.dataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите строку для редактирования", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int selectedIndex = view.dataGridView.SelectedRows[0].Index;
+            ColorDataModel selected = bindingList[selectedIndex];
+
+            // Запрашиваем новое название
+            string newName = Microsoft.VisualBasic.Interaction.InputBox(
+                "Введите новое название цвета:",
+                "Редактирование цвета",
+                selected.ColorName);
+
+            // Проверяем ввод
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                return;
+            }
+
+            // Обновляем данные
+            selected.ColorName = newName;
+
+            // Обновляем отображение
+            view.dataGridView.Refresh();
+
+            dataBase.colorRep.Update(selected);
+            SetupAutoComplete();
+        }
+
+        public override void Search()
         {
             string searchText = view.textBoxSearch.Text.Trim();
 
             // Проверяем, что поле не пустое
             if (string.IsNullOrWhiteSpace(searchText))
             {
-                MessageBox.Show("Введите название бренда для поиска", "Предупреждение",
+                MessageBox.Show("Введите название цвета для поиска", "Предупреждение",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -57,7 +91,7 @@ namespace GuideModule
             int foundIndex = -1;
             for (int i = 0; i < bindingList.Count; i++)
             {
-                if (bindingList[i].BrandName.ToLower().Contains(searchText.ToLower()))
+                if (bindingList[i].ColorName.ToLower().Contains(searchText.ToLower()))
                 {
                     foundIndex = i;
                     break;
@@ -81,7 +115,7 @@ namespace GuideModule
             }
             else
             {
-                MessageBox.Show($"Бренд с названием \"{searchText}\" не найден", "Результат поиска",
+                MessageBox.Show($"Цвет с названием \"{searchText}\" не найден", "Результат поиска",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -97,7 +131,7 @@ namespace GuideModule
 
             // Подтверждение удаления
             DialogResult result = MessageBox.Show(
-                "Вы уверены, что хотите удалить выбранный бренд?",
+                "Вы уверены, что хотите удалить выбранный цвет?",
                 "Подтверждение удаления",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -106,45 +140,11 @@ namespace GuideModule
             {
                 // Получаем индекс выбранной строки
                 int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-                BrandDataModel brandToDelete = bindingList[selectedIndex];
+                ColorDataModel ToDelete = bindingList[selectedIndex];
                 bindingList.RemoveAt(selectedIndex);
-                dataBase.brandRep.Delete(brandToDelete.Id);
+                dataBase.colorRep.Delete(ToDelete.Id);
                 SetupAutoComplete();
             }
-        }
-
-        public override void EditRowTable()
-        {
-            if (view.dataGridView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Выберите строку для редактирования", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-            BrandDataModel selectedBrand = bindingList[selectedIndex];
-
-            // Запрашиваем новое название
-            string newName = Microsoft.VisualBasic.Interaction.InputBox(
-                "Введите новое название бренда:",
-                "Редактирование бренда",
-                selectedBrand.BrandName);
-
-            // Проверяем ввод
-            if (string.IsNullOrWhiteSpace(newName))
-            {
-                return;
-            }
-
-            // Обновляем данные
-            selectedBrand.BrandName = newName;
-
-            // Обновляем отображение
-            view.dataGridView.Refresh();
-
-            dataBase.brandRep.Update(selectedBrand);
-            SetupAutoComplete();
         }
 
         public override void UpdateColumnTable()
@@ -169,9 +169,9 @@ namespace GuideModule
 
             // Колонка для названия бренда
             DataGridViewTextBoxColumn brandColumn = new DataGridViewTextBoxColumn();
-            brandColumn.HeaderText = "Название бренда";
-            brandColumn.Name = "BrandName";
-            brandColumn.DataPropertyName = "BrandName";
+            brandColumn.HeaderText = "Название цвета";
+            brandColumn.Name = "ColorName";
+            brandColumn.DataPropertyName = "ColorName";
             brandColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             brandColumn.ReadOnly = true; // Только чтение
             view.dataGridView.Columns.Add(brandColumn);
@@ -179,8 +179,8 @@ namespace GuideModule
 
         public override void UpdateRowTable()
         {
-            List<BrandDataModel> brandDataModels = dataBase.brandRep.GetAll();
-            bindingList = new BindingList<BrandDataModel>(brandDataModels);
+            List<ColorDataModel> DataModels = dataBase.colorRep.GetAll();
+            bindingList = new BindingList<ColorDataModel>(DataModels);
             view.dataGridView.DataSource = bindingList;
 
             SetupAutoComplete();
@@ -204,9 +204,9 @@ namespace GuideModule
             // Получаем все названия брендов
             AutoCompleteStringCollection autoCompleteCollection = new AutoCompleteStringCollection();
 
-            foreach (var brand in bindingList)
+            foreach (var color in bindingList)
             {
-                autoCompleteCollection.Add(brand.BrandName);
+                autoCompleteCollection.Add(color.ColorName);
             }
 
             // Настраиваем автодополнение для TextBox
@@ -220,7 +220,7 @@ namespace GuideModule
             {
                 Search();
                 e.Handled = true;
-                e.SuppressKeyPress = true; 
+                e.SuppressKeyPress = true;
             }
         }
     }

@@ -41,7 +41,7 @@ namespace GuideModule
             baseForm.buttonCancel = new Button();
             baseForm.mainTableLayout.SuspendLayout();
             baseForm.searchTableLayout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(baseForm.dataGridView)).BeginInit();
             baseForm.buttonsFlowLayout.SuspendLayout();
             baseForm.SuspendLayout();
             // 
@@ -49,19 +49,18 @@ namespace GuideModule
             // 
             baseForm.mainTableLayout.ColumnCount = 1;
             baseForm.mainTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            baseForm.mainTableLayout.Controls.Add(searchTableLayout, 0, 1);
-            baseForm.mainTableLayout.Controls.Add(dataGridView, 0, 2);
-            baseForm.mainTableLayout.Controls.Add(buttonsFlowLayout, 0, 3);
+            baseForm.mainTableLayout.Controls.Add(baseForm.searchTableLayout, 0, 0);
+            baseForm.mainTableLayout.Controls.Add(baseForm.dataGridView, 0, 1);
+            baseForm.mainTableLayout.Controls.Add(baseForm.buttonsFlowLayout, 0, 2);
             baseForm.mainTableLayout.Dock = DockStyle.Fill;
             baseForm.mainTableLayout.Location = new Point(0, 0);
             baseForm.mainTableLayout.Name = "mainTableLayout";
             baseForm.mainTableLayout.Padding = new Padding(10);
-            baseForm.mainTableLayout.RowCount = 4;
-            baseForm.mainTableLayout.RowStyles.Add(new RowStyle());
-            baseForm.mainTableLayout.RowStyles.Add(new RowStyle());
+            baseForm.mainTableLayout.RowCount = 3;
+            baseForm.mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             baseForm.mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            baseForm.mainTableLayout.RowStyles.Add(new RowStyle());
-            baseForm.mainTableLayout.Size = new Size(684, 461);
+            baseForm.mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            baseForm.mainTableLayout.Size = new Size(800, 600);
             baseForm.mainTableLayout.TabIndex = 0;
             // 
             // searchTableLayout
@@ -72,16 +71,15 @@ namespace GuideModule
             baseForm.searchTableLayout.ColumnStyles.Add(new ColumnStyle());
             baseForm.searchTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             baseForm.searchTableLayout.ColumnStyles.Add(new ColumnStyle());
-            baseForm.searchTableLayout.Controls.Add(labelSearch, 0, 0);
-            baseForm.searchTableLayout.Controls.Add(textBoxSearch, 1, 0);
-            baseForm.searchTableLayout.Controls.Add(buttonApply, 2, 0);
+            baseForm.searchTableLayout.Controls.Add(baseForm.labelSearch, 0, 0);
+            baseForm.searchTableLayout.Controls.Add(baseForm.textBoxSearch, 1, 0);
+            baseForm.searchTableLayout.Controls.Add(baseForm.buttonApply, 2, 0);
             baseForm.searchTableLayout.Dock = DockStyle.Fill;
-            baseForm.searchTableLayout.Location = new Point(10, 10);
-            baseForm.searchTableLayout.Margin = new Padding(0, 0, 0, 10);
+            baseForm.searchTableLayout.Location = new Point(13, 13);
             baseForm.searchTableLayout.Name = "searchTableLayout";
             baseForm.searchTableLayout.RowCount = 1;
             baseForm.searchTableLayout.RowStyles.Add(new RowStyle());
-            baseForm.searchTableLayout.Size = new Size(664, 29);
+            baseForm.searchTableLayout.Size = new Size(774, 29);
             baseForm.searchTableLayout.TabIndex = 1;
             // 
             // labelSearch
@@ -101,7 +99,7 @@ namespace GuideModule
             baseForm.textBoxSearch.Location = new Point(64, 2);
             baseForm.textBoxSearch.Margin = new Padding(0, 0, 10, 0);
             baseForm.textBoxSearch.Name = "textBoxSearch";
-            baseForm.textBoxSearch.Size = new Size(499, 25);
+            baseForm.textBoxSearch.Size = new Size(608, 25);
             baseForm.textBoxSearch.TabIndex = 1;
             // 
             // buttonApply
@@ -109,43 +107,44 @@ namespace GuideModule
             baseForm.buttonApply.Anchor = AnchorStyles.Right;
             baseForm.buttonApply.AutoSize = true;
             baseForm.buttonApply.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            baseForm.buttonApply.Location = new Point(573, 0);
+            baseForm.buttonApply.Location = new Point(682, 0);
             baseForm.buttonApply.Margin = new Padding(0);
             baseForm.buttonApply.Name = "buttonApply";
-            baseForm.buttonApply.Size = new Size(91, 29);
+            baseForm.buttonApply.Size = new Size(92, 29);
             baseForm.buttonApply.TabIndex = 2;
             baseForm.buttonApply.Text = "Применить";
             baseForm.buttonApply.UseVisualStyleBackColor = true;
-            baseForm.buttonApply.Click += ButtonApply_Click;
+            baseForm.buttonApply.Click += baseForm.ButtonApply_Click;
             // 
             // dataGridView
             // 
             baseForm.dataGridView.AllowUserToAddRows = false;
+            baseForm.dataGridView.AllowUserToDeleteRows = false;
+            baseForm.dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             baseForm.dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             baseForm.dataGridView.Dock = DockStyle.Fill;
-            baseForm.dataGridView.Location = new Point(10, 49);
-            baseForm.dataGridView.Margin = new Padding(0, 0, 0, 10);
-            baseForm.dataGridView.MultiSelect = false;
+            baseForm.dataGridView.Location = new Point(13, 55);
+            baseForm.dataGridView.Margin = new Padding(3, 10, 3, 10);
             baseForm.dataGridView.Name = "dataGridView";
+            baseForm.dataGridView.ReadOnly = true;
+            baseForm.dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             baseForm.dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            baseForm.dataGridView.Size = new Size(664, 357);
+            baseForm.dataGridView.Size = new Size(774, 472);
             baseForm.dataGridView.TabIndex = 2;
             // 
             // buttonsFlowLayout
             // 
             baseForm.buttonsFlowLayout.AutoSize = true;
             baseForm.buttonsFlowLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            baseForm.buttonsFlowLayout.Controls.Add(buttonCreate);
-            baseForm.buttonsFlowLayout.Controls.Add(buttonEdit);
-            baseForm.buttonsFlowLayout.Controls.Add(buttonDelete);
-            baseForm.buttonsFlowLayout.Controls.Add(buttonCancel);
+            baseForm.buttonsFlowLayout.Controls.Add(baseForm.buttonCreate);
+            baseForm.buttonsFlowLayout.Controls.Add(baseForm.buttonEdit);
+            baseForm.buttonsFlowLayout.Controls.Add(baseForm.buttonDelete);
+            baseForm.buttonsFlowLayout.Controls.Add(baseForm.buttonCancel);
             baseForm.buttonsFlowLayout.Dock = DockStyle.Fill;
-            baseForm.buttonsFlowLayout.Location = new Point(10, 416);
-            baseForm.buttonsFlowLayout.Margin = new Padding(0);
+            baseForm.buttonsFlowLayout.Location = new Point(13, 540);
             baseForm.buttonsFlowLayout.Name = "buttonsFlowLayout";
-            baseForm.buttonsFlowLayout.Size = new Size(664, 35);
+            baseForm.buttonsFlowLayout.Size = new Size(774, 35);
             baseForm.buttonsFlowLayout.TabIndex = 3;
-            baseForm.buttonsFlowLayout.WrapContents = false;
             // 
             // buttonCreate
             // 
@@ -153,73 +152,72 @@ namespace GuideModule
             baseForm.buttonCreate.AutoSize = true;
             baseForm.buttonCreate.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             baseForm.buttonCreate.Location = new Point(0, 3);
-            baseForm.buttonCreate.Margin = new Padding(0, 3, 5, 3);
+            baseForm.buttonCreate.Margin = new Padding(0, 3, 10, 3);
             baseForm.buttonCreate.Name = "buttonCreate";
             baseForm.buttonCreate.Size = new Size(70, 29);
             baseForm.buttonCreate.TabIndex = 0;
             baseForm.buttonCreate.Text = "Создать";
             baseForm.buttonCreate.UseVisualStyleBackColor = true;
-            baseForm.buttonCreate.Click += ButtonCreate_Click;
+            baseForm.buttonCreate.Click += baseForm.ButtonCreate_Click;
             // 
             // buttonEdit
             // 
             baseForm.buttonEdit.Anchor = AnchorStyles.None;
             baseForm.buttonEdit.AutoSize = true;
             baseForm.buttonEdit.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            baseForm.buttonEdit.Location = new Point(75, 3);
-            baseForm.buttonEdit.Margin = new Padding(0, 3, 5, 3);
+            baseForm.buttonEdit.Location = new Point(80, 3);
+            baseForm.buttonEdit.Margin = new Padding(0, 3, 10, 3);
             baseForm.buttonEdit.Name = "buttonEdit";
             baseForm.buttonEdit.Size = new Size(81, 29);
             baseForm.buttonEdit.TabIndex = 1;
             baseForm.buttonEdit.Text = "Изменить";
             baseForm.buttonEdit.UseVisualStyleBackColor = true;
-            baseForm.buttonEdit.Click += ButtonEdit_Click;
+            baseForm.buttonEdit.Click += baseForm.ButtonEdit_Click;
             // 
             // buttonDelete
             // 
             baseForm.buttonDelete.Anchor = AnchorStyles.None;
             baseForm.buttonDelete.AutoSize = true;
             baseForm.buttonDelete.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            baseForm.buttonDelete.Location = new Point(161, 3);
-            baseForm.buttonDelete.Margin = new Padding(0, 3, 5, 3);
+            baseForm.buttonDelete.Location = new Point(171, 3);
+            baseForm.buttonDelete.Margin = new Padding(0, 3, 10, 3);
             baseForm.buttonDelete.Name = "buttonDelete";
             baseForm.buttonDelete.Size = new Size(70, 29);
             baseForm.buttonDelete.TabIndex = 2;
             baseForm.buttonDelete.Text = "Удалить";
             baseForm.buttonDelete.UseVisualStyleBackColor = true;
-            baseForm.buttonDelete.Click += ButtonDelete_Click;
+            baseForm.buttonDelete.Click += baseForm.ButtonDelete_Click;
             // 
             // buttonCancel
             // 
             baseForm.buttonCancel.Anchor = AnchorStyles.None;
             baseForm.buttonCancel.AutoSize = true;
             baseForm.buttonCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            baseForm.buttonCancel.Location = new Point(236, 3);
+            baseForm.buttonCancel.Location = new Point(251, 3);
             baseForm.buttonCancel.Margin = new Padding(0, 3, 0, 3);
             baseForm.buttonCancel.Name = "buttonCancel";
             baseForm.buttonCancel.Size = new Size(68, 29);
             baseForm.buttonCancel.TabIndex = 3;
             baseForm.buttonCancel.Text = "Выйти";
             baseForm.buttonCancel.UseVisualStyleBackColor = true;
-            baseForm.buttonCancel.Click += ButtonCancel_Click;
+            baseForm.buttonCancel.Click += baseForm.ButtonCancel_Click;
             // 
-            // BrandForm
+            // BaseForm
             // 
             baseForm.AutoScaleDimensions = new SizeF(7F, 15F);
             baseForm.AutoScaleMode = AutoScaleMode.Font;
-            baseForm.AutoSize = true;
-            baseForm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            baseForm.ClientSize = new Size(684, 461);
-            baseForm.Controls.Add(mainTableLayout);
-            baseForm.MinimumSize = new Size(700, 500);
-            baseForm.Name = "BrandForm";
+            baseForm.ClientSize = new Size(800, 600);
+            baseForm.Controls.Add(baseForm.mainTableLayout);
+            baseForm.MinimumSize = new Size(816, 639);
+            baseForm.Name = "BaseForm";
+            baseForm.Padding = new Padding(0);
             baseForm.StartPosition = FormStartPosition.CenterScreen;
-            baseForm.Text = "Марки";
+            baseForm.Text = "Базовая форма";
             baseForm.mainTableLayout.ResumeLayout(false);
             baseForm.mainTableLayout.PerformLayout();
             baseForm.searchTableLayout.ResumeLayout(false);
             baseForm.searchTableLayout.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(baseForm.dataGridView)).EndInit();
             baseForm.buttonsFlowLayout.ResumeLayout(false);
             baseForm.buttonsFlowLayout.PerformLayout();
             baseForm.ResumeLayout(false);

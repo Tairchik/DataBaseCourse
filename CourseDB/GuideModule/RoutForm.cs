@@ -1,4 +1,5 @@
-﻿using CourseDB;
+﻿using AuthorizationLibrary;
+using CourseDB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,11 +12,34 @@ using System.Windows.Forms;
 
 namespace GuideModule
 {
-    public partial class RoutForm : Form
+    public partial class RoutForm : BaseForm
     {
-        public RoutForm(InitRepos initRepos)
+        public GuideController controller;
+        public InitRepos initRepos;
+        public RoutForm(InitRepos initRepos, int user_id, MenuState menuState) : base()
         {
-            InitializeComponent();
+            InitializeComponent(this);
+            this.Text = "Цвета";
+            controller = new RoutController(this, user_id, initRepos, menuState);
+        }
+        public override void ButtonApply_Click(object sender, EventArgs e)
+        {
+            controller.Search();
+        }
+
+        public override void ButtonCreate_Click(object sender, EventArgs e)
+        {
+            controller.CreateRowTable();
+        }
+
+        public override void ButtonEdit_Click(object sender, EventArgs e)
+        {
+            controller.EditRowTable();
+        }
+
+        public override void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            controller.DeleteRowTable();
         }
     }
 }

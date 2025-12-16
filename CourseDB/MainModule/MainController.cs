@@ -47,7 +47,7 @@ namespace MainModule
                 return status;
             }
             
-            return new MenuState() { D = 1, W = 1, E = 1, R = 1 }; // По умолчанию, если пункт не указан, он виден и доступен
+            return new MenuState() { D = 0, W = 0, E = 0, R = 0 }; // По умолчанию, если пункт не указан, он не доступен
         }
 
         // Метод для добавления пунктов в форму
@@ -278,11 +278,11 @@ namespace MainModule
                 case "Brand":
                     return new BrandForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Bus":
-                    return new BusForm(_initRepos);
+                    return new BusForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Color":
-                    return new ColorForm(_initRepos);
+                    return new ColorForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Model":
-                    return new ModelForm(_initRepos);
+                    return new ModelForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Post":
                     return new PostForm(_initRepos);
                 case "Rout":

@@ -102,7 +102,7 @@ namespace CourseDB
                 // 2. Подготавливаем команду в зависимости от результата проверки
                 var command = connection.CreateCommand();
 
-                if (existingId != null) 
+                if (existingId != 0) 
                 {
                     // АВТОБУС СУЩЕСТВУЕТ - ОБНОВЛЯЕМ
                     command.CommandText = @"
@@ -199,7 +199,7 @@ namespace CourseDB
                     WHERE InventoryNumber = @InventoryNumber";
                 checkCommand.Parameters.AddWithValue("@InventoryNumber", bus.InventoryNumber);
                 object result = checkCommand.ExecuteScalar();
-                if (result == null && result != DBNull.Value) throw new Exception($"Автобус с данным инвентарным номером {bus.InventoryNumber} не найден в БД");
+                if (result == null && result != DBNull.Value) return 0;
                 return Convert.ToInt32(result);
             }
         }
@@ -263,6 +263,17 @@ namespace CourseDB
 
                     return bus;
                 }
+            }
+        }
+        public void Delete(string inventoryNumber) 
+        {
+            using (var connection = GetConnection())
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = $"DELETE FROM {TableName} WHERE InventoryNumber = @inventoryNumber;";
+                command.Parameters.AddWithValue("@inventoryNumber", inventoryNumber);
+                command.ExecuteNonQuery();
             }
         }
     }

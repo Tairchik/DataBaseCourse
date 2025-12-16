@@ -50,13 +50,13 @@ namespace MainModule
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(292, 361);
+            ClientSize = new Size(384, 361);
             Controls.Add(menuStrip);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip;
             MaximizeBox = false;
-            MinimumSize = new Size(0, 400);
+            MinimumSize = new Size(400, 400);
             Name = "MainForm";
             Text = "АИС Автобусный парк";
             ResumeLayout(false);

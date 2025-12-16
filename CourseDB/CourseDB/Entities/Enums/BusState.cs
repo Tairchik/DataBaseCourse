@@ -40,7 +40,7 @@ namespace CourseDB
             {
                 case BusState.InOperation: return "Исправен";
                 case BusState.UnOperation: return "Не исправен";
-                case BusState.InRepair: return "В ремонту";
+                case BusState.InRepair: return "В ремонте";
                 case BusState.WrittenOff: return "Списан";
             }
             return "";
@@ -52,7 +52,7 @@ namespace CourseDB
             {
                 case "исправен": return BusState.InOperation;
                 case "не исправен": return BusState.UnOperation;
-                case "в ремонту": return BusState.InRepair;
+                case "в ремонте": return BusState.InRepair;
                 case "списан": return BusState.WrittenOff;
             }
             throw new ArgumentException("Такого состояния не существует");
