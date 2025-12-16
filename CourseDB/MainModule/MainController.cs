@@ -70,7 +70,7 @@ namespace MainModule
             {
                 menu.DropDownItems.Add(CreateMenuItem(subItem));
             }
-            if ((status.W == 1 || status.R == 1 || status.D == 1 || status.E == 1))
+            if (status.R == 1)
             {
                 if (menuItem.SubItems.Count == 0)
                 {
@@ -111,28 +111,28 @@ namespace MainModule
                 switch (menuItem.DllName)
                 {
                     case "HelpModule":
-                        form = CreateHelpModule(menuItem.FunctionName);
+                        form = CreateHelpModule(menuItem);
                         break;
                     case "OtherModule":
-                        form = CreateOtherModule(menuItem.FunctionName);
+                        form = CreateOtherModule(menuItem);
                         break;
                     case "DocumentModule":
-                        form = CreateDocumentModule(menuItem.FunctionName);
+                        form = CreateDocumentModule(menuItem);
                         break;
                     case "ControlBusModule":
-                        form = CreateControlBusModule(menuItem.FunctionName);
+                        form = CreateControlBusModule(menuItem);
                         break;
                     case "EmployeeModule":
-                        form = CreateEmployeeModule(menuItem.FunctionName);
+                        form = CreateEmployeeModule(menuItem);
                         break;
                     case "FinancialModule":
-                        form = CreateFinancialModule(menuItem.FunctionName);
+                        form = CreateFinancialModule(menuItem);
                         break;
                     case "GuideModule":
-                        form = CreateGuideModule(menuItem.FunctionName);
+                        form = CreateGuideModule(menuItem);
                         break;
                     case "TripModule":
-                        form = CreateTripModule(menuItem.FunctionName);
+                        form = CreateTripModule(menuItem);
                         break;
                     default:
                         MessageBox.Show($"Модуль '{menuItem.DllName}' не поддерживается", "Ошибка",
@@ -172,38 +172,38 @@ namespace MainModule
             }
         }
 
-        private Form? CreateHelpModule(string functionName)
+        private Form? CreateHelpModule(MenuLibrary.MenuItem menuItem)
         {
-            switch (functionName)
+            switch (menuItem.FunctionName)
             {
                 case "Content":
                     return new ContentForm(_initRepos);
                 case "AboutProgram":
                     return new AboutProgramForm(_initRepos); 
                 default:
-                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле HelpModule", "Ошибка",
+                    MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле HelpModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
             }
         }
 
-        private Form? CreateOtherModule(string functionName)
+        private Form? CreateOtherModule(MenuLibrary.MenuItem menuItem)
         {
-            switch (functionName)
+            switch (menuItem.FunctionName)
             {
                 case "Settings":
                     return new SettingsForm(user);
                 case "ChangePassword":
                     return new ChangePassword(user);
                 default:
-                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле OtherModule", "Ошибка",
+                    MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле OtherModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
             }
         }
-        private Form? CreateDocumentModule(string functionName)
+        private Form? CreateDocumentModule(MenuLibrary.MenuItem menuItem)
         {
-            switch (functionName)
+            switch (menuItem.FunctionName)
             {
                 case "BusReport":
                     return new BusReportForm(_initRepos);
@@ -214,50 +214,50 @@ namespace MainModule
                 case "TripReport":
                     return new TripReportForm(_initRepos);
                 default:
-                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле DocumentModule", "Ошибка",
+                    MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле DocumentModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
             }
         }
-        private Form? CreateTripModule(string functionName)
+        private Form? CreateTripModule(MenuLibrary.MenuItem menuItem)
         {
-            switch (functionName)
+            switch (menuItem.FunctionName)
             {
                 case "Trip":
                     return new TripForm(_initRepos);
                 default:
-                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле TripModule", "Ошибка",
+                    MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле TripModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
             }
         }
-        private Form? CreateControlBusModule(string functionName)
+        private Form? CreateControlBusModule(MenuLibrary.MenuItem menuItem)
         {
-            switch (functionName)
+            switch (menuItem.FunctionName)
             {
                 case "Control":
                     return new ControlForm(_initRepos);
                 default:
-                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле ControlBusModule", "Ошибка",
+                    MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле ControlBusModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
             }
         }
-        private Form? CreateEmployeeModule(string functionName)
+        private Form? CreateEmployeeModule(MenuLibrary.MenuItem menuItem)
         {
-            switch (functionName)
+            switch (menuItem.FunctionName)
             {
                 case "Employee":
                     return new EmployeeForm(_initRepos);
                 default:
-                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле EmployeeModule", "Ошибка",
+                    MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле EmployeeModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
             }
         }
-        private Form? CreateFinancialModule(string functionName)
+        private Form? CreateFinancialModule(MenuLibrary.MenuItem menuItem)
         {
-            switch (functionName)
+            switch (menuItem.FunctionName)
             {
                 case "RevenueRout":
                     return new RevenueRoutForm(_initRepos);
@@ -266,17 +266,17 @@ namespace MainModule
                 case "Salary":
                     return new SalaryForm(_initRepos);
                 default:
-                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле FinancialModule", "Ошибка",
+                    MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле FinancialModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
             }
         }
-        private Form? CreateGuideModule(string functionName)
+        private Form? CreateGuideModule(MenuLibrary.MenuItem menuItem)
         {
-            switch (functionName)
+            switch (menuItem.FunctionName)
             {
                 case "Brand":
-                    return new BrandForm(_initRepos);
+                    return new BrandForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Bus":
                     return new BusForm(_initRepos);
                 case "Color":
@@ -290,7 +290,7 @@ namespace MainModule
                 case "Station":
                     return new StationForm(_initRepos);
                 default:
-                    MessageBox.Show($"Функция '{functionName}' не найдена в модуле GuideModule", "Ошибка",
+                    MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле GuideModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
             }
