@@ -132,10 +132,12 @@ namespace CourseDB
             get => _stations;
             set 
             {
-                foreach (var stat in value) 
+                if (value == null || value.Count == 0) throw new ArgumentException("Список остановок маршрута не может быть не заданным.");
+                else 
                 {
-                    _stations.Add(stat);
+                    _stations = value;
                 }
+               
             }
         }
 
@@ -272,40 +274,6 @@ namespace CourseDB
             if (direct == true) return new string[] {StartStation, EndStation};
             return new string[] {EndStation, StartStation};
         }
-        // Конструктор с параметрами
-        public Rout(string name, TimeSpan timeRoute, int distance,
-                   TimeSpan startDirect, TimeSpan endDirect,
-                   TimeSpan startReverse, TimeSpan endReverse)
-        {
-            NameRoute = name;
-            TimeRoute = timeRoute;
-            Distance = distance;
-            StartTimeDirectRout = startDirect;
-            EndTimeDirectRout = endDirect;
-            StartTimeReversDirectRout = startReverse;
-            EndTimeReversDirectRout = endReverse;
-            Schedule = new ScheduleList();
-            _stations = new List<string>();
-            ValidateTimes();
-        }
-
-        // Конструктор с параметрами
-        public Rout(string name, TimeSpan timeRoute, int distance,
-                   TimeSpan startDirect, TimeSpan endDirect,
-                   TimeSpan startReverse, TimeSpan endReverse, ScheduleList schedule)
-        {
-            NameRoute = name;
-            TimeRoute = timeRoute;
-            Distance = distance;
-            StartTimeDirectRout = startDirect;
-            EndTimeDirectRout = endDirect;
-            StartTimeReversDirectRout = startReverse;
-            EndTimeReversDirectRout = endReverse;
-            Schedule = schedule;
-            _stations = new List<string>();
-            ValidateTimes();
-        }
-
 
         // Конструктор с параметрами
         public Rout(string name, TimeSpan timeRoute, int distance,

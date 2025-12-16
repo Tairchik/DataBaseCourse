@@ -13,8 +13,8 @@ namespace GuideModule
     public class RoutController: GuideController
     {
 
-        private BindingList<Model> bindingList;
-        public ModelController(ModelForm form, int user_id, InitRepos initRepos, MenuState menuState) : base(form, user_id, initRepos, menuState)
+        private BindingList<Rout> bindingList;
+        public RoutController(RoutForm form, int user_id, InitRepos initRepos, MenuState menuState) : base(form, user_id, initRepos, menuState)
         {
             view.dataGridView.DataBindingComplete += DataGridView_DataBindingComplete;
             view.textBoxSearch.KeyDown += TextBoxSearch_KeyDown;
@@ -42,47 +42,35 @@ namespace GuideModule
             numberColumn.ReadOnly = true;
             view.dataGridView.Columns.Add(numberColumn);
 
-            // Колонка для названия брeнда
-            DataGridViewTextBoxColumn brandColumn = new DataGridViewTextBoxColumn();
-            brandColumn.HeaderText = "Название бренда";
-            brandColumn.Name = "NameBrand";
-            brandColumn.DataPropertyName = "NameBrand";
-            brandColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            brandColumn.ReadOnly = true;
-            view.dataGridView.Columns.Add(brandColumn);
+            DataGridViewTextBoxColumn nameRoutColumn = new DataGridViewTextBoxColumn();
+            nameRoutColumn.HeaderText = "Номер маршрута";
+            nameRoutColumn.Name = "NameRoute";
+            nameRoutColumn.DataPropertyName = "NameRoute";
+            nameRoutColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            nameRoutColumn.ReadOnly = true;
+            view.dataGridView.Columns.Add(nameRoutColumn);
 
-            // Колонка для названия модели
-            DataGridViewTextBoxColumn modelColumn = new DataGridViewTextBoxColumn();
-            modelColumn.HeaderText = "Название модели";
-            modelColumn.Name = "NameModel";
-            modelColumn.DataPropertyName = "NameModel";
-            modelColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            modelColumn.ReadOnly = true;
-            view.dataGridView.Columns.Add(modelColumn);
+            DataGridViewTextBoxColumn startStationColumn = new DataGridViewTextBoxColumn();
+            startStationColumn.HeaderText = "Начальная остановка";
+            startStationColumn.Name = "StartStation";
+            startStationColumn.DataPropertyName = "StartStation";
+            startStationColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            startStationColumn.ReadOnly = true;
+            view.dataGridView.Columns.Add(startStationColumn);
 
-            // Колонка для числа сидячих мест
-            DataGridViewTextBoxColumn seatCapacityColumn = new DataGridViewTextBoxColumn();
-            seatCapacityColumn.HeaderText = "Число посадочных мест";
-            seatCapacityColumn.Name = "SeatingCapacity";
-            seatCapacityColumn.DataPropertyName = "SeatingCapacity";
-            seatCapacityColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            seatCapacityColumn.ReadOnly = true;
-            view.dataGridView.Columns.Add(seatCapacityColumn);
-
-            // Колонка для полный посадки
-            DataGridViewTextBoxColumn fullCapacityColumn = new DataGridViewTextBoxColumn();
-            fullCapacityColumn.HeaderText = "Название модели";
-            fullCapacityColumn.Name = "FullCapacity";
-            fullCapacityColumn.DataPropertyName = "FullCapacity";
-            fullCapacityColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fullCapacityColumn.ReadOnly = true;
-            view.dataGridView.Columns.Add(fullCapacityColumn);
+            DataGridViewTextBoxColumn endStationColumn = new DataGridViewTextBoxColumn();
+            endStationColumn.HeaderText = "Конечная остановка";
+            endStationColumn.Name = "EndStation";
+            endStationColumn.DataPropertyName = "EndStation";
+            endStationColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            endStationColumn.ReadOnly = true;
+            view.dataGridView.Columns.Add(endStationColumn);
         }
 
         public override void UpdateRowTable()
         {
-            List<Model> DataModels = dataBase.modelRep.GetAll();
-            bindingList = new BindingList<Model>(DataModels);
+            List<Rout> Data = dataBase.routRep.GetAll();
+            bindingList = new BindingList<Rout>(Data);
             view.dataGridView.DataSource = bindingList;
 
             SetupAutoComplete();
@@ -98,22 +86,98 @@ namespace GuideModule
 
         public override void CreateRowTable()
         {
-            List<BrandDataModel> brands = dataBase.brandRep.GetAll();
-            using (ModelEditForm form = new ModelEditForm(brands, user_id))
+            var stations = dataBase.stationRep.GetAll();
+
+            if (stations == null || stations.Count == 0)
+            {
+                MessageBox.Show("Список остановок пуст. Сначала создайте остановки.", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var stations_str = new List<string>(); 
+            foreach (var i in stations) 
+            {
+                stations_str.Add(i.StationName);
+            }
+
+
+            using (RoutEditForm form = new RoutEditForm(stations_str, user_id))
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    Model newModel = form.ResultModel;
+                    Rout newRout = form.ResultModel;
 
-                    // Сохраняем в БД
-                    dataBase.modelRep.Save(newModel);
+                    try
+                    {
+                        dataBase.routRep.Save(newRout);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"{ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     // Добавляем в список
-                    bindingList.Add(newModel);
+                    bindingList.Add(newRout);
                 }
             }
             SetupAutoComplete();
         }
+
+        public override void EditRowTable()
+        {
+            if (view.dataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите строку для редактирования", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var stations = dataBase.stationRep.GetAll();
+
+            if (stations == null || stations.Count == 0)
+            {
+                MessageBox.Show("Список остановок пуст. Сначала создайте остановки.", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var stations_str = new List<string>();
+            foreach (var i in stations)
+            {
+                stations_str.Add(i.StationName);
+            }
+
+            int selectedIndex = view.dataGridView.SelectedRows[0].Index;
+            Rout selectedRout = bindingList[selectedIndex];
+
+
+            using (RoutEditForm form = new RoutEditForm(stations_str, selectedRout, user_id))
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    Rout updatedRout = form.ResultModel;
+
+                    try
+                    {
+                        dataBase.routRep.Save(updatedRout);
+                    }
+                    catch (Exception ex) 
+                    {
+                        MessageBox.Show($"{ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // Обновляем в списке
+                    bindingList[selectedIndex] = updatedRout;
+                    view.dataGridView.Refresh();
+                }
+            }
+            SetupAutoComplete();
+        }
+
 
         // Метод поиска
         public override void Search()
@@ -130,31 +194,23 @@ namespace GuideModule
             int foundIndex = -1;
             for (int i = 0; i < bindingList.Count; i++)
             {
-                if (bindingList[i].NameModel.ToLower().Contains(searchText.ToLower()))
+                if (bindingList[i].NameRoute.ToLower().Contains(searchText.ToLower()))
                 {
                     foundIndex = i;
                     break;
                 }
             }
 
-            // Если найдено
             if (foundIndex >= 0)
             {
-                // Снимаем выделение со всех строк
                 view.dataGridView.ClearSelection();
-
-                // Выделяем найденную строку
                 view.dataGridView.Rows[foundIndex].Selected = true;
-
-                // Прокручиваем к найденной строке
                 view.dataGridView.FirstDisplayedScrollingRowIndex = foundIndex;
-
-                // Устанавливаем фокус на DataGridView
                 view.dataGridView.Focus();
             }
             else
             {
-                MessageBox.Show($"Бренд с названием \"{searchText}\" не найден", "Результат поиска",
+                MessageBox.Show($"Маршрут с названием \"{searchText}\" не найден", "Результат поиска",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -170,7 +226,7 @@ namespace GuideModule
 
             // Подтверждение удаления
             DialogResult result = MessageBox.Show(
-                "Вы уверены, что хотите удалить выбранный бренд?",
+                "Вы уверены, что хотите удалить выбранный маршрут?",
                 "Подтверждение удаления",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -179,45 +235,12 @@ namespace GuideModule
             {
                 // Получаем индекс выбранной строки
                 int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-                Model objectToDelete = bindingList[selectedIndex];
+                Rout objectToDelete = bindingList[selectedIndex];
                 bindingList.RemoveAt(selectedIndex);
-                dataBase.modelRep.Delete(objectToDelete);
+                dataBase.routRep.Delete(objectToDelete);
                 SetupAutoComplete();
             }
         }
-
-        public override void EditRowTable()
-        {
-            if (view.dataGridView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Выберите строку для редактирования", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-            Model selectedModel = bindingList[selectedIndex];
-
-            List<BrandDataModel> brands = dataBase.brandRep.GetAll();
-
-            using (ModelEditForm form = new ModelEditForm(brands, selectedModel, user_id))
-            {
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    Model updatedModel = form.ResultModel;
-
-                    // Обновляем в БД
-                    dataBase.modelRep.Save(updatedModel);
-
-                    // Обновляем в списке
-                    bindingList[selectedIndex] = updatedModel;
-                    view.dataGridView.Refresh();
-                }
-            }
-            SetupAutoComplete();
-        }
-
-
 
         private void DataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -230,7 +253,7 @@ namespace GuideModule
 
             foreach (var tmp in bindingList)
             {
-                autoCompleteCollection.Add(tmp.NameModel);
+                autoCompleteCollection.Add(tmp.NameRoute);
             }
 
             view.textBoxSearch.AutoCompleteMode = AutoCompleteMode.SuggestAppend;

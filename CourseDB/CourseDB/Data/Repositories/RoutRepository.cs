@@ -38,7 +38,7 @@ namespace CourseDB
                 var command = connection.CreateCommand();
 
                 // Проверяем, есть ли маршрут в identity map
-                if (_identityMap.TryGetValue(GetById(GetIdByNumber(rout.NameRoute)), out int existingId))
+                if (_identityMap.TryGetValue(rout, out int existingId))
                 {
                     // UPDATE существующего маршрута
                     command.CommandText = $@"
@@ -91,7 +91,7 @@ namespace CourseDB
                 command.Parameters.AddWithValue("@Distance", rout.Distance);
                 command.Parameters.AddWithValue("@PlannedRevenue", rout.Revenue);
 
-                if (_identityMap.ContainsKey(GetById(GetIdByNumber(rout.NameRoute))))
+                if (_identityMap.ContainsKey(rout))
                 {
                     // UPDATE: выполняем команду и сохраняем связанные данные
                     command.ExecuteNonQuery();
@@ -172,7 +172,10 @@ namespace CourseDB
                 {
                     if (reader.Read())
                     {
-                        var rout = MapReaderToRout(reader);
+
+                        var stations = _listStationRepository.GetByRoutId(id);
+
+                        var rout = MapReaderToRout(reader, stations);
 
                         // Загружаем связанные данные
                         LoadRelatedData(rout, id);
@@ -191,7 +194,7 @@ namespace CourseDB
         /// <summary>
         /// Маппинг данных из reader в объект Rout
         /// </summary>
-        private Rout MapReaderToRout(SqliteDataReader reader)
+        private Rout MapReaderToRout(SqliteDataReader reader, List<string> stations_)
         {
             return new Rout(
                 name: reader.GetString(reader.GetOrdinal("RoutNumber")),
@@ -201,7 +204,8 @@ namespace CourseDB
                 endDirect: TimeSpan.Parse(reader.GetString(reader.GetOrdinal("LastBusStartTime"))),
                 startReverse: TimeSpan.Parse(reader.GetString(reader.GetOrdinal("FirstBusDepartureFromTerminal"))),
                 endReverse: TimeSpan.Parse(reader.GetString(reader.GetOrdinal("LastBusDepartureFromTerminal"))),
-                schedule: new ScheduleList() // Временный объект, будет заменен при загрузке
+                schedule: new ScheduleList(), // Временный объект, будет заменен при загрузке
+                stations: stations_
             )
             {
                 Revenue = Convert.ToDecimal(reader.GetDouble(reader.GetOrdinal("PlannedRevenue")))
@@ -252,8 +256,9 @@ namespace CourseDB
                     while (reader.Read())
                     {
                         int routId = reader.GetInt32(reader.GetOrdinal("RoutId"));
+                        var stations = _listStationRepository.GetByRoutId(routId);
 
-                        var rout = MapReaderToRout(reader);
+                        var rout = MapReaderToRout(reader, stations);
 
                         // Загружаем связанные данные
                         LoadRelatedData(rout, routId);
