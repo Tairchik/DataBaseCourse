@@ -61,27 +61,27 @@ namespace TripModule
             // Колонка ФИО
             employeesDataGridView.Columns.Add(new DataGridViewTextBoxColumn
             {
-                Name = "colFullName",
-                HeaderText = "ФИО",
-                DataPropertyName = "FullName",
+                Name = "colSName",
+                HeaderText = "Фамили",
+                DataPropertyName = "Surname",
                 Width = 200
             });
 
             // Колонка Должность
             employeesDataGridView.Columns.Add(new DataGridViewTextBoxColumn
             {
-                Name = "colPosition",
-                HeaderText = "Должность",
-                DataPropertyName = "PositionName",
+                Name = "colName",
+                HeaderText = "Имя",
+                DataPropertyName = "Name",
                 Width = 150
             });
 
             // Колонка Табельный номер
             employeesDataGridView.Columns.Add(new DataGridViewTextBoxColumn
             {
-                Name = "colEmployeeId",
-                HeaderText = "Табельный номер",
-                DataPropertyName = "EmployeeId",
+                Name = "colPName",
+                HeaderText = "Отчество",
+                DataPropertyName = "Patronymic",
                 Width = 120
             });
 

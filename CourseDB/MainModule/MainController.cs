@@ -288,7 +288,7 @@ namespace MainModule
                 case "Rout":
                     return new RoutForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Station":
-                    return new StationForm(_initRepos);
+                    return new StationForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 default:
                     MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле GuideModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);

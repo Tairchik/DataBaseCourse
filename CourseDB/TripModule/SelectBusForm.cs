@@ -22,7 +22,7 @@ namespace TripModule
             InitializeComponent();
             this.Text = title;
             _allBuses = buses ?? new List<Bus>();
-
+            busesDataGridView.CellFormatting += DataGridView_CellFormatting;
             InitializeData();
             SetupDataGridView();
             ApplyFilters();
@@ -61,7 +61,7 @@ namespace TripModule
             {
                 Name = "colNumber",
                 HeaderText = "Госномер",
-                DataPropertyName = "BusNumber",
+                DataPropertyName = "RegistrationNumber",
                 Width = 120
             });
 
@@ -69,8 +69,7 @@ namespace TripModule
             busesDataGridView.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colModel",
-                HeaderText = "Марка/Модель",
-                DataPropertyName = "Model",
+                HeaderText = "Модель",
                 Width = 150
             });
 
@@ -79,22 +78,35 @@ namespace TripModule
             {
                 Name = "colCapacity",
                 HeaderText = "Вместимость",
-                DataPropertyName = "Capacity",
-                Width = 100
-            });
-
-            // Колонка Год выпуска
-            busesDataGridView.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "colYear",
-                HeaderText = "Год выпуска",
-                DataPropertyName = "Year",
                 Width = 100
             });
 
             busesDataGridView.DataSource = _displayedBuses;
         }
+        private void DataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Проверяем, что это строка с данными, а не заголовок
+            if (e.RowIndex >= 0 && e.RowIndex < _displayedBuses.Count)
+            {
+                Bus currentBus = _displayedBuses[e.RowIndex];
 
+                // Получаем имя столбца, который сейчас отрисовывается
+                string columnName = busesDataGridView.Columns[e.ColumnIndex].Name;
+
+                if (columnName == "colModel")
+                {
+                    // Безопасно достаем бренд через Model
+                    e.Value = currentBus.Model?.NameModel ?? "Н/Д";
+                    e.FormattingApplied = true;
+                }
+                else if (columnName == "colCapacity")
+                {
+                    // Безопасно достаем название модели
+                    e.Value = currentBus.Model?.FullCapacity.ToString() ?? "Н/Д";
+                    e.FormattingApplied = true;
+                }
+            }
+        }
         private void ApplyFilters()
         {
             try
@@ -107,7 +119,7 @@ namespace TripModule
                 if (!string.IsNullOrEmpty(searchText))
                 {
                     _filteredBuses = _filteredBuses
-                        .Where(b => b.ToString().ToLower().Contains(searchText.ToLower()))
+                        .Where(b => b.RegistrationNumber.ToLower().Contains(searchText.ToLower()))
                         .ToList();
                 }
 

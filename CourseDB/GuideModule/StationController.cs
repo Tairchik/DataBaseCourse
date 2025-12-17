@@ -158,9 +158,9 @@ namespace GuideModule
 
             // Колонка для названия бренда
             DataGridViewTextBoxColumn brandColumn = new DataGridViewTextBoxColumn();
-            brandColumn.HeaderText = "Название должности";
-            brandColumn.Name = "NamePost";
-            brandColumn.DataPropertyName = "NamePost";
+            brandColumn.HeaderText = "Название остановки";
+            brandColumn.Name = "StationName";
+            brandColumn.DataPropertyName = "StationName";
             brandColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             brandColumn.ReadOnly = true; // Только чтение
             view.dataGridView.Columns.Add(brandColumn);
