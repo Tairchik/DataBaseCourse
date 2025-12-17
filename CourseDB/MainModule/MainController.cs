@@ -224,7 +224,7 @@ namespace MainModule
             switch (menuItem.FunctionName)
             {
                 case "Trip":
-                    return new TripForm(_initRepos);
+                    return new TripForm(_initRepos, user.Id);
                 default:
                     MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле TripModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);

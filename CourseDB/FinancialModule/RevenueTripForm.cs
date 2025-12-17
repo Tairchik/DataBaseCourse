@@ -200,14 +200,6 @@ namespace FinancialModule
                 {
                     if (decimal.TryParse(textBoxActualRevenue.Text, out decimal newRevenue))
                     {
-                        if (newRevenue < 0)
-                        {
-                            MessageBox.Show("Фактическая выручка не может быть отрицательной", "Ошибка",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            textBoxActualRevenue.Focus();
-                            return;
-                        }
-
                         // Обновляем выручку для выбранного рейса
                         var selectedRow = dataGridViewTrips.SelectedRows[0];
                         if (selectedRow.DataBoundItem is Trip selectedTripData)

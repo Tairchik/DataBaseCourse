@@ -21,6 +21,7 @@ namespace CourseDB
 
         public List<IControlTrip> ControlTrips
         {
+            set { _controlTrips = value; }
             get { return _controlTrips; }
         }
 

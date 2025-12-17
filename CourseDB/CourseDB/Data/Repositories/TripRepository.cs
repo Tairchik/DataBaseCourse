@@ -76,7 +76,7 @@ namespace CourseDB
                 }
 
                 // Добавляем параметры
-                command.Parameters.AddWithValue("@RoutId", _routRepository.GetIdByObject(trip.Rout_ as Rout));
+                command.Parameters.AddWithValue("@RoutId", _routRepository.GetIdByNumber(trip.Rout_.NameRoute));
                 command.Parameters.AddWithValue("@DriverId", _employeeRepository.GetIdByObject(trip.Driver as Employee));
                 command.Parameters.AddWithValue("@BusId", _busRepository.GetIdByObject((trip.Bus_ as Bus)));
 

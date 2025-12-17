@@ -146,7 +146,7 @@ namespace GuideModule
                 Model selectedModel = (Model)comboBoxModel.SelectedItem;
 
                 // Получаем состояние
-                BusState state = (BusState)comboBoxState.SelectedItem;
+                BusState state = BusStateExtensions.GetEnumByString((string) comboBoxState.SelectedItem);
 
                 if (resultBus == null)
                 {

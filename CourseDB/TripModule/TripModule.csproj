@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AuthorizationLibrary\AuthorizationLibrary.csproj" />
     <ProjectReference Include="..\CourseDB\CourseDB.csproj" />
   </ItemGroup>
 
