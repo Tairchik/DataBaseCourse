@@ -248,7 +248,7 @@ namespace MainModule
             switch (menuItem.FunctionName)
             {
                 case "Employee":
-                    return new EmployeeForm(_initRepos);
+                    return new EmployeeForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 default:
                     MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле EmployeeModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
