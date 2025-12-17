@@ -260,11 +260,11 @@ namespace MainModule
             switch (menuItem.FunctionName)
             {
                 case "RevenueRout":
-                    return new RevenueRoutForm(_initRepos);
+                    return new RevenueRoutForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "RevenueTrip":
-                    return new RevenueTripForm(_initRepos);
+                    return new RevenueTripForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Salary":
-                    return new SalaryForm(_initRepos);
+                    return new SalaryForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 default:
                     MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле FinancialModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);

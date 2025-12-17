@@ -21,5 +21,6 @@ namespace CourseDB
         int ClassDriver { get; set; }
         List<IEmploymentHistory> GetSortedByTypeEvent(string typeEvent);
         List<IEmploymentHistory> GetSortedByTypeEvent(TypeEvent typeEvent);
+        string GetFullName();
     }
 }

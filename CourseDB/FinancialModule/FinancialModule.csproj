@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CourseDB\CourseDB.csproj" />
+    <ProjectReference Include="..\GuideModule\GuideModule.csproj" />
   </ItemGroup>
 
 </Project>

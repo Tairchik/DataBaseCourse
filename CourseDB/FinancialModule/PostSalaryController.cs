@@ -1,20 +1,19 @@
 ﻿using AuthorizationLibrary;
-using CourseDB.Data;
 using CourseDB;
+using GuideModule;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace GuideModule
+namespace FinancialModule
 {
-    public class PostController : GuideController
+    public class PostSalaryController: GuideController
     {
         private BindingList<Post> bindingList;
-        public PostController(BaseForm form, int user_id, InitRepos initRepos, MenuState menuState) : base(form, user_id, initRepos, menuState)
+        public PostSalaryController(BaseForm form, int user_id, InitRepos initRepos, MenuState menuState) : base(form, user_id, initRepos, menuState)
         {
             view.dataGridView.DataBindingComplete += DataGridView_DataBindingComplete;
             view.textBoxSearch.KeyDown += TextBoxSearch_KeyDown;
@@ -25,19 +24,24 @@ namespace GuideModule
 
         public override void CreateRowTable()
         {
-            string postName = Microsoft.VisualBasic.Interaction.InputBox(
-                "Введите название должности:",
-                "Новая должность",
-            "");
-
-            Post post = new Post
+            using (PostEditForm form = new PostEditForm(user_id))
             {
-                NamePost = postName,
-            };
-
-            dataBase.postRep.Save(post);
-            bindingList.Add(post);
-
+                try
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        Post newPost = form.ResultModel;
+                        dataBase.postRep.Save(newPost);
+                        bindingList.Add(newPost);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"{ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
             SetupAutoComplete();
         }
 
@@ -53,25 +57,29 @@ namespace GuideModule
             int selectedIndex = view.dataGridView.SelectedRows[0].Index;
             Post selected = bindingList[selectedIndex];
 
-            // Запрашиваем новое название
-            string newName = Microsoft.VisualBasic.Interaction.InputBox(
-                "Введите новое название должности:",
-                "Редактирование должности",
-                selected.NamePost);
-
-            // Проверяем ввод
-            if (string.IsNullOrWhiteSpace(newName))
+            using (PostEditForm form = new PostEditForm(selected, user_id))
             {
-                return;
+                try
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        Post updated = form.ResultModel;
+
+                        // Обновляем в БД
+                        dataBase.postRep.Save(updated);
+
+                        // Обновляем в списке
+                        bindingList[selectedIndex] = updated;
+                        view.dataGridView.Refresh();
+                    }
+                }
+                catch (Exception ex) 
+                {
+                    MessageBox.Show($"{ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
-
-            // Обновляем данные
-            selected.NamePost = newName;
-
-            // Обновляем отображение
-            view.dataGridView.Refresh();
-
-            dataBase.postRep.Save(selected);
             SetupAutoComplete();
         }
 
@@ -143,10 +151,9 @@ namespace GuideModule
             view.dataGridView.AllowUserToAddRows = false;
             view.dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             view.dataGridView.MultiSelect = false;
-            view.dataGridView.ReadOnly = true; // Запрещаем редактирование напрямую
-            view.dataGridView.EditMode = DataGridViewEditMode.EditProgrammatically; // Редактирование только программно
+            view.dataGridView.ReadOnly = true;
+            view.dataGridView.EditMode = DataGridViewEditMode.EditProgrammatically; 
             view.dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            // Очищаем колонки (на случай повторного вызова)
             view.dataGridView.Columns.Clear();
 
             // Колонка для порядкового номера
@@ -157,14 +164,21 @@ namespace GuideModule
             numberColumn.ReadOnly = true;
             view.dataGridView.Columns.Add(numberColumn);
 
-            // Колонка для названия бренда
             DataGridViewTextBoxColumn brandColumn = new DataGridViewTextBoxColumn();
             brandColumn.HeaderText = "Название должности";
             brandColumn.Name = "NamePost";
             brandColumn.DataPropertyName = "NamePost";
             brandColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            brandColumn.ReadOnly = true; // Только чтение
+            brandColumn.ReadOnly = true; 
             view.dataGridView.Columns.Add(brandColumn);
+
+            DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+            column.HeaderText = "Оклад";
+            column.Name = "Salary";
+            column.DataPropertyName = "Salary";
+            column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            column.ReadOnly = true; 
+            view.dataGridView.Columns.Add(column);
         }
 
         public override void UpdateRowTable()
@@ -191,7 +205,6 @@ namespace GuideModule
 
         private void SetupAutoComplete()
         {
-            // Получаем все названия брендов
             AutoCompleteStringCollection autoCompleteCollection = new AutoCompleteStringCollection();
 
             foreach (var post in bindingList)
@@ -199,7 +212,6 @@ namespace GuideModule
                 autoCompleteCollection.Add(post.NamePost);
             }
 
-            // Настраиваем автодополнение для TextBox
             view.textBoxSearch.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             view.textBoxSearch.AutoCompleteSource = AutoCompleteSource.CustomSource;
             view.textBoxSearch.AutoCompleteCustomSource = autoCompleteCollection;
