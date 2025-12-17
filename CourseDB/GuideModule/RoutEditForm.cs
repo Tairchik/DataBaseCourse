@@ -162,13 +162,6 @@ namespace GuideModule
                 int endHour = (int)numericToHour.Value;
                 int interval = (int)numericInterval.Value;
 
-                if (startHour >= endHour)
-                {
-                    MessageBox.Show("Начальный час должен быть меньше конечного", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
                 var newSchedule = new Schedule
                 {
                     StartHour = startHour,
@@ -176,16 +169,6 @@ namespace GuideModule
                     Interval = interval
                 };
 
-                // Проверка на пересечение с существующими графиками
-                foreach (var existingSchedule in scheduleList)
-                {
-                    if (ScheduleList.DoSchedulesOverlap(existingSchedule, newSchedule))
-                    {
-                        MessageBox.Show($"График пересекается с существующим: {existingSchedule.StartHour:00}:00 - {existingSchedule.EndHour:00}:00",
-                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
 
                 scheduleList.Add(newSchedule);
                 scheduleList = scheduleList.OrderBy(s => s.StartHour).ToList();

@@ -284,7 +284,7 @@ namespace MainModule
                 case "Model":
                     return new ModelForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Post":
-                    return new PostForm(_initRepos);
+                    return new PostForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Rout":
                     return new RoutForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Station":

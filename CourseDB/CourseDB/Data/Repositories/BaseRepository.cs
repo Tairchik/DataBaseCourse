@@ -234,10 +234,7 @@ namespace CourseDB.Data
                         Interval INTEGER NOT NULL,                       -- Интервал движения (в минутах)
                         StartHour INTEGER NOT NULL,                      -- Начальный час (0-23)
                         EndHour INTEGER NOT NULL,                        -- Конечный час (0-23)
-                        FOREIGN KEY (RoutId) REFERENCES Routs (RoutId) ON DELETE CASCADE,
-                        CHECK (StartHour >= 0 AND StartHour <= 23),
-                        CHECK (EndHour >= 0 AND EndHour <= 23),
-                        CHECK (StartHour < EndHour)
+                        FOREIGN KEY (RoutId) REFERENCES Routs (RoutId) ON DELETE CASCADE
                     );";
                 command.ExecuteNonQuery();
 

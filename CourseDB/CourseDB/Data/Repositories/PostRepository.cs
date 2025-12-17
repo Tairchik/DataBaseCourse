@@ -92,7 +92,7 @@ namespace CourseDB.Data
                 var command = connection.CreateCommand();
 
                 // Проверяем, есть ли этот объект уже в нашей карте (Identity Map)
-                if (_identityMap.TryGetValue(GetById(GetIdByObject(post.NamePost)), out int id))
+                if (_identityMap.TryGetValue(post, out int id))
                 {
                     // --- UPDATE (Обновление) ---
                     // Если ID найден, значит запись уже есть в БД -> обновляем её

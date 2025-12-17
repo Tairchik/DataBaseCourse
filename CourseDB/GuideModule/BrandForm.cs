@@ -20,7 +20,7 @@ namespace GuideModule
         public BrandForm(InitRepos initRepos, int user_id, MenuState menuState) : base() 
         {
             InitializeComponent(this);
-            this.Text = "Марки213";
+            this.Text = "Марки";
             guideController = new BrandController(this, user_id, initRepos, menuState);
         }
 

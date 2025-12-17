@@ -36,7 +36,7 @@ namespace CourseDB
             {
                 if (DoSchedulesOverlap(existingSchedule, schedule))
                 {
-                    throw new InvalidOperationException($"Расписание пересекается с существующим: {existingSchedule.StartHour:00}:00 - {existingSchedule.EndHour:00}:00");
+                    throw new Exception($"Расписание пересекается с существующим: {existingSchedule.StartHour:00}:00 - {existingSchedule.EndHour:00}:00");
                 }
             }
 

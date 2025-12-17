@@ -17,7 +17,7 @@ namespace CourseDB
             get => _startHour;
             set
             {
-                if (value < 0 || value >= 23)
+                if (value < 0 || value > 23)
                     throw new ArgumentException("Час начала должен быть в диапазоне от 0 до 23");
                 _startHour = value;
             }
@@ -28,7 +28,7 @@ namespace CourseDB
             get => _endHour;
             set
             {
-                if (value < 0 || value >= 23)
+                if (value < 0 || value > 23)
                     throw new ArgumentException("Час окончания должен быть в диапазоне от 0 до 23");
                 _endHour = value;
             }
