@@ -212,28 +212,28 @@
             // 
             colRoute.FillWeight = 150F;
             colRoute.HeaderText = "Маршрут";
-            colRoute.Name = "colRoute";
+            colRoute.Name = "Route";
             colRoute.ReadOnly = true;
             // 
             // colDate
             // 
             colDate.FillWeight = 100F;
             colDate.HeaderText = "Дата";
-            colDate.Name = "colDate";
+            colDate.Name = "DateStart";
             colDate.ReadOnly = true;
             // 
             // colTime
             // 
             colTime.FillWeight = 80F;
             colTime.HeaderText = "Время";
-            colTime.Name = "colTime";
+            colTime.Name = "TimeStart";
             colTime.ReadOnly = true;
             // 
             // colActualRevenue
             // 
             colActualRevenue.FillWeight = 120F;
             colActualRevenue.HeaderText = "Фактическая выручка";
-            colActualRevenue.Name = "colActualRevenue";
+            colActualRevenue.Name = "ActualRevenue";
             colActualRevenue.ReadOnly = true;
             // 
             // panelRevenueEdit

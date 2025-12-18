@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -275,6 +276,12 @@ namespace CourseDB.Data
                     );";
                 command.ExecuteNonQuery();
             }
+        }
+        protected string SqlCommand(string command) 
+        {
+            string result = "";
+
+            return result;
         }
     }
 }

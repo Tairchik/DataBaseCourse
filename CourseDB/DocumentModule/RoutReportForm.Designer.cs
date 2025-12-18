@@ -79,11 +79,11 @@ namespace DocumentModule
 
             this.btnApply.Text = "Применить";
             this.btnApply.AutoSize = true;
-            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+            this.btnApply.Click += btnApply_Click;
 
             this.btnReset.Text = "Сбросить";
             this.btnReset.AutoSize = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnReset.Click += btnReset_Click;
 
             // Таблица
             this.dgvRoutes.Dock = DockStyle.Fill;
@@ -106,7 +106,7 @@ namespace DocumentModule
             this.btnHelp.AutoSize = true;
             this.btnHelp.Anchor = AnchorStyles.Left;
             this.btnHelp.Margin = new Padding(3, 5, 3, 5);
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            this.btnHelp.Click += btnHelp_Click;
 
             // Подвал
             this.bottomPanel.Dock = DockStyle.Fill;
@@ -122,7 +122,7 @@ namespace DocumentModule
 
             this.btnExit.Text = "Выйти";
             this.btnExit.AutoSize = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExit.Click += btnExit_Click;
 
             // Form
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -143,6 +143,7 @@ namespace DocumentModule
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
         }
+
 
         #endregion
         private TableLayoutPanel mainLayout;

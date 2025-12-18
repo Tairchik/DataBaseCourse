@@ -26,7 +26,7 @@ namespace FinancialModule
         public RevenueTripForm(InitRepos init, int user_id, MenuState menuState)
         {
             InitializeComponent();
-            this.dataGridViewTrips.CellFormatting += dataGridViewTrips_CellFormatting;
+            this.dataGridViewTrips.CellFormatting += DataGridView_CellFormatting;
             dataBase = init;
             this.allTrips = dataBase.tripRep.GetAll();
             this.allRoutes = dataBase.routRep.GetAll();
@@ -46,11 +46,24 @@ namespace FinancialModule
 
                 string columnName = dataGridViewTrips.Columns[e.ColumnIndex].Name;
 
-                if (columnName == "colRoute")
+                if (columnName == "Route")
                 {
                     // Безопасно достаем бренд через Model
                     e.Value = current.Rout_?.NameRoute ?? "Н/Д";
                     e.FormattingApplied = true;
+                }
+                else if (columnName == "DateStart") 
+                {
+                    e.Value = current.DateStart.ToString("dd.MM.yyyy");
+                    e.FormattingApplied = true;
+                }
+                else if (columnName == "TimeStart")
+                {
+                    e.Value = current.TimeStart.ToString(@"hh\:mm");
+                }
+                else if (columnName == "ActualRevenue")
+                {
+                    e.Value = current.ActualRevenue.ToString("F2");
                 }
             }
         }

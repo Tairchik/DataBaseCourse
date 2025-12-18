@@ -79,10 +79,6 @@ namespace TripModule
 
                 if (_editingTrip.TimeStart != TimeSpan.Zero)
                     timeDepartureTime.Value = DateTime.Today.Add(_editingTrip.TimeStart);
-                else
-                    timeDepartureTime.Value = DateTime.Today.Add(TimeSpan.FromHours(8)); // 08:00 по умолчанию
-
-                txtBus.Text = _editingTrip.Bus_?.ToString() ?? "";
                 txtDriver.Text = _editingTrip.Driver?.GetFullName() ?? "";
                 txtConductor.Text = _editingTrip.Conductor?.GetFullName() ?? "";
 
@@ -178,7 +174,7 @@ namespace TripModule
                     if (form.ShowDialog() == DialogResult.OK && form.SelectedBus != null)
                     {
                         _editingTrip.Bus_ = form.SelectedBus;
-                        txtBus.Text = form.SelectedBus.ToString();
+                        txtBus.Text = form.SelectedBus.RegistrationNumber;
                     }
                 }
             }

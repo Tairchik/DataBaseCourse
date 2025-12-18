@@ -32,6 +32,7 @@
     <ProjectReference Include="..\HelpModule\HelpModule.csproj" />
     <ProjectReference Include="..\LoginWindow\LoginWindow.csproj" />
     <ProjectReference Include="..\OtherModule\OtherModule.csproj" />
+    <ProjectReference Include="..\SqlCommandModule\SqlCommandModule.csproj" />
     <ProjectReference Include="..\TripModule\TripModule.csproj" />
   </ItemGroup>
 

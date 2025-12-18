@@ -29,7 +29,7 @@ namespace GuideModule
                 "Введите название должности:",
                 "Новая должность",
             "");
-
+            if (string.IsNullOrEmpty(postName)) { return; }
             Post post = new Post
             {
                 NamePost = postName,

@@ -1,6 +1,6 @@
 ﻿namespace DocumentModule
 {
-    partial class DriverReport
+    partial class DriverReportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -285,7 +285,7 @@
             ResumeLayout(false);
         }
 
-
+        #endregion
 
         private TableLayoutPanel mainLayout;
         private GroupBox grpFilters;
@@ -310,7 +310,7 @@
         private DataGridViewTextBoxColumn colStartTime;
         private DataGridViewTextBoxColumn colExp;
         private DataGridViewTextBoxColumn colClass;
+
     }
-    #endregion
 }
 #endregion

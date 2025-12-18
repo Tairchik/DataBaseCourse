@@ -19,8 +19,8 @@ namespace MainModule
                     var username = loginForm.AuthenticatedUsername;
 
                     MainForm mainForm = new MainForm(users[username]);
-
-                    if (mainForm.ShowDialog() == DialogResult.Continue)
+                    var dialog = mainForm.ShowDialog();
+                    if (dialog == DialogResult.Continue)
                     {
                         ChangePassword changePassword = new ChangePassword(users[username]);
                         if (changePassword.ShowDialog() == DialogResult.OK)
@@ -31,6 +31,10 @@ namespace MainModule
                         {
                             run(true, users[username]);
                         }
+                    }
+                    else if (dialog == DialogResult.Retry) 
+                    {
+                        run(false);
                     }
                 }
             }

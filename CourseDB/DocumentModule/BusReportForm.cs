@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using CourseDB;
 
@@ -13,22 +13,46 @@ namespace DocumentModule
         {
             InitializeComponent();
             _repos = repos;
-            LoadFilters();
-            LoadData();
+            this.Load += (s, e) => { LoadFilters(); LoadData(); };
         }
 
         private void LoadFilters()
         {
+            var buses = _repos.busRep.GetAll();
+            var models = buses.Select(b => b.Model.NameModel).Distinct().OrderBy(m => m);
+
+            cmbModel.Items.Clear();
             cmbModel.Items.Add("Все");
-            // Загрузка моделей
-            // foreach(var m in _repos.Models.GetAll()) cmbModel.Items.Add(m.NameModel);
+            foreach (var m in models) cmbModel.Items.Add(m);
             cmbModel.SelectedIndex = 0;
         }
 
-        private void btnApply_Click(object sender, EventArgs e)
+        private void LoadData()
         {
-            LoadData();
+            dgvBuses.Rows.Clear();
+            var buses = _repos.busRep.GetAll();
+            var allTrips = _repos.tripRep.GetAll().Where(t => t.DateStart.ToString("yyyy-MM-dd") == DateTime.Today.ToString("yyyy-MM-dd")).ToList();
+            var allRoutes = _repos.routRep.GetAll();
+
+            string filterModel = cmbModel.SelectedItem?.ToString() ?? "Все";
+
+            foreach (var bus in buses)
+            {
+                if (filterModel != "Все" && bus.Model.NameModel != filterModel) continue;
+
+                var trip = allTrips.FirstOrDefault(t => t.Bus_.RegistrationNumber == bus.RegistrationNumber);
+                var route = trip != null ? allRoutes.FirstOrDefault(r => r.NameRoute == trip.Rout_.NameRoute) : null;
+
+                dgvBuses.Rows.Add(
+                    bus.RegistrationNumber,
+                    route?.NameRoute ?? "В депо",
+                    BusStateExtensions.GetStringByEnum(bus.State)
+                );
+            }
+            lblCount.Text = $"Всего единиц: {dgvBuses.Rows.Count}";
         }
+
+        private void btnApply_Click(object sender, EventArgs e) => LoadData();
 
         private void btnReset_Click(object sender, EventArgs e)
         {
@@ -36,22 +60,13 @@ namespace DocumentModule
             LoadData();
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void btnHelp_Click(object sender, EventArgs e)
         {
-            this.Close();
+            MessageBox.Show("Отчет по автобусам показывает текущее распределение техники по маршрутам.\n" +
+                "Статус 'В депо' означает отсутствие запланированных рейсов на сегодня.",
+                "Справка", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void LoadData()
-        {
-            dgvBuses.Rows.Clear();
-
-            // Загрузка и фильтрация
-            // ...
-
-            // Пример
-            // dgvBuses.Rows.Add("A123BC", "Маршрут 1", "Исправен");
-
-            lblCount.Text = $"Число автобусов: {dgvBuses.Rows.Count}";
-        }
+        private void btnExit_Click(object sender, EventArgs e) => this.Close();
     }
 }

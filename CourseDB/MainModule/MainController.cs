@@ -9,6 +9,7 @@ using EmployeeModule;
 using FinancialModule;
 using GuideModule;
 using LoginWindow;
+using SqlCommandModule;
 
 namespace MainModule
 {
@@ -134,6 +135,16 @@ namespace MainModule
                     case "TripModule":
                         form = CreateTripModule(menuItem);
                         break;
+                    case "MainModule":
+                        if (menuItem.FunctionName == "Exit")
+                        {
+                            _view.DialogResult = DialogResult.Retry;
+                            _view.Close();
+                        }
+                        break;
+                    case "SqlCommandModule":
+                        form = SqlCommandModule(menuItem);
+                        break;
                     default:
                         MessageBox.Show($"Модуль '{menuItem.DllName}' не поддерживается", "Ошибка",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -187,6 +198,19 @@ namespace MainModule
             }
         }
 
+        private Form? SqlCommandModule(MenuLibrary.MenuItem menuItem)
+        {
+            switch (menuItem.FunctionName)
+            {
+                case "SqlCommand":
+                    return new SqlCommandForm();
+                default:
+                    MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле SqlCommandModule", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+            }
+        }
+
         private Form? CreateOtherModule(MenuLibrary.MenuItem menuItem)
         {
             switch (menuItem.FunctionName)
@@ -208,11 +232,13 @@ namespace MainModule
                 case "BusReport":
                     return new BusReportForm(_initRepos);
                 case "DriverReport":
-                    return new DriverReport(_initRepos);
+                    return new DriverReportForm(_initRepos);
                 case "RoutReport":
-                    return new RoutReportForm(_initRepos);
+                    return new RoutReportForm(_initRepos, user.Id);
                 case "TripReport":
                     return new TripReportForm(_initRepos);
+                case "SqlCommand":
+                    return new SqlCommandForm();
                 default:
                     MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле DocumentModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
