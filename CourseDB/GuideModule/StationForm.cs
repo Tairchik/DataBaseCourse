@@ -19,7 +19,7 @@ namespace GuideModule
         public StationForm(InitRepos initRepos, int user_id, MenuState menuState) : base()
         {
             InitializeComponent(this);
-            this.Text = "Станции";
+            this.Text = "Справочник: Остановки";
             controller = new StationController(this, user_id, initRepos, menuState);
         }
         public override void ButtonApply_Click(object sender, EventArgs e)

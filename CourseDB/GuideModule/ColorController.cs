@@ -25,20 +25,25 @@ namespace GuideModule
 
         public override void CreateRowTable()
         {
-            string colorName = Microsoft.VisualBasic.Interaction.InputBox(
-            "Введите название цвета:",
-            "Новый цвет",
-            "");
+            EditForm editForm = new EditForm(base.user_id, "цвета");
+            DialogResult dialogResult = editForm.ShowDialog();
 
-            ColorDataModel newColor = new ColorDataModel
+            if (dialogResult == DialogResult.OK)
             {
-                ColorName = colorName,
-            };
-
-            newColor.Id = dataBase.colorRep.GetOrCreate(newColor.ColorName);
-            bindingList.Add(newColor);
-
-            SetupAutoComplete();
+                if (bindingList.Any(b => string.Equals(b.ColorName, editForm.Model_, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Цвет {editForm.Model_} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                ColorDataModel color = new ColorDataModel
+                {
+                    ColorName = editForm.Model_,
+                };
+                color.Id = dataBase.colorRep.GetOrCreate(color.ColorName);
+                bindingList.Add(color);
+                SetupAutoComplete();
+            }
         }
 
         public override void EditRowTable()
@@ -51,28 +56,23 @@ namespace GuideModule
             }
 
             int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-            ColorDataModel selected = bindingList[selectedIndex];
+            var selected = bindingList[selectedIndex];
 
-            // Запрашиваем новое название
-            string newName = Microsoft.VisualBasic.Interaction.InputBox(
-                "Введите новое название цвета:",
-                "Редактирование цвета",
-                selected.ColorName);
-
-            // Проверяем ввод
-            if (string.IsNullOrWhiteSpace(newName))
+            EditForm editForm = new EditForm(base.user_id, selected.ColorName, "Цвета");
+            DialogResult dialogResult = editForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
             {
-                return;
+                if (bindingList.Any(b => string.Equals(b.ColorName, editForm.Model_, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Цвет {editForm.Model_} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                selected.ColorName = editForm.Model_;
+                dataBase.colorRep.Update(selected);
+                view.dataGridView.Refresh();
+                SetupAutoComplete();
             }
-
-            // Обновляем данные
-            selected.ColorName = newName;
-
-            // Обновляем отображение
-            view.dataGridView.Refresh();
-
-            dataBase.colorRep.Update(selected);
-            SetupAutoComplete();
         }
 
         public override void Search()
@@ -138,12 +138,21 @@ namespace GuideModule
 
             if (result == DialogResult.Yes)
             {
-                // Получаем индекс выбранной строки
-                int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-                ColorDataModel ToDelete = bindingList[selectedIndex];
-                bindingList.RemoveAt(selectedIndex);
-                dataBase.colorRep.Delete(ToDelete.Id);
-                SetupAutoComplete();
+                try
+                {
+                    int selectedIndex = view.dataGridView.SelectedRows[0].Index;
+                    ColorDataModel ToDelete = bindingList[selectedIndex];
+                    dataBase.colorRep.Delete(ToDelete.ColorName);
+                    bindingList.RemoveAt(selectedIndex);
+                    SetupAutoComplete();
+                }
+                catch 
+                {
+                    MessageBox.Show($"Ошибка при удалении: данный объект " +
+                       $"используется другим объектом, чтобы его удалить," +
+                       $" удалите или измените объекты связанные с ним", "Ошибка",
+                       MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

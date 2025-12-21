@@ -139,7 +139,7 @@ namespace GuideModule
                     bindingList.RemoveAt(selectedIndex);
                     SetupAutoComplete();
                 }
-                catch (Exception ex)
+                catch
                 {
                     MessageBox.Show($"Ошибка при удалении: данный объект " +
                         $"используется другим объектом, чтобы его удалить," +

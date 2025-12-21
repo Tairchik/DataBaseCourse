@@ -30,7 +30,7 @@ namespace GuideModule
             this.isEditMode = false;
 
             InitializeForm();
-            this.Text = "Новый маршрут";
+            this.Text = "Создание маршрута";
         }
 
         // Конструктор для редактирования существующего маршрута

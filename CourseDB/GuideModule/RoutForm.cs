@@ -19,7 +19,7 @@ namespace GuideModule
         public RoutForm(InitRepos initRepos, int user_id, MenuState menuState) : base()
         {
             InitializeComponent(this);
-            this.Text = "Маршруты";
+            this.Text = "Справочник: Маршруты";
             controller = new RoutController(this, user_id, initRepos, menuState);
         }
         public override void ButtonApply_Click(object sender, EventArgs e)

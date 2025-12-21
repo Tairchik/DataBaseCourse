@@ -19,7 +19,7 @@ namespace GuideModule
         public ColorForm(InitRepos initRepos, int user_id, MenuState menuState) : base()
         {
             InitializeComponent(this);
-            this.Text = "Цвета";
+            this.Text = "Справочник: Цвета";
             controller = new ColorController(this, user_id, initRepos, menuState);
         }
         public override void ButtonApply_Click(object sender, EventArgs e)

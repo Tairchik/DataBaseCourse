@@ -25,20 +25,25 @@ namespace GuideModule
 
         public override void CreateRowTable()
         {
-            string postName = Microsoft.VisualBasic.Interaction.InputBox(
-                "Введите название должности:",
-                "Новая должность",
-            "");
-            if (string.IsNullOrEmpty(postName)) { return; }
-            Post post = new Post
+            EditForm editForm = new EditForm(base.user_id, "должности");
+            DialogResult dialogResult = editForm.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
             {
-                NamePost = postName,
-            };
-
-            dataBase.postRep.Save(post);
-            bindingList.Add(post);
-
-            SetupAutoComplete();
+                if (bindingList.Any(b => string.Equals(b.NamePost, editForm.Model_, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Должность {editForm.Model_} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                Post post = new Post
+                {
+                    NamePost = editForm.Model_,
+                };
+                dataBase.postRep.Save(post);
+                bindingList.Add(post);
+                SetupAutoComplete();
+            }
         }
 
         public override void EditRowTable()
@@ -51,28 +56,23 @@ namespace GuideModule
             }
 
             int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-            Post selected = bindingList[selectedIndex];
+            var selected = bindingList[selectedIndex];
 
-            // Запрашиваем новое название
-            string newName = Microsoft.VisualBasic.Interaction.InputBox(
-                "Введите новое название должности:",
-                "Редактирование должности",
-                selected.NamePost);
-
-            // Проверяем ввод
-            if (string.IsNullOrWhiteSpace(newName))
+            EditForm editForm = new EditForm(base.user_id, selected.NamePost, "должности");
+            DialogResult dialogResult = editForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
             {
-                return;
+                if (bindingList.Any(b => string.Equals(b.NamePost, editForm.Model_, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Должность {editForm.Model_} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                selected.NamePost = editForm.Model_;
+                dataBase.postRep.Save(selected);
+                view.dataGridView.Refresh();
+                SetupAutoComplete();
             }
-
-            // Обновляем данные
-            selected.NamePost = newName;
-
-            // Обновляем отображение
-            view.dataGridView.Refresh();
-
-            dataBase.postRep.Save(selected);
-            SetupAutoComplete();
         }
 
         public override void Search()
@@ -128,12 +128,21 @@ namespace GuideModule
 
             if (result == DialogResult.Yes)
             {
-                // Получаем индекс выбранной строки
-                int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-                Post ToDelete = bindingList[selectedIndex];
-                bindingList.RemoveAt(selectedIndex);
-                dataBase.postRep.Delete(ToDelete);
-                SetupAutoComplete();
+                try
+                {
+                    int selectedIndex = view.dataGridView.SelectedRows[0].Index;
+                    Post ToDelete = bindingList[selectedIndex];
+                    dataBase.postRep.Delete(ToDelete);
+                    bindingList.RemoveAt(selectedIndex);
+                    SetupAutoComplete();
+                }
+                catch
+                {
+                    MessageBox.Show($"Ошибка при удалении: данный объект " +
+                      $"используется другим объектом, чтобы его удалить," +
+                      $" удалите или измените объекты связанные с ним", "Ошибка",
+                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

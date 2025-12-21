@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RoutEditForm));
             mainTableLayout = new TableLayoutPanel();
             splitContainer1 = new SplitContainer();
             leftPanel = new Panel();
@@ -729,6 +730,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1000, 700);
             Controls.Add(mainTableLayout);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1016, 739);
             Name = "RoutEditForm";
             StartPosition = FormStartPosition.CenterParent;

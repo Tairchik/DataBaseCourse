@@ -304,9 +304,12 @@ namespace GuideModule
                     bindingList.Remove(selectedBus);
                     SetupAutoComplete();
                 }
-                catch (Exception ex)
+                catch
                 {
-                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Ошибка при удалении: данный объект " +
+                       $"используется другим объектом, чтобы его удалить," +
+                       $" удалите или измените объекты связанные с ним", "Ошибка",
+                       MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

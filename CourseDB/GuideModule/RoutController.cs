@@ -106,6 +106,12 @@ namespace GuideModule
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
+                    if (bindingList.Any(b => string.Equals(b.NameRoute, form.ResultModel.NameRoute, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        MessageBox.Show($"Маршрут {form.ResultModel.NameRoute} уже сущесвтует", "Уведомление",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
                     Rout newRout = form.ResultModel;
 
                     try
@@ -157,6 +163,12 @@ namespace GuideModule
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
+                    if (bindingList.Any(b => string.Equals(b.NameRoute, form.ResultModel.NameRoute, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        MessageBox.Show($"Маршрут {form.ResultModel.NameRoute} уже сущесвтует", "Уведомление",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
                     Rout updatedRout = form.ResultModel;
 
                     try
@@ -233,12 +245,21 @@ namespace GuideModule
 
             if (result == DialogResult.Yes)
             {
-                // Получаем индекс выбранной строки
-                int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-                Rout objectToDelete = bindingList[selectedIndex];
-                bindingList.RemoveAt(selectedIndex);
-                dataBase.routRep.Delete(objectToDelete);
-                SetupAutoComplete();
+                try
+                {
+                    int selectedIndex = view.dataGridView.SelectedRows[0].Index;
+                    Rout objectToDelete = bindingList[selectedIndex];
+                    dataBase.routRep.Delete(objectToDelete);
+                    bindingList.RemoveAt(selectedIndex);
+                    SetupAutoComplete();
+                }
+                catch
+                {
+                    MessageBox.Show($"Ошибка при удалении: данный объект " +
+                          $"используется другим объектом, чтобы его удалить," +
+                          $" удалите или измените объекты связанные с ним", "Ошибка",
+                          MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

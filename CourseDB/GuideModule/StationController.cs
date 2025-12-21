@@ -24,20 +24,25 @@ namespace GuideModule
 
         public override void CreateRowTable()
         {
-            string Name = Microsoft.VisualBasic.Interaction.InputBox(
-                "Введите название остановки:",
-                "Новая остановка",
-            "");
+            EditForm editForm = new EditForm(base.user_id, "остановки");
+            DialogResult dialogResult = editForm.ShowDialog();
 
-            BusStationDataModel station = new BusStationDataModel
+            if (dialogResult == DialogResult.OK)
             {
-                StationName = Name,
-            };
-
-            dataBase.stationRep.GetOrCreate(station.StationName);
-            bindingList.Add(station);
-
-            SetupAutoComplete();
+                if (bindingList.Any(b => string.Equals(b.StationName, editForm.Model_, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Остановка {editForm.Model_} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                BusStationDataModel street = new BusStationDataModel
+                {
+                    StationName = editForm.Model_,
+                };
+                street.Id = dataBase.stationRep.GetOrCreate(street.StationName);
+                bindingList.Add(street);
+                SetupAutoComplete();
+            }
         }
 
         public override void EditRowTable()
@@ -50,28 +55,23 @@ namespace GuideModule
             }
 
             int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-            BusStationDataModel selected = bindingList[selectedIndex];
+            var selected = bindingList[selectedIndex];
 
-            // Запрашиваем новое название
-            string newName = Microsoft.VisualBasic.Interaction.InputBox(
-                "Введите новое название остановки:",
-                "Редактирование остановки",
-                selected.StationName);
-
-            // Проверяем ввод
-            if (string.IsNullOrWhiteSpace(newName))
+            EditForm editForm = new EditForm(base.user_id, selected.StationName, "остановки");
+            DialogResult dialogResult = editForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
             {
-                return;
+                if (bindingList.Any(b => string.Equals(b.StationName, editForm.Model_, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Остановка {editForm.Model_} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                selected.StationName = editForm.Model_;
+                dataBase.stationRep.Update(selected);
+                view.dataGridView.Refresh();
+                SetupAutoComplete();
             }
-
-            // Обновляем данные
-            selected.StationName = newName;
-
-            // Обновляем отображение
-            view.dataGridView.Refresh();
-
-            dataBase.stationRep.GetOrCreate(selected.StationName);
-            SetupAutoComplete();
         }
 
         public override void Search()
@@ -104,7 +104,7 @@ namespace GuideModule
             }
             else
             {
-                MessageBox.Show($"Должность с названием \"{searchText}\" не найдена", "Результат поиска",
+                MessageBox.Show($"Остановка с названием \"{searchText}\" не найдена", "Результат поиска",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -120,19 +120,28 @@ namespace GuideModule
 
             // Подтверждение удаления
             DialogResult result = MessageBox.Show(
-                "Вы уверены, что хотите удалить выбранную должность?",
+                "Вы уверены, что хотите удалить выбранную остановку?",
                 "Подтверждение удаления",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                // Получаем индекс выбранной строки
-                int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-                BusStationDataModel ToDelete = bindingList[selectedIndex];
-                bindingList.RemoveAt(selectedIndex);
-                dataBase.stationRep.GetOrCreate(ToDelete.StationName);
-                SetupAutoComplete();
+                try
+                {
+                    int selectedIndex = view.dataGridView.SelectedRows[0].Index;
+                    BusStationDataModel ToDelete = bindingList[selectedIndex];
+                    dataBase.stationRep.Delete(ToDelete.StationName);
+                    bindingList.RemoveAt(selectedIndex);
+                    SetupAutoComplete();
+                }
+                catch
+                {
+                    MessageBox.Show($"Ошибка при удалении: данный объект " +
+                          $"используется другим объектом, чтобы его удалить," +
+                          $" удалите или измените объекты связанные с ним", "Ошибка",
+                          MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

@@ -27,7 +27,7 @@ namespace GuideModule
             this.brands = brands;
             this.isEditMode = false;
             InitializeBrandComboBox();
-            this.Text = "Новая модель";
+            this.Text = "Создание модели";
             SettingsRepository rep = new SettingsRepository();
             Font f = rep.GetSettings(user_id);
             this.Font = f;

@@ -116,9 +116,9 @@ namespace GuideModule
 
                     // Добавляем в список
                     bindingList.Add(newModel);
+                    SetupAutoComplete();
                 }
             }
-            SetupAutoComplete();
         }
 
         // Метод поиска
@@ -190,7 +190,7 @@ namespace GuideModule
                     bindingList.RemoveAt(selectedIndex);
                     SetupAutoComplete();
                 }
-                catch (Exception ex)
+                catch
                 {
                     MessageBox.Show($"Ошибка при удалении: данный объект " +
                        $"используется другим объектом, чтобы его удалить," +
@@ -232,12 +232,10 @@ namespace GuideModule
                     // Обновляем в списке
                     bindingList[selectedIndex] = updatedModel;
                     view.dataGridView.Refresh();
+                    SetupAutoComplete();
                 }
             }
-            SetupAutoComplete();
         }
-
-        
 
         private void DataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {

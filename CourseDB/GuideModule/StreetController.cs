@@ -59,9 +59,7 @@ namespace GuideModule
             int selectedIndex = view.dataGridView.SelectedRows[0].Index;
             var selected = bindingList[selectedIndex];
 
-            // Запрашиваем новое название
-
-            EditForm editForm = new EditForm(base.user_id, selected.StreetName, "Улицы");
+            EditForm editForm = new EditForm(base.user_id, selected.StreetName, "улицы");
             DialogResult dialogResult = editForm.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
@@ -72,7 +70,7 @@ namespace GuideModule
                     return;
                 }
                 selected.StreetName = editForm.Model_;
-                dataBase.streetRep.GetOrCreate(selected.StreetName);
+                dataBase.streetRep.Update(selected);
                 view.dataGridView.Refresh();
                 SetupAutoComplete();
             }
@@ -138,7 +136,7 @@ namespace GuideModule
                     bindingList.RemoveAt(selectedIndex);
                     SetupAutoComplete();
                 }
-                catch (Exception ex)
+                catch
                 {
                     MessageBox.Show($"Ошибка при удалении: данный объект " +
                        $"используется другим объектом, чтобы его удалить," +

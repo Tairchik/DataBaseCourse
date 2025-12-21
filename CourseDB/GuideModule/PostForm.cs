@@ -19,7 +19,7 @@ namespace GuideModule
         public PostForm(InitRepos initRepos, int user_id, MenuState menuState) : base()
         {
             InitializeComponent(this);
-            this.Text = "Должности";
+            this.Text = "Справочник: Должности";
             controller = new PostController(this, user_id, initRepos, menuState);
         }
         public override void ButtonApply_Click(object sender, EventArgs e)

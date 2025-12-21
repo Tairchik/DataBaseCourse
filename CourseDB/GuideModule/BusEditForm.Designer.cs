@@ -19,6 +19,7 @@ namespace GuideModule
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BusEditForm));
             tableLayoutPanel = new TableLayoutPanel();
             labelModel = new Label();
             comboBoxModel = new ComboBox();
@@ -376,6 +377,7 @@ namespace GuideModule
             ClientSize = new Size(604, 306);
             Controls.Add(tableLayoutPanel);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             MinimumSize = new Size(620, 345);
