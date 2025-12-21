@@ -168,21 +168,29 @@ namespace GuideModule
                 return;
             }
 
-            // Подтверждение удаления
             DialogResult result = MessageBox.Show(
-                "Вы уверены, что хотите удалить выбранный бренд?",
+                "Вы уверены, что хотите удалить выбранную модель?",
                 "Подтверждение удаления",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                // Получаем индекс выбранной строки
-                int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-                Model objectToDelete = bindingList[selectedIndex];
-                bindingList.RemoveAt(selectedIndex);
-                dataBase.modelRep.Delete(objectToDelete);
-                SetupAutoComplete();
+                try
+                {
+                    int selectedIndex = view.dataGridView.SelectedRows[0].Index;
+                    var ToDelete = bindingList[selectedIndex];
+                    dataBase.modelRep.Delete(ToDelete);
+                    bindingList.RemoveAt(selectedIndex);
+                    SetupAutoComplete();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении: данный объект " +
+                       $"используется другим объектом, чтобы его удалить," +
+                       $" удалите или измените объекты связанные с ним", "Ошибка",
+                       MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

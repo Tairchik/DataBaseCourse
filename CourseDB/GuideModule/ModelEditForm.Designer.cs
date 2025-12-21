@@ -17,22 +17,23 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModelEditForm));
             tableLayoutPanel = new TableLayoutPanel();
             labelBrandName = new Label();
             comboBoxBrand = new ComboBox();
             labelModelName = new Label();
             textBoxModelName = new TextBox();
-            buttonApply = new Button();
-            buttonCancel = new Button();
-            flowLayoutPanelButtons = new FlowLayoutPanel();
-            numericUpDownFullCapacity = new NumericUpDown();
-            labelFullCapacity = new Label();
-            numericUpDownSeatCapacity = new NumericUpDown();
             labelSeatCapacity = new Label();
+            numericUpDownSeatCapacity = new NumericUpDown();
+            labelFullCapacity = new Label();
+            numericUpDownFullCapacity = new NumericUpDown();
+            flowLayoutPanelButtons = new FlowLayoutPanel();
+            buttonCancel = new Button();
+            buttonApply = new Button();
             tableLayoutPanel.SuspendLayout();
-            flowLayoutPanelButtons.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownFullCapacity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSeatCapacity).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownFullCapacity).BeginInit();
+            flowLayoutPanelButtons.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel
@@ -105,35 +106,51 @@
             textBoxModelName.Size = new Size(282, 23);
             textBoxModelName.TabIndex = 5;
             // 
-            // buttonApply
+            // labelSeatCapacity
             // 
-            buttonApply.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonApply.AutoSize = true;
-            buttonApply.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            buttonApply.Location = new Point(285, 13);
-            buttonApply.MinimumSize = new Size(90, 30);
-            buttonApply.Name = "buttonApply";
-            buttonApply.Padding = new Padding(10, 5, 10, 5);
-            buttonApply.Size = new Size(100, 35);
-            buttonApply.TabIndex = 9;
-            buttonApply.Text = "Применить";
-            buttonApply.UseVisualStyleBackColor = true;
-            buttonApply.Click += buttonApply_Click;
+            labelSeatCapacity.Anchor = AnchorStyles.Left;
+            labelSeatCapacity.AutoSize = true;
+            labelSeatCapacity.Location = new Point(3, 100);
+            labelSeatCapacity.Margin = new Padding(3, 10, 3, 10);
+            labelSeatCapacity.Name = "labelSeatCapacity";
+            labelSeatCapacity.Size = new Size(144, 15);
+            labelSeatCapacity.TabIndex = 2;
+            labelSeatCapacity.Text = "Число посадочных мест:";
             // 
-            // buttonCancel
+            // numericUpDownSeatCapacity
             // 
-            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonCancel.AutoSize = true;
-            buttonCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            buttonCancel.Location = new Point(391, 13);
-            buttonCancel.MinimumSize = new Size(80, 30);
-            buttonCancel.Name = "buttonCancel";
-            buttonCancel.Padding = new Padding(10, 5, 10, 5);
-            buttonCancel.Size = new Size(80, 35);
-            buttonCancel.TabIndex = 10;
-            buttonCancel.Text = "Отмена";
-            buttonCancel.UseVisualStyleBackColor = true;
-            buttonCancel.Click += buttonCancel_Click;
+            numericUpDownSeatCapacity.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            numericUpDownSeatCapacity.Location = new Point(195, 96);
+            numericUpDownSeatCapacity.Margin = new Padding(3, 10, 3, 10);
+            numericUpDownSeatCapacity.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
+            numericUpDownSeatCapacity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownSeatCapacity.Name = "numericUpDownSeatCapacity";
+            numericUpDownSeatCapacity.Size = new Size(282, 23);
+            numericUpDownSeatCapacity.TabIndex = 6;
+            numericUpDownSeatCapacity.Value = new decimal(new int[] { 30, 0, 0, 0 });
+            // 
+            // labelFullCapacity
+            // 
+            labelFullCapacity.Anchor = AnchorStyles.Left;
+            labelFullCapacity.AutoSize = true;
+            labelFullCapacity.Location = new Point(3, 143);
+            labelFullCapacity.Margin = new Padding(3, 10, 3, 10);
+            labelFullCapacity.Name = "labelFullCapacity";
+            labelFullCapacity.Size = new Size(127, 15);
+            labelFullCapacity.TabIndex = 3;
+            labelFullCapacity.Text = "Полная вместимость:";
+            // 
+            // numericUpDownFullCapacity
+            // 
+            numericUpDownFullCapacity.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            numericUpDownFullCapacity.Location = new Point(195, 139);
+            numericUpDownFullCapacity.Margin = new Padding(3, 10, 3, 10);
+            numericUpDownFullCapacity.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
+            numericUpDownFullCapacity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownFullCapacity.Name = "numericUpDownFullCapacity";
+            numericUpDownFullCapacity.Size = new Size(282, 23);
+            numericUpDownFullCapacity.TabIndex = 7;
+            numericUpDownFullCapacity.Value = new decimal(new int[] { 50, 0, 0, 0 });
             // 
             // flowLayoutPanelButtons
             // 
@@ -150,51 +167,35 @@
             flowLayoutPanelButtons.Size = new Size(474, 51);
             flowLayoutPanelButtons.TabIndex = 8;
             // 
-            // numericUpDownFullCapacity
+            // buttonCancel
             // 
-            numericUpDownFullCapacity.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            numericUpDownFullCapacity.Location = new Point(195, 139);
-            numericUpDownFullCapacity.Margin = new Padding(3, 10, 3, 10);
-            numericUpDownFullCapacity.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
-            numericUpDownFullCapacity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericUpDownFullCapacity.Name = "numericUpDownFullCapacity";
-            numericUpDownFullCapacity.Size = new Size(282, 23);
-            numericUpDownFullCapacity.TabIndex = 7;
-            numericUpDownFullCapacity.Value = new decimal(new int[] { 50, 0, 0, 0 });
+            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonCancel.AutoSize = true;
+            buttonCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            buttonCancel.Location = new Point(391, 13);
+            buttonCancel.MinimumSize = new Size(80, 30);
+            buttonCancel.Name = "buttonCancel";
+            buttonCancel.Padding = new Padding(10, 5, 10, 5);
+            buttonCancel.Size = new Size(80, 35);
+            buttonCancel.TabIndex = 10;
+            buttonCancel.Text = "Отмена";
+            buttonCancel.UseVisualStyleBackColor = true;
+            buttonCancel.Click += buttonCancel_Click;
             // 
-            // labelFullCapacity
+            // buttonApply
             // 
-            labelFullCapacity.Anchor = AnchorStyles.Left;
-            labelFullCapacity.AutoSize = true;
-            labelFullCapacity.Location = new Point(3, 143);
-            labelFullCapacity.Margin = new Padding(3, 10, 3, 10);
-            labelFullCapacity.Name = "labelFullCapacity";
-            labelFullCapacity.Size = new Size(127, 15);
-            labelFullCapacity.TabIndex = 3;
-            labelFullCapacity.Text = "Полная вместимость:";
-            // 
-            // numericUpDownSeatCapacity
-            // 
-            numericUpDownSeatCapacity.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            numericUpDownSeatCapacity.Location = new Point(195, 96);
-            numericUpDownSeatCapacity.Margin = new Padding(3, 10, 3, 10);
-            numericUpDownSeatCapacity.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
-            numericUpDownSeatCapacity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericUpDownSeatCapacity.Name = "numericUpDownSeatCapacity";
-            numericUpDownSeatCapacity.Size = new Size(282, 23);
-            numericUpDownSeatCapacity.TabIndex = 6;
-            numericUpDownSeatCapacity.Value = new decimal(new int[] { 30, 0, 0, 0 });
-            // 
-            // labelSeatCapacity
-            // 
-            labelSeatCapacity.Anchor = AnchorStyles.Left;
-            labelSeatCapacity.AutoSize = true;
-            labelSeatCapacity.Location = new Point(3, 100);
-            labelSeatCapacity.Margin = new Padding(3, 10, 3, 10);
-            labelSeatCapacity.Name = "labelSeatCapacity";
-            labelSeatCapacity.Size = new Size(144, 15);
-            labelSeatCapacity.TabIndex = 2;
-            labelSeatCapacity.Text = "Число посадочных мест:";
+            buttonApply.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonApply.AutoSize = true;
+            buttonApply.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            buttonApply.Location = new Point(285, 13);
+            buttonApply.MinimumSize = new Size(90, 30);
+            buttonApply.Name = "buttonApply";
+            buttonApply.Padding = new Padding(10, 5, 10, 5);
+            buttonApply.Size = new Size(100, 35);
+            buttonApply.TabIndex = 9;
+            buttonApply.Text = "Применить";
+            buttonApply.UseVisualStyleBackColor = true;
+            buttonApply.Click += buttonApply_Click;
             // 
             // ModelEditForm
             // 
@@ -205,6 +206,7 @@
             ClientSize = new Size(500, 265);
             Controls.Add(tableLayoutPanel);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             MinimumSize = new Size(400, 300);
@@ -214,10 +216,10 @@
             Text = "Модель";
             tableLayoutPanel.ResumeLayout(false);
             tableLayoutPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSeatCapacity).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownFullCapacity).EndInit();
             flowLayoutPanelButtons.ResumeLayout(false);
             flowLayoutPanelButtons.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownFullCapacity).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownSeatCapacity).EndInit();
             ResumeLayout(false);
             PerformLayout();
 

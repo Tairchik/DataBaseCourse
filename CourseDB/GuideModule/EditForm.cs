@@ -36,7 +36,7 @@ namespace GuideModule
             SettingsRepository rep = new SettingsRepository();
             this.Font = rep.GetSettings(user_id);
             this.labelName.Text = $"Название {nameForm.ToLower()}:";
-            this.Text = $"Создание {nameForm.ToLower()}:";
+            this.Text = $"Создание {nameForm.ToLower()}";
         }
 
         public EditForm(int user_id, string oldVal, string nameForm)
@@ -45,7 +45,7 @@ namespace GuideModule
             SettingsRepository rep = new SettingsRepository();
             this.Font = rep.GetSettings(user_id);
             this.labelName.Text = $"Название {nameForm.ToLower()}:";
-            this.Text = $"Редактирование {nameForm.ToLower()}:";
+            this.Text = $"Редактирование {nameForm.ToLower()}";
             this.textBox.Text = oldVal;
         }
 

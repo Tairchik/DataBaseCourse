@@ -29,12 +29,19 @@ namespace GuideModule
 
             if (dialogResult == DialogResult.OK)
             {
+                if (bindingList.Any(b =>string.Equals(b.BrandName, editForm.Model_, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Марка {editForm.Model_} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 BrandDataModel model = new BrandDataModel
                 {
                     BrandName = editForm.Model_,
-                }
-                ;
-                dataBase.brandRep.GetOrCreate(model.BrandName);
+                };
+                model.Id = dataBase.brandRep.GetOrCreate(model.BrandName);
+                
                 bindingList.Add(model);
                 SetupAutoComplete();
             }

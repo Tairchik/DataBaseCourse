@@ -31,11 +31,17 @@ namespace GuideModule
 
             if (dialogResult == DialogResult.OK)
             {
+                if (bindingList.Any(b => string.Equals(b.StreetName, editForm.Model_, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Улица {editForm.Model_} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
                 StreetDataModel street = new StreetDataModel
                 {
                     StreetName = editForm.Model_,
                 };
-                dataBase.streetRep.GetOrCreate(street.StreetName);
+                street.Id = dataBase.streetRep.GetOrCreate(street.StreetName);
                 bindingList.Add(street);
                 SetupAutoComplete();
             }

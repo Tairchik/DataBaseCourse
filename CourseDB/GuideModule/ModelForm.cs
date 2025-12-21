@@ -19,7 +19,7 @@ namespace GuideModule
         public ModelForm(InitRepos initRepos, int user_id, MenuState menuState) : base()
         {
             InitializeComponent(this);
-            this.Text = "Модели";
+            this.Text = "ИС Автобусный парк: Модели";
             controller = new ModelController(this, user_id, initRepos, menuState);
         }
 
