@@ -7,14 +7,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Xml.Linq;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace GuideModule
 {
-    public class BrandController : GuideController
+    public class StreetController: GuideController
     {
-        private BindingList<BrandDataModel> bindingList;
-        public BrandController(BaseForm form, int user_id, InitRepos initRepos, MenuState menuState) : base (form, user_id, initRepos, menuState)
+        private BindingList<StreetDataModel> bindingList;
+        public StreetController(BaseForm form, int user_id, InitRepos initRepos, MenuState menuState) : base(form, user_id, initRepos, menuState)
         {
             view.dataGridView.DataBindingComplete += DataGridView_DataBindingComplete;
             view.textBoxSearch.KeyDown += TextBoxSearch_KeyDown;
@@ -22,20 +23,20 @@ namespace GuideModule
             UpdateRowTable();
             SetupAutoComplete();
         }
+
         public override void CreateRowTable()
         {
-            EditForm editForm = new EditForm(base.user_id, "марки");
+            EditForm editForm = new EditForm(base.user_id, "улицы");
             DialogResult dialogResult = editForm.ShowDialog();
 
             if (dialogResult == DialogResult.OK)
             {
-                BrandDataModel model = new BrandDataModel
+                StreetDataModel street = new StreetDataModel
                 {
-                    BrandName = editForm.Model_,
-                }
-                ;
-                dataBase.brandRep.GetOrCreate(model.BrandName);
-                bindingList.Add(model);
+                    StreetName = editForm.Model_,
+                };
+                dataBase.streetRep.GetOrCreate(street.StreetName);
+                bindingList.Add(street);
                 SetupAutoComplete();
             }
         }
@@ -52,33 +53,34 @@ namespace GuideModule
             int selectedIndex = view.dataGridView.SelectedRows[0].Index;
             var selected = bindingList[selectedIndex];
 
-            EditForm editForm = new EditForm(base.user_id, selected.BrandName, "марки");
+            // Запрашиваем новое название
+
+            EditForm editForm = new EditForm(base.user_id, selected.StreetName, "Улицы");
             DialogResult dialogResult = editForm.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
-                selected.BrandName = editForm.Model_;
-                dataBase.brandRep.Update(selected);
+                selected.StreetName = editForm.Model_;
+                dataBase.streetRep.GetOrCreate(selected.StreetName);
                 view.dataGridView.Refresh();
                 SetupAutoComplete();
             }
         }
 
-        public override void Search() 
+        public override void Search()
         {
             string searchText = view.textBoxSearch.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(searchText))
             {
-                MessageBox.Show("Введите название марки для поиска", "Предупреждение",
+                MessageBox.Show("Введите название улицы для поиска", "Предупреждение",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Ищем строку с совпадающим названием (регистронезависимый поиск)
             int foundIndex = -1;
             for (int i = 0; i < bindingList.Count; i++)
             {
-                if (bindingList[i].BrandName.ToLower().Contains(searchText.ToLower()))
+                if (bindingList[i].StreetName.ToLower().Contains(searchText.ToLower()))
                 {
                     foundIndex = i;
                     break;
@@ -94,7 +96,7 @@ namespace GuideModule
             }
             else
             {
-                MessageBox.Show($"Марка с названием \"{searchText}\" не найден", "Результат поиска",
+                MessageBox.Show($"Улица с названием \"{searchText}\" не найдена", "Результат поиска",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -108,34 +110,31 @@ namespace GuideModule
                 return;
             }
 
-            // Подтверждение удаления
             DialogResult result = MessageBox.Show(
-                "Вы уверены, что хотите удалить выбранную марку?",
+                "Вы уверены, что хотите удалить выбранную улицу?",
                 "Подтверждение удаления",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                // Получаем индекс выбранной строки
                 try
                 {
                     int selectedIndex = view.dataGridView.SelectedRows[0].Index;
                     var ToDelete = bindingList[selectedIndex];
-                    dataBase.brandRep.Delete(ToDelete.BrandName);
+                    dataBase.streetRep.Delete(ToDelete.StreetName);
                     bindingList.RemoveAt(selectedIndex);
                     SetupAutoComplete();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Ошибка при удалении: данный объект " +
-                        $"используется другим объектом, чтобы его удалить," +
-                        $" удалите или измените объекты связанные с ним", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                       $"используется другим объектом, чтобы его удалить," +
+                       $" удалите или измените объекты связанные с ним", "Ошибка",
+                       MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
-
 
         public override void UpdateColumnTable()
         {
@@ -143,10 +142,9 @@ namespace GuideModule
             view.dataGridView.AllowUserToAddRows = false;
             view.dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             view.dataGridView.MultiSelect = false;
-            view.dataGridView.ReadOnly = true; // Запрещаем редактирование напрямую
-            view.dataGridView.EditMode = DataGridViewEditMode.EditProgrammatically; // Редактирование только программно
+            view.dataGridView.ReadOnly = true;
+            view.dataGridView.EditMode = DataGridViewEditMode.EditProgrammatically; 
             view.dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            // Очищаем колонки (на случай повторного вызова)
             view.dataGridView.Columns.Clear();
 
             // Колонка для порядкового номера
@@ -157,11 +155,10 @@ namespace GuideModule
             numberColumn.ReadOnly = true;
             view.dataGridView.Columns.Add(numberColumn);
 
-            // Колонка для названия бренда
             DataGridViewTextBoxColumn brandColumn = new DataGridViewTextBoxColumn();
-            brandColumn.HeaderText = "Название марки";
-            brandColumn.Name = "BrandName";
-            brandColumn.DataPropertyName = "BrandName";
+            brandColumn.HeaderText = "Название улицы";
+            brandColumn.Name = "StreetName";
+            brandColumn.DataPropertyName = "StreetName";
             brandColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             brandColumn.ReadOnly = true; // Только чтение
             view.dataGridView.Columns.Add(brandColumn);
@@ -169,8 +166,8 @@ namespace GuideModule
 
         public override void UpdateRowTable()
         {
-            List<BrandDataModel> brandDataModels = dataBase.brandRep.GetAll();
-            bindingList = new BindingList<BrandDataModel>(brandDataModels);
+            List<StreetDataModel> DataModels = dataBase.streetRep.GetAll();
+            bindingList = new BindingList<StreetDataModel>(DataModels);
             view.dataGridView.DataSource = bindingList;
 
             SetupAutoComplete();
@@ -194,9 +191,9 @@ namespace GuideModule
             // Получаем все названия брендов
             AutoCompleteStringCollection autoCompleteCollection = new AutoCompleteStringCollection();
 
-            foreach (var brand in bindingList)
+            foreach (var model in bindingList)
             {
-                autoCompleteCollection.Add(brand.BrandName);
+                autoCompleteCollection.Add(model.StreetName);
             }
 
             // Настраиваем автодополнение для TextBox
@@ -210,8 +207,9 @@ namespace GuideModule
             {
                 Search();
                 e.Handled = true;
-                e.SuppressKeyPress = true; 
+                e.SuppressKeyPress = true;
             }
         }
+
     }
 }

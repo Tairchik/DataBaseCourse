@@ -53,6 +53,32 @@ namespace CourseDB.Data
             }
             return connection;
         }
+        public List<string> SqlCommand(string qeary)
+        {
+            List<string> result = new List<string>();
+            using (var connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+
+                command.CommandText = qeary;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read()) 
+                    {
+                        List<string> rowValues = new List<string>();
+
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            var value = reader.IsDBNull(i) ? "NULL" : reader.GetValue(i).ToString();
+                            rowValues.Add(value);
+                        }
+                        result.Add(string.Join(" | ", rowValues));
+                    }
+                }
+            }
+            return result;
+        }
 
         private static void EnsureDatabaseSchema()
         {
@@ -277,11 +303,6 @@ namespace CourseDB.Data
                 command.ExecuteNonQuery();
             }
         }
-        protected string SqlCommand(string command) 
-        {
-            string result = "";
-
-            return result;
-        }
+        
     }
 }

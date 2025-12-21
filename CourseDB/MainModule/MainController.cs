@@ -203,7 +203,7 @@ namespace MainModule
             switch (menuItem.FunctionName)
             {
                 case "SqlCommand":
-                    return new SqlCommandForm();
+                    return new SqlCommandForm(_initRepos);
                 default:
                     MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле SqlCommandModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -237,8 +237,6 @@ namespace MainModule
                     return new RoutReportForm(_initRepos, user.Id);
                 case "TripReport":
                     return new TripReportForm(_initRepos);
-                case "SqlCommand":
-                    return new SqlCommandForm();
                 default:
                     MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле DocumentModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -315,6 +313,8 @@ namespace MainModule
                     return new RoutForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 case "Station":
                     return new StationForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
+                case "Street":
+                    return new StreetForm(_initRepos, user.Id, user.MenuStatus[menuItem.Id]);
                 default:
                     MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле GuideModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);

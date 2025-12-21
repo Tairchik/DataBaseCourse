@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,6 +29,8 @@ namespace GuideModule
 
         protected void InitializeComponent(BaseForm baseForm)
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditForm));
+
             baseForm.mainTableLayout = new TableLayoutPanel();
             baseForm.searchTableLayout = new TableLayoutPanel();
             baseForm.labelSearch = new Label();
@@ -217,6 +220,7 @@ namespace GuideModule
             baseForm.mainTableLayout.PerformLayout();
             baseForm.searchTableLayout.ResumeLayout(false);
             baseForm.searchTableLayout.PerformLayout();
+            Icon = (Icon)resources.GetObject("$this.Icon");
             ((System.ComponentModel.ISupportInitialize)(baseForm.dataGridView)).EndInit();
             baseForm.buttonsFlowLayout.ResumeLayout(false);
             baseForm.buttonsFlowLayout.PerformLayout();

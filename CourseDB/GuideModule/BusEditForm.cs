@@ -30,7 +30,7 @@ namespace GuideModule
                 return;
             }
 
-            this.Text = "Новый автобус";
+            this.Text = "ИС Автобусный парк: Новый автобус";
         }
 
         public BusEditForm(List<Model> models, Bus existingBus, int user_id)
@@ -47,7 +47,7 @@ namespace GuideModule
             }
 
             LoadBusData(existingBus);
-            this.Text = "Редактирование автобуса";
+            this.Text = "ИС Автобусный парк: Редактирование автобуса";
         }
 
         private bool InitializeForm()

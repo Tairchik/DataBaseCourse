@@ -12,15 +12,15 @@ using System.Windows.Forms;
 
 namespace GuideModule
 {
-    public partial class StationForm : BaseForm
+    public partial class StreetForm : BaseForm
     {
         public GuideController controller;
         public InitRepos initRepos;
-        public StationForm(InitRepos initRepos, int user_id, MenuState menuState) : base()
+        public StreetForm(InitRepos initRepos, int user_id, MenuState menuState) : base()
         {
             InitializeComponent(this);
-            this.Text = "Станции";
-            controller = new StationController(this, user_id, initRepos, menuState);
+            this.Text = "Улицы";
+            controller = new StreetController(this, user_id, initRepos, menuState);
         }
         public override void ButtonApply_Click(object sender, EventArgs e)
         {
