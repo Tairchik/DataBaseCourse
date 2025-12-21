@@ -103,6 +103,12 @@ namespace GuideModule
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
+                    if (bindingList.Any(b => string.Equals(b.NameModel, form.ResultModel.NameModel, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        MessageBox.Show($"Модель {form.ResultModel.NameModel} бренда {form.ResultModel.NameBrand} уже сущесвтует", "Уведомление",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
                     Model newModel = form.ResultModel;
 
                     // Сохраняем в БД
@@ -212,6 +218,12 @@ namespace GuideModule
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
+                    if (bindingList.Any(b => string.Equals(b.NameModel, form.ResultModel.NameModel, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        MessageBox.Show($"Модель {form.ResultModel.NameModel} бренда {form.ResultModel.NameBrand} уже сущесвтует", "Уведомление",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
                     Model updatedModel = form.ResultModel;
 
                     // Обновляем в БД

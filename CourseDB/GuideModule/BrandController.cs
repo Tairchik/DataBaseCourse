@@ -63,6 +63,12 @@ namespace GuideModule
             DialogResult dialogResult = editForm.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
+                if (bindingList.Any(b => string.Equals(b.BrandName, editForm.Model_, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Марка {editForm.Model_} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
                 selected.BrandName = editForm.Model_;
                 dataBase.brandRep.Update(selected);
                 view.dataGridView.Refresh();

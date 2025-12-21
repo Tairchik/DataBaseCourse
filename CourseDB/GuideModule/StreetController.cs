@@ -65,6 +65,12 @@ namespace GuideModule
             DialogResult dialogResult = editForm.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
+                if (bindingList.Any(b => string.Equals(b.StreetName, editForm.Model_, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Улица {editForm.Model_} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
                 selected.StreetName = editForm.Model_;
                 dataBase.streetRep.GetOrCreate(selected.StreetName);
                 view.dataGridView.Refresh();

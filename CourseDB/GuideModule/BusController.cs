@@ -168,6 +168,13 @@ namespace GuideModule
 
             if (form.ShowDialog() == DialogResult.OK)
             {
+                if (bindingList.Any(b => string.Equals(b.InventoryNumber, form.ResultModel.InventoryNumber, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Авобус с инвентарным номером {form.ResultModel.InventoryNumber} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 Bus newBus = form.ResultModel;
 
                 // Сохраняем в БД
@@ -204,16 +211,24 @@ namespace GuideModule
             }
 
             BusEditForm form = new BusEditForm(models, selectedBus, user_id);
+            DialogResult dialogResult = form.ShowDialog();
+
 
             // Проверяем DialogResult сразу после создания формы
-            if (form.DialogResult == DialogResult.Cancel)
+            if (dialogResult == DialogResult.Cancel)
             {
                 form.Dispose(); // Освобождаем ресурсы
                 return;
             }
 
-            if (form.ShowDialog() == DialogResult.OK)
+            if (dialogResult == DialogResult.OK)
             {
+                if (bindingList.Any(b => string.Equals(b.InventoryNumber, form.ResultModel.InventoryNumber, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show($"Авобус с инвентарным номером {form.ResultModel.InventoryNumber} уже сущесвтует", "Уведомление",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
                 Bus updatedBus = form.ResultModel;
 
                 // Обновляем в БД

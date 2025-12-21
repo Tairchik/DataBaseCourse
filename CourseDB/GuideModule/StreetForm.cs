@@ -19,7 +19,7 @@ namespace GuideModule
         public StreetForm(InitRepos initRepos, int user_id, MenuState menuState) : base()
         {
             InitializeComponent(this);
-            this.Text = "Улицы";
+            this.Text = "Справочник: Улицы";
             controller = new StreetController(this, user_id, initRepos, menuState);
         }
         public override void ButtonApply_Click(object sender, EventArgs e)

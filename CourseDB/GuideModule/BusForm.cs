@@ -19,7 +19,7 @@ namespace GuideModule
         public BusForm(InitRepos initRepos, int user_id, MenuState menuState) : base()
         {
             InitializeComponent(this);
-            this.Text = "Автобусы";
+            this.Text = "Справочник: Автобусы";
             controller = new BusController(this, user_id, initRepos, menuState);
         }
 
