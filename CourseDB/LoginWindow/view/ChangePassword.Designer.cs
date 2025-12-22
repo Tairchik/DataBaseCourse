@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangePassword));
             bannerPanel = new Panel();
             keyIcon = new PictureBox();
             label1 = new Label();
@@ -241,13 +242,14 @@
             Controls.Add(bannerPanel);
             Controls.Add(statusStrip);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             Name = "ChangePassword";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Вход";
+            Text = "Изменить пораль";
             InputLanguageChanged += Form_InputLanguageChanged;
             KeyDown += LoginForm_KeyDown;
             bannerPanel.ResumeLayout(false);

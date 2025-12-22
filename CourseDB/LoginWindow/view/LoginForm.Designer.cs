@@ -30,6 +30,7 @@ namespace LoginWindow
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             bannerPanel = new Panel();
             keyIcon = new PictureBox();
             label1 = new Label();
@@ -216,6 +217,7 @@ namespace LoginWindow
             Controls.Add(bannerPanel);
             Controls.Add(statusStrip);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
