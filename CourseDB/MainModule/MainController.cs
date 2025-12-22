@@ -4,7 +4,6 @@ using CourseDB;
 using OtherModule;
 using DocumentModule;
 using TripModule;
-using ControlBusModule;
 using EmployeeModule;
 using FinancialModule;
 using GuideModule;
@@ -119,9 +118,6 @@ namespace MainModule
                         break;
                     case "DocumentModule":
                         form = CreateDocumentModule(menuItem);
-                        break;
-                    case "ControlBusModule":
-                        form = CreateControlBusModule(menuItem);
                         break;
                     case "EmployeeModule":
                         form = CreateEmployeeModule(menuItem);
@@ -251,18 +247,6 @@ namespace MainModule
                     return new TripForm(_initRepos, user.Id);
                 default:
                     MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле TripModule", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return null;
-            }
-        }
-        private Form? CreateControlBusModule(MenuLibrary.MenuItem menuItem)
-        {
-            switch (menuItem.FunctionName)
-            {
-                case "Control":
-                    return new ControlForm(_initRepos);
-                default:
-                    MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле ControlBusModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
             }

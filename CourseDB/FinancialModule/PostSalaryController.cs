@@ -30,6 +30,13 @@ namespace FinancialModule
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
+                        if (bindingList.Any(b => string.Equals(b.NamePost, form.ResultModel.NamePost, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            MessageBox.Show($"Должность {form.ResultModel.NamePost} уже сущесвтует", "Уведомление",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+
                         Post newPost = form.ResultModel;
                         dataBase.postRep.Save(newPost);
                         bindingList.Add(newPost);
@@ -63,6 +70,12 @@ namespace FinancialModule
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
+                        if (bindingList.Any(b => string.Equals(b.NamePost, form.ResultModel.NamePost, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            MessageBox.Show($"Должность {form.ResultModel.NamePost} уже сущесвтует", "Уведомление",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
                         Post updated = form.ResultModel;
 
                         // Обновляем в БД
@@ -136,12 +149,21 @@ namespace FinancialModule
 
             if (result == DialogResult.Yes)
             {
-                // Получаем индекс выбранной строки
-                int selectedIndex = view.dataGridView.SelectedRows[0].Index;
-                Post ToDelete = bindingList[selectedIndex];
-                bindingList.RemoveAt(selectedIndex);
-                dataBase.postRep.Delete(ToDelete);
-                SetupAutoComplete();
+                try
+                {
+                    int selectedIndex = view.dataGridView.SelectedRows[0].Index;
+                    Post ToDelete = bindingList[selectedIndex];
+                    dataBase.postRep.Delete(ToDelete);
+                    bindingList.RemoveAt(selectedIndex);
+                    SetupAutoComplete();
+                }
+                catch
+                {
+                    MessageBox.Show($"Ошибка при удалении: данный объект " +
+                      $"используется другим объектом, чтобы его удалить," +
+                      $" удалите или измените объекты связанные с ним", "Ошибка",
+                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

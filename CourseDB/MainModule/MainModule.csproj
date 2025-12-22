@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthorizationLibrary\AuthorizationLibrary.csproj" />
-    <ProjectReference Include="..\ControlBusModule\ControlBusModule.csproj" />
     <ProjectReference Include="..\CourseDB\CourseDB.csproj" />
     <ProjectReference Include="..\DocumentModule\DocumentModule.csproj" />
     <ProjectReference Include="..\EmployeeModule\EmployeeModule.csproj" />

@@ -327,7 +327,7 @@ namespace EmployeeModule
         private void AddEmployeeButton_Click(object sender, EventArgs e)
         {
             // Открытие формы создания сотрудника
-            using (var form = new EmployeeEditForm(allPosts, userId))
+            using (var form = new EmployeeEditForm(allPosts))
             {
                 if (form.ShowDialog() == DialogResult.OK && form.ResultEmployee != null)
                 {
@@ -361,7 +361,7 @@ namespace EmployeeModule
                 if (selectedRow.Tag is Employee employee)
                 {
                     // Открытие формы редактирования сотрудника
-                    using (var form = new EmployeeEditForm(allPosts, employee, userId))
+                    using (var form = new EmployeeEditForm(allPosts, employee))
                     {
                         if (form.ShowDialog() == DialogResult.OK && form.ResultEmployee != null)
                         {

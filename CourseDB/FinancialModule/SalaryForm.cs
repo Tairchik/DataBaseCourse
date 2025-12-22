@@ -10,7 +10,7 @@ namespace FinancialModule
         public SalaryForm(InitRepos initRepos, int user_id, MenuState menuState)
         {
             InitializeComponent(this);
-            this.Text = "Назначить оклад";
+            this.Text = "Финансовый учет: Назначить оклад";
             controller = new PostSalaryController(this, user_id, initRepos, menuState);
         }
 

@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RevenueRoutForm));
             mainTableLayout = new TableLayoutPanel();
             panelFilter = new Panel();
             tableLayoutPanelFilter = new TableLayoutPanel();
@@ -50,6 +51,8 @@
             // 
             // mainTableLayout
             // 
+            mainTableLayout.AutoSize = true;
+            mainTableLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             mainTableLayout.ColumnCount = 1;
             mainTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             mainTableLayout.Controls.Add(panelFilter, 0, 0);
@@ -64,11 +67,13 @@
             mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
             mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
-            mainTableLayout.Size = new Size(800, 600);
+            mainTableLayout.Size = new Size(800, 455);
             mainTableLayout.TabIndex = 0;
             // 
             // panelFilter
             // 
+            panelFilter.AutoSize = true;
+            panelFilter.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelFilter.Controls.Add(tableLayoutPanelFilter);
             panelFilter.Dock = DockStyle.Fill;
             panelFilter.Location = new Point(3, 3);
@@ -79,9 +84,11 @@
             // 
             // tableLayoutPanelFilter
             // 
+            tableLayoutPanelFilter.AutoSize = true;
+            tableLayoutPanelFilter.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanelFilter.ColumnCount = 4;
             tableLayoutPanelFilter.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanelFilter.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanelFilter.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelFilter.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelFilter.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelFilter.Controls.Add(labelSearch, 0, 0);
@@ -105,6 +112,7 @@
             labelSearch.Size = new Size(63, 15);
             labelSearch.TabIndex = 0;
             labelSearch.Text = "Маршрут:";
+            labelSearch.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // comboBoxSearch
             // 
@@ -119,7 +127,7 @@
             // 
             // buttonApplyFilter
             // 
-            buttonApplyFilter.Anchor = AnchorStyles.Right;
+            buttonApplyFilter.Anchor = AnchorStyles.Left;
             buttonApplyFilter.AutoSize = true;
             buttonApplyFilter.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             buttonApplyFilter.Location = new Point(564, 9);
@@ -133,7 +141,7 @@
             // 
             // buttonResetFilter
             // 
-            buttonResetFilter.Anchor = AnchorStyles.Right;
+            buttonResetFilter.Anchor = AnchorStyles.Left;
             buttonResetFilter.AutoSize = true;
             buttonResetFilter.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             buttonResetFilter.Location = new Point(657, 9);
@@ -146,12 +154,14 @@
             // 
             // panelTable
             // 
+            panelTable.AutoSize = true;
+            panelTable.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelTable.Controls.Add(dataGridViewRoutes);
             panelTable.Dock = DockStyle.Fill;
             panelTable.Location = new Point(3, 73);
             panelTable.Name = "panelTable";
             panelTable.Padding = new Padding(10);
-            panelTable.Size = new Size(794, 374);
+            panelTable.Size = new Size(794, 229);
             panelTable.TabIndex = 1;
             // 
             // dataGridViewRoutes
@@ -167,7 +177,7 @@
             dataGridViewRoutes.ReadOnly = true;
             dataGridViewRoutes.RowHeadersVisible = false;
             dataGridViewRoutes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewRoutes.Size = new Size(774, 354);
+            dataGridViewRoutes.Size = new Size(774, 209);
             dataGridViewRoutes.TabIndex = 0;
             dataGridViewRoutes.SelectionChanged += dataGridViewRoutes_SelectionChanged;
             // 
@@ -195,7 +205,7 @@
             // 
             panelRevenueEdit.Controls.Add(tableLayoutPanelRevenue);
             panelRevenueEdit.Dock = DockStyle.Fill;
-            panelRevenueEdit.Location = new Point(3, 453);
+            panelRevenueEdit.Location = new Point(3, 308);
             panelRevenueEdit.Name = "panelRevenueEdit";
             panelRevenueEdit.Padding = new Padding(10);
             panelRevenueEdit.Size = new Size(794, 74);
@@ -203,9 +213,11 @@
             // 
             // tableLayoutPanelRevenue
             // 
+            tableLayoutPanelRevenue.AutoSize = true;
+            tableLayoutPanelRevenue.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanelRevenue.ColumnCount = 2;
             tableLayoutPanelRevenue.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanelRevenue.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanelRevenue.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelRevenue.Controls.Add(labelPlannedRevenue, 0, 0);
             tableLayoutPanelRevenue.Controls.Add(textBoxPlannedRevenue, 1, 0);
             tableLayoutPanelRevenue.Dock = DockStyle.Fill;
@@ -236,11 +248,13 @@
             // 
             // panelButtons
             // 
+            panelButtons.AutoSize = true;
+            panelButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelButtons.Controls.Add(flowLayoutPanelButtons);
             panelButtons.Dock = DockStyle.Fill;
-            panelButtons.Location = new Point(3, 533);
+            panelButtons.Location = new Point(3, 388);
             panelButtons.Name = "panelButtons";
-            panelButtons.Padding = new Padding(10);
+            panelButtons.Padding = new Padding(0, 10, 0, 0);
             panelButtons.Size = new Size(794, 64);
             panelButtons.TabIndex = 3;
             // 
@@ -252,17 +266,18 @@
             flowLayoutPanelButtons.Controls.Add(buttonApply);
             flowLayoutPanelButtons.Dock = DockStyle.Fill;
             flowLayoutPanelButtons.FlowDirection = FlowDirection.RightToLeft;
-            flowLayoutPanelButtons.Location = new Point(10, 10);
+            flowLayoutPanelButtons.Location = new Point(0, 10);
             flowLayoutPanelButtons.Name = "flowLayoutPanelButtons";
-            flowLayoutPanelButtons.Size = new Size(774, 44);
+            flowLayoutPanelButtons.Padding = new Padding(0, 0, 10, 0);
+            flowLayoutPanelButtons.Size = new Size(794, 54);
             flowLayoutPanelButtons.TabIndex = 0;
             // 
             // buttonCancel
             // 
-            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonCancel.Anchor = AnchorStyles.None;
             buttonCancel.AutoSize = true;
             buttonCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            buttonCancel.Location = new Point(691, 3);
+            buttonCancel.Location = new Point(701, 3);
             buttonCancel.MinimumSize = new Size(80, 30);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Padding = new Padding(10, 5, 10, 5);
@@ -274,10 +289,10 @@
             // 
             // buttonApply
             // 
-            buttonApply.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonApply.Anchor = AnchorStyles.None;
             buttonApply.AutoSize = true;
             buttonApply.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            buttonApply.Location = new Point(585, 3);
+            buttonApply.Location = new Point(595, 3);
             buttonApply.MinimumSize = new Size(90, 30);
             buttonApply.Name = "buttonApply";
             buttonApply.Padding = new Padding(10, 5, 10, 5);
@@ -291,19 +306,26 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 600);
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ClientSize = new Size(800, 455);
             Controls.Add(mainTableLayout);
-            MinimumSize = new Size(816, 639);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimumSize = new Size(816, 464);
             Name = "RevenueRoutForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Плановая выручка маршрутов";
+            Text = "Финансовый учет: Плановая выручка маршрутов";
             mainTableLayout.ResumeLayout(false);
+            mainTableLayout.PerformLayout();
             panelFilter.ResumeLayout(false);
+            panelFilter.PerformLayout();
             tableLayoutPanelFilter.ResumeLayout(false);
             tableLayoutPanelFilter.PerformLayout();
             panelTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridViewRoutes).EndInit();
             panelRevenueEdit.ResumeLayout(false);
+            panelRevenueEdit.PerformLayout();
             tableLayoutPanelRevenue.ResumeLayout(false);
             tableLayoutPanelRevenue.PerformLayout();
             panelButtons.ResumeLayout(false);
@@ -311,6 +333,7 @@
             flowLayoutPanelButtons.ResumeLayout(false);
             flowLayoutPanelButtons.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

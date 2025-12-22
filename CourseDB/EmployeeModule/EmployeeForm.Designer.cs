@@ -68,6 +68,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeeForm));
             mainSplitContainer = new SplitContainer();
             topPanel = new Panel();
             filterPanel = new Panel();
@@ -79,10 +80,15 @@
             applyFilterButton = new Button();
             resetFilterButton = new Button();
             employeesDataGridView = new DataGridView();
+            colEmployeeNumber = new DataGridViewTextBoxColumn();
+            colSurname = new DataGridViewTextBoxColumn();
+            colName = new DataGridViewTextBoxColumn();
+            colPatronymic = new DataGridViewTextBoxColumn();
+            colPosition = new DataGridViewTextBoxColumn();
             deleteEmployeeButton = new Button();
             selectEmployeeButton = new Button();
-            addEmployeeButton = new Button();
             editEmployeeButton = new Button();
+            addEmployeeButton = new Button();
             bottomPanel = new Panel();
             employmentDetailsPanel = new Panel();
             employmentFormTableLayout = new TableLayoutPanel();
@@ -98,20 +104,14 @@
             documentNumberTextBox = new TextBox();
             documentTypeLabel = new Label();
             documentTypeTextBox = new TextBox();
+            eventTypeLabel = new Label();
+            eventTypeComboBox = new ComboBox();
             dismissalReasonLabel = new Label();
             dismissalReasonTextBox = new TextBox();
             deleteEmploymentButton = new Button();
             addEmploymentButton = new Button();
             employmentHistoryLabel = new Label();
             employmentHistoryDataGridView = new DataGridView();
-            exitButton = new Button();
-            eventTypeLabel = new Label();
-            eventTypeComboBox = new ComboBox();
-            colEmployeeNumber = new DataGridViewTextBoxColumn();
-            colSurname = new DataGridViewTextBoxColumn();
-            colName = new DataGridViewTextBoxColumn();
-            colPatronymic = new DataGridViewTextBoxColumn();
-            colPosition = new DataGridViewTextBoxColumn();
             colHistoryDocumentDate = new DataGridViewTextBoxColumn();
             colHistoryEventDate = new DataGridViewTextBoxColumn();
             colHistoryPosition = new DataGridViewTextBoxColumn();
@@ -119,7 +119,7 @@
             colHistoryEventType = new DataGridViewTextBoxColumn();
             colHistoryDocumentType = new DataGridViewTextBoxColumn();
             colHistoryDismissalReason = new DataGridViewTextBoxColumn();
-
+            exitButton = new Button();
             ((System.ComponentModel.ISupportInitialize)mainSplitContainer).BeginInit();
             mainSplitContainer.Panel1.SuspendLayout();
             mainSplitContainer.Panel2.SuspendLayout();
@@ -133,7 +133,6 @@
             employmentFormTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)employmentHistoryDataGridView).BeginInit();
             SuspendLayout();
-
             // 
             // mainSplitContainer
             // 
@@ -175,7 +174,7 @@
             // 
             filterPanel.Controls.Add(filterTableLayout);
             filterPanel.Dock = DockStyle.Top;
-            filterPanel.Location = new Point(10, 10);
+            filterPanel.Location = new Point(10, 260);
             filterPanel.Name = "filterPanel";
             filterPanel.Size = new Size(1180, 60);
             filterPanel.TabIndex = 0;
@@ -209,25 +208,25 @@
             searchLabel.AutoSize = true;
             searchLabel.Location = new Point(3, 22);
             searchLabel.Name = "searchLabel";
-            searchLabel.Size = new Size(94, 15);
+            searchLabel.Size = new Size(92, 15);
             searchLabel.TabIndex = 0;
             searchLabel.Text = "Поиск по ФИО:";
             // 
             // searchTextBox
             // 
             searchTextBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            searchTextBox.Location = new Point(103, 18);
+            searchTextBox.Location = new Point(101, 18);
             searchTextBox.Name = "searchTextBox";
-            searchTextBox.Size = new Size(308, 23);
+            searchTextBox.Size = new Size(324, 23);
             searchTextBox.TabIndex = 1;
             // 
             // positionFilterLabel
             // 
             positionFilterLabel.Anchor = AnchorStyles.Left;
             positionFilterLabel.AutoSize = true;
-            positionFilterLabel.Location = new Point(417, 22);
+            positionFilterLabel.Location = new Point(431, 22);
             positionFilterLabel.Name = "positionFilterLabel";
-            positionFilterLabel.Size = new Size(114, 15);
+            positionFilterLabel.Size = new Size(132, 15);
             positionFilterLabel.TabIndex = 2;
             positionFilterLabel.Text = "Фильтр по должности:";
             // 
@@ -236,9 +235,9 @@
             positionFilterComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             positionFilterComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             positionFilterComboBox.FormattingEnabled = true;
-            positionFilterComboBox.Location = new Point(537, 18);
+            positionFilterComboBox.Location = new Point(569, 18);
             positionFilterComboBox.Name = "positionFilterComboBox";
-            positionFilterComboBox.Size = new Size(308, 23);
+            positionFilterComboBox.Size = new Size(324, 23);
             positionFilterComboBox.TabIndex = 3;
             // 
             // applyFilterButton
@@ -246,11 +245,11 @@
             applyFilterButton.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             applyFilterButton.AutoSize = true;
             applyFilterButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            applyFilterButton.Location = new Point(851, 18);
+            applyFilterButton.Location = new Point(899, 12);
             applyFilterButton.MinimumSize = new Size(0, 25);
             applyFilterButton.Name = "applyFilterButton";
             applyFilterButton.Padding = new Padding(5);
-            applyFilterButton.Size = new Size(161, 25);
+            applyFilterButton.Size = new Size(135, 35);
             applyFilterButton.TabIndex = 4;
             applyFilterButton.Text = "Применить";
             applyFilterButton.UseVisualStyleBackColor = true;
@@ -260,11 +259,11 @@
             resetFilterButton.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             resetFilterButton.AutoSize = true;
             resetFilterButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            resetFilterButton.Location = new Point(1018, 18);
+            resetFilterButton.Location = new Point(1040, 12);
             resetFilterButton.MinimumSize = new Size(0, 25);
             resetFilterButton.Name = "resetFilterButton";
             resetFilterButton.Padding = new Padding(5);
-            resetFilterButton.Size = new Size(159, 25);
+            resetFilterButton.Size = new Size(137, 35);
             resetFilterButton.TabIndex = 5;
             resetFilterButton.Text = "Сбросить";
             resetFilterButton.UseVisualStyleBackColor = true;
@@ -273,17 +272,11 @@
             // 
             employeesDataGridView.AllowUserToAddRows = false;
             employeesDataGridView.AllowUserToDeleteRows = false;
-            employeesDataGridView.AutoGenerateColumns = false;
             employeesDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             employeesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            employeesDataGridView.Columns.AddRange(new DataGridViewColumn[] {
-            colEmployeeNumber,
-            colSurname,
-            colName,
-            colPatronymic,
-            colPosition});
+            employeesDataGridView.Columns.AddRange(new DataGridViewColumn[] { colEmployeeNumber, colSurname, colName, colPatronymic, colPosition });
             employeesDataGridView.Dock = DockStyle.Top;
-            employeesDataGridView.Location = new Point(10, 70);
+            employeesDataGridView.Location = new Point(10, 10);
             employeesDataGridView.Name = "employeesDataGridView";
             employeesDataGridView.ReadOnly = true;
             employeesDataGridView.RowHeadersVisible = false;
@@ -291,18 +284,48 @@
             employeesDataGridView.Size = new Size(1180, 250);
             employeesDataGridView.TabIndex = 1;
             // 
+            // colEmployeeNumber
+            // 
+            colEmployeeNumber.HeaderText = "№";
+            colEmployeeNumber.Name = "colEmployeeNumber";
+            colEmployeeNumber.ReadOnly = true;
+            // 
+            // colSurname
+            // 
+            colSurname.HeaderText = "Фамилия";
+            colSurname.Name = "colSurname";
+            colSurname.ReadOnly = true;
+            // 
+            // colName
+            // 
+            colName.HeaderText = "Имя";
+            colName.Name = "colName";
+            colName.ReadOnly = true;
+            // 
+            // colPatronymic
+            // 
+            colPatronymic.HeaderText = "Отчество";
+            colPatronymic.Name = "colPatronymic";
+            colPatronymic.ReadOnly = true;
+            // 
+            // colPosition
+            // 
+            colPosition.HeaderText = "Должность";
+            colPosition.Name = "colPosition";
+            colPosition.ReadOnly = true;
+            // 
             // deleteEmployeeButton
             // 
             deleteEmployeeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             deleteEmployeeButton.AutoSize = true;
             deleteEmployeeButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            deleteEmployeeButton.Location = new Point(1110, 330);
+            deleteEmployeeButton.Location = new Point(337, 330);
             deleteEmployeeButton.MinimumSize = new Size(80, 35);
             deleteEmployeeButton.Name = "deleteEmployeeButton";
             deleteEmployeeButton.Padding = new Padding(10, 5, 10, 5);
-            deleteEmployeeButton.Size = new Size(80, 35);
+            deleteEmployeeButton.Size = new Size(147, 35);
             deleteEmployeeButton.TabIndex = 4;
-            deleteEmployeeButton.Text = "Удалить";
+            deleteEmployeeButton.Text = "Удалить сотрудника";
             deleteEmployeeButton.UseVisualStyleBackColor = true;
             // 
             // selectEmployeeButton
@@ -310,42 +333,42 @@
             selectEmployeeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             selectEmployeeButton.AutoSize = true;
             selectEmployeeButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            selectEmployeeButton.Location = new Point(1010, 330);
+            selectEmployeeButton.Location = new Point(1106, 330);
             selectEmployeeButton.MinimumSize = new Size(80, 35);
             selectEmployeeButton.Name = "selectEmployeeButton";
             selectEmployeeButton.Padding = new Padding(10, 5, 10, 5);
-            selectEmployeeButton.Size = new Size(80, 35);
+            selectEmployeeButton.Size = new Size(84, 35);
             selectEmployeeButton.TabIndex = 3;
             selectEmployeeButton.Text = "Выбрать";
             selectEmployeeButton.UseVisualStyleBackColor = true;
-            // 
-            // addEmployeeButton
-            // 
-            addEmployeeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            addEmployeeButton.AutoSize = true;
-            addEmployeeButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            addEmployeeButton.Location = new Point(660, 330);
-            addEmployeeButton.MinimumSize = new Size(80, 35);
-            addEmployeeButton.Name = "addEmployeeButton";
-            addEmployeeButton.Padding = new Padding(10, 5, 10, 5);
-            addEmployeeButton.Size = new Size(80, 35);
-            addEmployeeButton.TabIndex = 5;
-            addEmployeeButton.Text = "Добавить";
-            addEmployeeButton.UseVisualStyleBackColor = true;
             // 
             // editEmployeeButton
             // 
             editEmployeeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             editEmployeeButton.AutoSize = true;
             editEmployeeButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            editEmployeeButton.Location = new Point(770, 330);
+            editEmployeeButton.Location = new Point(174, 330);
             editEmployeeButton.MinimumSize = new Size(80, 35);
             editEmployeeButton.Name = "editEmployeeButton";
             editEmployeeButton.Padding = new Padding(10, 5, 10, 5);
-            editEmployeeButton.Size = new Size(80, 35);
+            editEmployeeButton.Size = new Size(157, 35);
             editEmployeeButton.TabIndex = 6;
-            editEmployeeButton.Text = "Изменить";
+            editEmployeeButton.Text = "Изменить сотрудника";
             editEmployeeButton.UseVisualStyleBackColor = true;
+            // 
+            // addEmployeeButton
+            // 
+            addEmployeeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            addEmployeeButton.AutoSize = true;
+            addEmployeeButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            addEmployeeButton.Location = new Point(13, 330);
+            addEmployeeButton.MinimumSize = new Size(80, 35);
+            addEmployeeButton.Name = "addEmployeeButton";
+            addEmployeeButton.Padding = new Padding(10, 5, 10, 5);
+            addEmployeeButton.Size = new Size(155, 35);
+            addEmployeeButton.TabIndex = 5;
+            addEmployeeButton.Text = "Добавить сотрудника";
+            addEmployeeButton.UseVisualStyleBackColor = true;
             // 
             // bottomPanel
             // 
@@ -413,7 +436,7 @@
             positionLabel.AutoSize = true;
             positionLabel.Location = new Point(3, 5);
             positionLabel.Name = "positionLabel";
-            positionLabel.Size = new Size(68, 15);
+            positionLabel.Size = new Size(72, 15);
             positionLabel.TabIndex = 0;
             positionLabel.Text = "Должность:";
             // 
@@ -433,7 +456,7 @@
             workplaceLabel.AutoSize = true;
             workplaceLabel.Location = new Point(169, 5);
             workplaceLabel.Name = "workplaceLabel";
-            workplaceLabel.Size = new Size(90, 15);
+            workplaceLabel.Size = new Size(89, 15);
             workplaceLabel.TabIndex = 2;
             workplaceLabel.Text = "Место работы:";
             // 
@@ -449,9 +472,9 @@
             // 
             eventDateLabel.Anchor = AnchorStyles.Left;
             eventDateLabel.AutoSize = true;
-            eventDateLabel.Location = new Point(335, 5);
+            eventDateLabel.Location = new Point(335, 0);
             eventDateLabel.Name = "eventDateLabel";
-            eventDateLabel.Size = new Size(157, 15);
+            eventDateLabel.Size = new Size(95, 25);
             eventDateLabel.TabIndex = 4;
             eventDateLabel.Text = "Дата кадрового мероприятия:";
             // 
@@ -468,9 +491,9 @@
             // 
             documentDateLabel.Anchor = AnchorStyles.Left;
             documentDateLabel.AutoSize = true;
-            documentDateLabel.Location = new Point(501, 5);
+            documentDateLabel.Location = new Point(501, 0);
             documentDateLabel.Name = "documentDateLabel";
-            documentDateLabel.Size = new Size(156, 15);
+            documentDateLabel.Size = new Size(104, 25);
             documentDateLabel.TabIndex = 6;
             documentDateLabel.Text = "Дата подписания документа:";
             // 
@@ -487,9 +510,9 @@
             // 
             documentNumberLabel.Anchor = AnchorStyles.Left;
             documentNumberLabel.AutoSize = true;
-            documentNumberLabel.Location = new Point(667, 5);
+            documentNumberLabel.Location = new Point(667, 0);
             documentNumberLabel.Name = "documentNumberLabel";
-            documentNumberLabel.Size = new Size(196, 15);
+            documentNumberLabel.Size = new Size(108, 25);
             documentNumberLabel.TabIndex = 8;
             documentNumberLabel.Text = "Номер кадрового мероприятия:";
             // 
@@ -507,7 +530,7 @@
             documentTypeLabel.AutoSize = true;
             documentTypeLabel.Location = new Point(833, 5);
             documentTypeLabel.Name = "documentTypeLabel";
-            documentTypeLabel.Size = new Size(89, 15);
+            documentTypeLabel.Size = new Size(91, 15);
             documentTypeLabel.TabIndex = 10;
             documentTypeLabel.Text = "Вид документа:";
             // 
@@ -519,20 +542,41 @@
             documentTypeTextBox.Size = new Size(164, 23);
             documentTypeTextBox.TabIndex = 11;
             // 
+            // eventTypeLabel
+            // 
+            eventTypeLabel.Anchor = AnchorStyles.Left;
+            eventTypeLabel.AutoSize = true;
+            eventTypeLabel.Location = new Point(3, 60);
+            eventTypeLabel.Name = "eventTypeLabel";
+            eventTypeLabel.Size = new Size(107, 15);
+            eventTypeLabel.TabIndex = 14;
+            eventTypeLabel.Text = "Вид мероприятия:";
+            // 
+            // eventTypeComboBox
+            // 
+            eventTypeComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            eventTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            eventTypeComboBox.FormattingEnabled = true;
+            eventTypeComboBox.Items.AddRange(new object[] { "Прием", "Перевод", "Увольнение" });
+            eventTypeComboBox.Location = new Point(3, 88);
+            eventTypeComboBox.Name = "eventTypeComboBox";
+            eventTypeComboBox.Size = new Size(160, 23);
+            eventTypeComboBox.TabIndex = 15;
+            // 
             // dismissalReasonLabel
             // 
             dismissalReasonLabel.Anchor = AnchorStyles.Left;
             dismissalReasonLabel.AutoSize = true;
-            dismissalReasonLabel.Location = new Point(169, 60);
+            dismissalReasonLabel.Location = new Point(169, 55);
             dismissalReasonLabel.Name = "dismissalReasonLabel";
-            dismissalReasonLabel.Size = new Size(248, 15);
+            dismissalReasonLabel.Size = new Size(142, 25);
             dismissalReasonLabel.TabIndex = 12;
             dismissalReasonLabel.Text = "Причины прекращения трудового договора:";
             // 
             // dismissalReasonTextBox
             // 
             dismissalReasonTextBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            dismissalReasonTextBox.Location = new Point(169, 83);
+            dismissalReasonTextBox.Location = new Point(169, 88);
             dismissalReasonTextBox.Name = "dismissalReasonTextBox";
             dismissalReasonTextBox.Size = new Size(160, 23);
             dismissalReasonTextBox.TabIndex = 13;
@@ -542,11 +586,11 @@
             deleteEmploymentButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             deleteEmploymentButton.AutoSize = true;
             deleteEmploymentButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            deleteEmploymentButton.Location = new Point(1010, 80);
+            deleteEmploymentButton.Location = new Point(1009, 80);
             deleteEmploymentButton.MinimumSize = new Size(80, 35);
             deleteEmploymentButton.Name = "deleteEmploymentButton";
             deleteEmploymentButton.Padding = new Padding(10, 5, 10, 5);
-            deleteEmploymentButton.Size = new Size(80, 35);
+            deleteEmploymentButton.Size = new Size(81, 35);
             deleteEmploymentButton.TabIndex = 2;
             deleteEmploymentButton.Text = "Удалить";
             deleteEmploymentButton.UseVisualStyleBackColor = true;
@@ -556,11 +600,11 @@
             addEmploymentButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             addEmploymentButton.AutoSize = true;
             addEmploymentButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            addEmploymentButton.Location = new Point(1010, 40);
+            addEmploymentButton.Location = new Point(1001, 40);
             addEmploymentButton.MinimumSize = new Size(80, 35);
             addEmploymentButton.Name = "addEmploymentButton";
             addEmploymentButton.Padding = new Padding(10, 5, 10, 5);
-            addEmploymentButton.Size = new Size(80, 35);
+            addEmploymentButton.Size = new Size(89, 35);
             addEmploymentButton.TabIndex = 1;
             addEmploymentButton.Text = "Добавить";
             addEmploymentButton.UseVisualStyleBackColor = true;
@@ -571,7 +615,7 @@
             employmentHistoryLabel.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             employmentHistoryLabel.Location = new Point(13, 140);
             employmentHistoryLabel.Name = "employmentHistoryLabel";
-            employmentHistoryLabel.Size = new Size(164, 19);
+            employmentHistoryLabel.Size = new Size(136, 19);
             employmentHistoryLabel.TabIndex = 2;
             employmentHistoryLabel.Text = "Трудовая книжка:";
             // 
@@ -580,17 +624,9 @@
             employmentHistoryDataGridView.AllowUserToAddRows = false;
             employmentHistoryDataGridView.AllowUserToDeleteRows = false;
             employmentHistoryDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            employmentHistoryDataGridView.AutoGenerateColumns = false;
             employmentHistoryDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             employmentHistoryDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            employmentHistoryDataGridView.Columns.AddRange(new DataGridViewColumn[] {
-            colHistoryDocumentDate,
-            colHistoryEventDate,
-            colHistoryPosition,
-            colHistoryWorkplace,
-            colHistoryEventType,
-            colHistoryDocumentType,
-            colHistoryDismissalReason});
+            employmentHistoryDataGridView.Columns.AddRange(new DataGridViewColumn[] { colHistoryDocumentDate, colHistoryEventDate, colHistoryPosition, colHistoryWorkplace, colHistoryEventType, colHistoryDocumentType, colHistoryDismissalReason });
             employmentHistoryDataGridView.Location = new Point(10, 165);
             employmentHistoryDataGridView.Name = "employmentHistoryDataGridView";
             employmentHistoryDataGridView.ReadOnly = true;
@@ -598,75 +634,6 @@
             employmentHistoryDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             employmentHistoryDataGridView.Size = new Size(1180, 140);
             employmentHistoryDataGridView.TabIndex = 1;
-            // 
-            // exitButton
-            // 
-            exitButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            exitButton.AutoSize = true;
-            exitButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            exitButton.Location = new Point(1110, 310);
-            exitButton.MinimumSize = new Size(80, 35);
-            exitButton.Name = "exitButton";
-            exitButton.Padding = new Padding(10, 5, 10, 5);
-            exitButton.Size = new Size(80, 35);
-            exitButton.TabIndex = 3;
-            exitButton.Text = "Выйти";
-            exitButton.UseVisualStyleBackColor = true;
-            // 
-            // eventTypeLabel
-            // 
-            eventTypeLabel.Anchor = AnchorStyles.Left;
-            eventTypeLabel.AutoSize = true;
-            eventTypeLabel.Location = new Point(3, 60);
-            eventTypeLabel.Name = "eventTypeLabel";
-            eventTypeLabel.Size = new Size(114, 15);
-            eventTypeLabel.TabIndex = 14;
-            eventTypeLabel.Text = "Вид мероприятия:";
-            // 
-            // eventTypeComboBox
-            // 
-            eventTypeComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            eventTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            eventTypeComboBox.FormattingEnabled = true;
-            eventTypeComboBox.Items.AddRange(new object[] {
-            "Прием",
-            "Перевод",
-            "Увольнение"});
-            eventTypeComboBox.Location = new Point(3, 83);
-            eventTypeComboBox.Name = "eventTypeComboBox";
-            eventTypeComboBox.Size = new Size(160, 23);
-            eventTypeComboBox.TabIndex = 15;
-            // 
-            // colEmployeeNumber
-            // 
-            colEmployeeNumber.HeaderText = "№";
-            colEmployeeNumber.Name = "colEmployeeNumber";
-            colEmployeeNumber.ReadOnly = true;
-            colEmployeeNumber.Width = 50;
-            // 
-            // colSurname
-            // 
-            colSurname.HeaderText = "Фамилия";
-            colSurname.Name = "colSurname";
-            colSurname.ReadOnly = true;
-            // 
-            // colName
-            // 
-            colName.HeaderText = "Имя";
-            colName.Name = "colName";
-            colName.ReadOnly = true;
-            // 
-            // colPatronymic
-            // 
-            colPatronymic.HeaderText = "Отчество";
-            colPatronymic.Name = "colPatronymic";
-            colPatronymic.ReadOnly = true;
-            // 
-            // colPosition
-            // 
-            colPosition.HeaderText = "Должность";
-            colPosition.Name = "colPosition";
-            colPosition.ReadOnly = true;
             // 
             // colHistoryDocumentDate
             // 
@@ -710,12 +677,27 @@
             colHistoryDismissalReason.Name = "colHistoryDismissalReason";
             colHistoryDismissalReason.ReadOnly = true;
             // 
+            // exitButton
+            // 
+            exitButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            exitButton.AutoSize = true;
+            exitButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            exitButton.Location = new Point(1110, 310);
+            exitButton.MinimumSize = new Size(80, 35);
+            exitButton.Name = "exitButton";
+            exitButton.Padding = new Padding(10, 5, 10, 5);
+            exitButton.Size = new Size(80, 35);
+            exitButton.TabIndex = 3;
+            exitButton.Text = "Выйти";
+            exitButton.UseVisualStyleBackColor = true;
+            // 
             // EmployeeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1200, 750);
             Controls.Add(mainSplitContainer);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1216, 789);
             Name = "EmployeeForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -725,6 +707,7 @@
             ((System.ComponentModel.ISupportInitialize)mainSplitContainer).EndInit();
             mainSplitContainer.ResumeLayout(false);
             topPanel.ResumeLayout(false);
+            topPanel.PerformLayout();
             filterPanel.ResumeLayout(false);
             filterTableLayout.ResumeLayout(false);
             filterTableLayout.PerformLayout();
@@ -732,6 +715,7 @@
             bottomPanel.ResumeLayout(false);
             bottomPanel.PerformLayout();
             employmentDetailsPanel.ResumeLayout(false);
+            employmentDetailsPanel.PerformLayout();
             employmentFormTableLayout.ResumeLayout(false);
             employmentFormTableLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)employmentHistoryDataGridView).EndInit();

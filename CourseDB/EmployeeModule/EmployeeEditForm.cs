@@ -17,26 +17,23 @@ namespace EmployeeModule
         private List<Post> allPosts;
         private Employee existingEmployee;
         private bool isEditMode;
-        private int userId;
 
         // Конструктор для создания нового сотрудника
-        public EmployeeEditForm(List<Post> allPosts, int user_id)
+        public EmployeeEditForm(List<Post> allPosts)
         {
             InitializeComponent();
             this.allPosts = allPosts ?? new List<Post>();
-            this.userId = user_id;
             this.isEditMode = false;
 
             InitializeForm();
-            this.Text = "Новый сотрудник";
+            this.Text = "Создание сотрудника";
         }
 
         // Конструктор для редактирования существующего сотрудника
-        public EmployeeEditForm(List<Post> allPosts, Employee existingEmployee, int user_id)
+        public EmployeeEditForm(List<Post> allPosts, Employee existingEmployee)
         {
             InitializeComponent();
             this.allPosts = allPosts ?? new List<Post>();
-            this.userId = user_id;
             this.isEditMode = true;
             this.existingEmployee = existingEmployee;
             ResultEmployee = existingEmployee;
@@ -48,9 +45,6 @@ namespace EmployeeModule
 
         private void InitializeForm()
         {
-            // Настройка шрифта
-            ApplyFontSettings();
-
             // Заполнение выпадающих списков
             FillComboBoxes();
 
@@ -59,13 +53,6 @@ namespace EmployeeModule
             timeWorkNumeric.Value = 0;
             classDriverNumeric.Value = 0;
             bonusNumeric.Value = 0;
-        }
-
-        private void ApplyFontSettings()
-        {
-            SettingsRepository rep = new SettingsRepository();
-            Font f = rep.GetSettings(userId);
-            this.Font = f;
         }
 
         private void FillComboBoxes()
