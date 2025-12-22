@@ -231,8 +231,6 @@ namespace MainModule
                     return new DriverReportForm(_initRepos);
                 case "RoutReport":
                     return new RoutReportForm(_initRepos, user.Id);
-                case "TripReport":
-                    return new TripReportForm(_initRepos);
                 default:
                     MessageBox.Show($"Функция '{menuItem.FunctionName}' не найдена в модуле DocumentModule", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -30,6 +30,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DriverReportForm));
             mainLayout = new TableLayoutPanel();
             grpFilters = new GroupBox();
             flowFilters = new FlowLayoutPanel();
@@ -172,7 +173,7 @@
             dgvDrivers.Name = "dgvDrivers";
             dgvDrivers.ReadOnly = true;
             dgvDrivers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDrivers.Size = new Size(794, 409);
+            dgvDrivers.Size = new Size(794, 399);
             dgvDrivers.TabIndex = 1;
             // 
             // colSurname
@@ -220,16 +221,18 @@
             // bottomPanel
             // 
             bottomPanel.AutoSize = true;
+            bottomPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             bottomPanel.ColumnCount = 2;
             bottomPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             bottomPanel.ColumnStyles.Add(new ColumnStyle());
             bottomPanel.Controls.Add(statusStrip, 0, 0);
             bottomPanel.Controls.Add(btnExit, 1, 0);
             bottomPanel.Dock = DockStyle.Fill;
-            bottomPanel.Location = new Point(3, 477);
+            bottomPanel.Location = new Point(3, 467);
+            bottomPanel.MinimumSize = new Size(0, 30);
             bottomPanel.Name = "bottomPanel";
             bottomPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            bottomPanel.Size = new Size(794, 20);
+            bottomPanel.Size = new Size(794, 30);
             bottomPanel.TabIndex = 2;
             // 
             // statusStrip
@@ -237,40 +240,42 @@
             statusStrip.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             statusStrip.Dock = DockStyle.None;
             statusStrip.Items.AddRange(new ToolStripItem[] { lblCount, lblMaxExp });
-            statusStrip.Location = new Point(0, 0);
+            statusStrip.Location = new Point(0, 4);
             statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(713, 20);
+            statusStrip.Size = new Size(736, 22);
             statusStrip.TabIndex = 0;
             // 
             // lblCount
             // 
             lblCount.Name = "lblCount";
-            lblCount.Size = new Size(0, 15);
+            lblCount.Size = new Size(0, 17);
             // 
             // lblMaxExp
             // 
             lblMaxExp.Name = "lblMaxExp";
-            lblMaxExp.Size = new Size(0, 15);
+            lblMaxExp.Size = new Size(0, 17);
             // 
             // btnExit
             // 
-            btnExit.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnExit.AutoSize = true;
-            btnExit.Location = new Point(716, 3);
+            btnExit.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnExit.Location = new Point(739, 3);
             btnExit.Name = "btnExit";
-            btnExit.Size = new Size(75, 14);
+            btnExit.Size = new Size(52, 24);
             btnExit.TabIndex = 1;
             btnExit.Text = "Выйти";
             btnExit.Click += btnExit_Click;
             // 
-            // DriverReport
+            // DriverReportForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 500);
             Controls.Add(mainLayout);
-            Name = "DriverReport";
-            Text = "Отчет по водителям";
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            Name = "DriverReportForm";
+            Text = "Документы: Отчет по водителям";
             mainLayout.ResumeLayout(false);
             mainLayout.PerformLayout();
             grpFilters.ResumeLayout(false);
