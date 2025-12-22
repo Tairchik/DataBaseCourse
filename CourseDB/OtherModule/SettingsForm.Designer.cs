@@ -23,6 +23,7 @@ namespace OtherModule
         #region Windows Form Designer generated code
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             lblFontFamily = new Label();
             cmbFontFamily = new ComboBox();
             lblFontSize = new Label();
@@ -191,11 +192,12 @@ namespace OtherModule
             ClientSize = new Size(336, 131);
             Controls.Add(mainLayoutFlow);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SettingsForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Настройки приложения";
+            Text = "Разное: Настройки";
             grpFontSettings.ResumeLayout(false);
             grpFontSettings.PerformLayout();
             tblSettingsLayout.ResumeLayout(false);

@@ -85,7 +85,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ContentForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Справка - Содержание";
+            Text = "Справка: Содержание";
             splitContainer.Panel1.ResumeLayout(false);
             splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();

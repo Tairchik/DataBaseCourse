@@ -62,9 +62,9 @@
             lblCopyright.AutoSize = true;
             lblCopyright.Location = new Point(20, 200);
             lblCopyright.Name = "lblCopyright";
-            lblCopyright.Size = new Size(173, 30);
+            lblCopyright.Size = new Size(191, 30);
             lblCopyright.TabIndex = 2;
-            lblCopyright.Text = "© 2025 Разработка студента: \r\nБикмухаметов Таир Олегович";
+            lblCopyright.Text = "© 2025 Разработка студента: \r\nБикмухаметова Таира Олеговича";
             // 
             // txtDescription
             // 
@@ -116,7 +116,7 @@
             MinimizeBox = false;
             Name = "AboutProgramForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "О программе";
+            Text = "Справка: О программе";
             ((System.ComponentModel.ISupportInitialize)pbIcon).EndInit();
             ResumeLayout(false);
             PerformLayout();

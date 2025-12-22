@@ -26,6 +26,9 @@ namespace GuideModule
         public TableLayoutPanel mainTableLayout;
         public TableLayoutPanel searchTableLayout;
         public FlowLayoutPanel buttonsFlowLayout;
+        public StatusStrip statusStrip;
+        public TableLayoutPanel bottomPanel;
+        public ToolStripStatusLabel lblCount;
 
         protected void InitializeComponent(BaseForm baseForm)
         {
@@ -33,6 +36,7 @@ namespace GuideModule
 
             baseForm.mainTableLayout = new TableLayoutPanel();
             baseForm.searchTableLayout = new TableLayoutPanel();
+            baseForm.bottomPanel = new TableLayoutPanel(); // Оставляем TableLayoutPanel
             baseForm.labelSearch = new Label();
             baseForm.textBoxSearch = new TextBox();
             baseForm.buttonApply = new Button();
@@ -42,11 +46,16 @@ namespace GuideModule
             baseForm.buttonEdit = new Button();
             baseForm.buttonDelete = new Button();
             baseForm.buttonCancel = new Button();
+            baseForm.statusStrip = new StatusStrip();
+            baseForm.lblCount = new ToolStripStatusLabel();
             baseForm.mainTableLayout.SuspendLayout();
             baseForm.searchTableLayout.SuspendLayout();
+            baseForm.bottomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(baseForm.dataGridView)).BeginInit();
             baseForm.buttonsFlowLayout.SuspendLayout();
+            baseForm.statusStrip.SuspendLayout();
             baseForm.SuspendLayout();
+
             // 
             // mainTableLayout
             // 
@@ -55,16 +64,19 @@ namespace GuideModule
             baseForm.mainTableLayout.Controls.Add(baseForm.searchTableLayout, 0, 0);
             baseForm.mainTableLayout.Controls.Add(baseForm.dataGridView, 0, 1);
             baseForm.mainTableLayout.Controls.Add(baseForm.buttonsFlowLayout, 0, 2);
+            baseForm.mainTableLayout.Controls.Add(baseForm.bottomPanel, 0, 3);
             baseForm.mainTableLayout.Dock = DockStyle.Fill;
             baseForm.mainTableLayout.Location = new Point(0, 0);
             baseForm.mainTableLayout.Name = "mainTableLayout";
             baseForm.mainTableLayout.Padding = new Padding(10);
-            baseForm.mainTableLayout.RowCount = 3;
+            baseForm.mainTableLayout.RowCount = 4;
             baseForm.mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             baseForm.mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             baseForm.mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            baseForm.mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             baseForm.mainTableLayout.Size = new Size(800, 600);
             baseForm.mainTableLayout.TabIndex = 0;
+
             // 
             // searchTableLayout
             // 
@@ -84,6 +96,41 @@ namespace GuideModule
             baseForm.searchTableLayout.RowStyles.Add(new RowStyle());
             baseForm.searchTableLayout.Size = new Size(774, 29);
             baseForm.searchTableLayout.TabIndex = 1;
+
+            //
+            // bottomPanel
+            //
+            baseForm.bottomPanel.ColumnCount = 1;
+            baseForm.bottomPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            baseForm.bottomPanel.Controls.Add(baseForm.statusStrip, 0, 0);
+            baseForm.bottomPanel.Dock = DockStyle.Fill;
+            baseForm.bottomPanel.Location = new Point(13, 563);
+            baseForm.bottomPanel.Name = "bottomPanel";
+            baseForm.bottomPanel.RowCount = 1;
+            baseForm.bottomPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            baseForm.bottomPanel.Size = new Size(774, 24);
+            baseForm.bottomPanel.TabIndex = 4;
+
+            // 
+            // statusStrip
+            // 
+            baseForm.statusStrip.Dock = DockStyle.Fill;
+            baseForm.statusStrip.Items.AddRange(new ToolStripItem[] {
+        baseForm.lblCount});
+            baseForm.statusStrip.Location = new Point(0, 0);
+            baseForm.statusStrip.Name = "statusStrip";
+            baseForm.statusStrip.Size = new Size(774, 24);
+            baseForm.statusStrip.SizingGrip = false;
+            baseForm.statusStrip.TabIndex = 0;
+
+            // 
+            // lblCount
+            // 
+            baseForm.lblCount.Name = "lblCount";
+            baseForm.lblCount.Size = new Size(759, 19);
+            baseForm.lblCount.Spring = true;
+            baseForm.lblCount.TextAlign = ContentAlignment.MiddleLeft;
+
             // 
             // labelSearch
             // 
@@ -95,6 +142,7 @@ namespace GuideModule
             baseForm.labelSearch.Size = new Size(54, 21);
             baseForm.labelSearch.TabIndex = 0;
             baseForm.labelSearch.Text = "Поиск";
+
             // 
             // textBoxSearch
             // 
@@ -104,6 +152,7 @@ namespace GuideModule
             baseForm.textBoxSearch.Name = "textBoxSearch";
             baseForm.textBoxSearch.Size = new Size(608, 25);
             baseForm.textBoxSearch.TabIndex = 1;
+
             // 
             // buttonApply
             // 
@@ -118,6 +167,7 @@ namespace GuideModule
             baseForm.buttonApply.Text = "Применить";
             baseForm.buttonApply.UseVisualStyleBackColor = true;
             baseForm.buttonApply.Click += baseForm.ButtonApply_Click;
+
             // 
             // dataGridView
             // 
@@ -134,6 +184,7 @@ namespace GuideModule
             baseForm.dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             baseForm.dataGridView.Size = new Size(774, 472);
             baseForm.dataGridView.TabIndex = 2;
+
             // 
             // buttonsFlowLayout
             // 
@@ -148,6 +199,7 @@ namespace GuideModule
             baseForm.buttonsFlowLayout.Name = "buttonsFlowLayout";
             baseForm.buttonsFlowLayout.Size = new Size(774, 35);
             baseForm.buttonsFlowLayout.TabIndex = 3;
+
             // 
             // buttonCreate
             // 
@@ -162,6 +214,7 @@ namespace GuideModule
             baseForm.buttonCreate.Text = "Создать";
             baseForm.buttonCreate.UseVisualStyleBackColor = true;
             baseForm.buttonCreate.Click += baseForm.ButtonCreate_Click;
+
             // 
             // buttonEdit
             // 
@@ -176,6 +229,7 @@ namespace GuideModule
             baseForm.buttonEdit.Text = "Изменить";
             baseForm.buttonEdit.UseVisualStyleBackColor = true;
             baseForm.buttonEdit.Click += baseForm.ButtonEdit_Click;
+
             // 
             // buttonDelete
             // 
@@ -190,6 +244,7 @@ namespace GuideModule
             baseForm.buttonDelete.Text = "Удалить";
             baseForm.buttonDelete.UseVisualStyleBackColor = true;
             baseForm.buttonDelete.Click += baseForm.ButtonDelete_Click;
+
             // 
             // buttonCancel
             // 
@@ -204,6 +259,7 @@ namespace GuideModule
             baseForm.buttonCancel.Text = "Выйти";
             baseForm.buttonCancel.UseVisualStyleBackColor = true;
             baseForm.buttonCancel.Click += baseForm.ButtonCancel_Click;
+
             // 
             // BaseForm
             // 
@@ -220,11 +276,15 @@ namespace GuideModule
             baseForm.mainTableLayout.PerformLayout();
             baseForm.searchTableLayout.ResumeLayout(false);
             baseForm.searchTableLayout.PerformLayout();
-            Icon = (Icon)resources.GetObject("$this.Icon");
+            baseForm.bottomPanel.ResumeLayout(false);
+            baseForm.bottomPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(baseForm.dataGridView)).EndInit();
             baseForm.buttonsFlowLayout.ResumeLayout(false);
             baseForm.buttonsFlowLayout.PerformLayout();
+            baseForm.statusStrip.ResumeLayout(false);
+            baseForm.statusStrip.PerformLayout();
             baseForm.ResumeLayout(false);
+            baseForm.Icon = (Icon)resources.GetObject("$this.Icon");
         }
 
         public virtual void ButtonApply_Click(object sender, EventArgs e)

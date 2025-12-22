@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace GuideModule
 {
@@ -21,8 +22,15 @@ namespace GuideModule
             this.user_id = user_id;
             dataBase = initRepos;
             this.menuState = menuState;
+            view.dataGridView.DataBindingComplete += DataGridView_DataCount;
             ChangeSettings();
             ChangeRootSettings(); 
+        }
+
+        private void DataGridView_DataCount(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            int count = view.dataGridView.Rows.Count;
+            view.lblCount.Text = $"Всего записей: {count}";
         }
 
         // Метод который подгружает из user настройки
