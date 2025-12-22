@@ -557,7 +557,6 @@
             eventTypeComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             eventTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             eventTypeComboBox.FormattingEnabled = true;
-            eventTypeComboBox.Items.AddRange(new object[] { "Прием", "Перевод", "Увольнение" });
             eventTypeComboBox.Location = new Point(3, 88);
             eventTypeComboBox.Name = "eventTypeComboBox";
             eventTypeComboBox.Size = new Size(160, 23);

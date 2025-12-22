@@ -38,6 +38,7 @@ namespace FinancialModule
             Font f = rep.GetSettings(user_id);
             this.Font = f;
             this.Text = "Редактирование должности";
+            textBoxPost.Enabled = false;
         }
 
         private void buttonApply_Click(object sender, EventArgs e)

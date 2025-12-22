@@ -70,12 +70,6 @@ namespace FinancialModule
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
-                        if (bindingList.Any(b => string.Equals(b.NamePost, form.ResultModel.NamePost, StringComparison.OrdinalIgnoreCase)))
-                        {
-                            MessageBox.Show($"Должность {form.ResultModel.NamePost} уже сущесвтует", "Уведомление",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
-                        }
                         Post updated = form.ResultModel;
 
                         // Обновляем в БД

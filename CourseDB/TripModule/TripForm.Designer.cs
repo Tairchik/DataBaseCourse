@@ -37,6 +37,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TripForm));
             mainTableLayout = new TableLayoutPanel();
             filterPanel = new Panel();
             filterTableLayout = new TableLayoutPanel();
@@ -78,7 +79,7 @@
             mainTableLayout.Location = new Point(0, 0);
             mainTableLayout.Name = "mainTableLayout";
             mainTableLayout.RowCount = 3;
-            mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F)); // Увеличил высоту для фильтров
+            mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
             mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             mainTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
             mainTableLayout.Size = new Size(1000, 600);
@@ -91,28 +92,28 @@
             filterPanel.Location = new Point(3, 3);
             filterPanel.Name = "filterPanel";
             filterPanel.Padding = new Padding(10);
-            filterPanel.Size = new Size(994, 74); // Соответствует увеличенной высоте
+            filterPanel.Size = new Size(994, 74);
             filterPanel.TabIndex = 0;
             // 
             // filterTableLayout
             // 
-            filterTableLayout.ColumnCount = 6; // Изменено на 6 колонок
-            filterTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Дата (текст)
-            filterTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F)); // Поле даты
-            filterTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Маршрут (текст)
-            filterTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F)); // Поле маршрута
-            filterTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Кнопка Применить
-            filterTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Кнопка Сбросить
+            filterTableLayout.ColumnCount = 6;
+            filterTableLayout.ColumnStyles.Add(new ColumnStyle());
+            filterTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            filterTableLayout.ColumnStyles.Add(new ColumnStyle());
+            filterTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            filterTableLayout.ColumnStyles.Add(new ColumnStyle());
+            filterTableLayout.ColumnStyles.Add(new ColumnStyle());
             filterTableLayout.Controls.Add(dateLabel, 0, 0);
             filterTableLayout.Controls.Add(dateFilterPicker, 1, 0);
             filterTableLayout.Controls.Add(routeLabel, 2, 0);
             filterTableLayout.Controls.Add(routeFilterComboBox, 3, 0);
             filterTableLayout.Controls.Add(applyFilterButton, 4, 0);
-            filterTableLayout.Controls.Add(resetFilterButton, 5, 0); // Исправлено: колонка 5 вместо 4
+            filterTableLayout.Controls.Add(resetFilterButton, 5, 0);
             filterTableLayout.Dock = DockStyle.Fill;
             filterTableLayout.Location = new Point(10, 10);
             filterTableLayout.Name = "filterTableLayout";
-            filterTableLayout.RowCount = 1; // Только одна строка
+            filterTableLayout.RowCount = 1;
             filterTableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             filterTableLayout.Size = new Size(974, 54);
             filterTableLayout.TabIndex = 0;
@@ -121,7 +122,7 @@
             // 
             dateLabel.Anchor = AnchorStyles.Left;
             dateLabel.AutoSize = true;
-            dateLabel.Location = new Point(3, 20);
+            dateLabel.Location = new Point(3, 19);
             dateLabel.Name = "dateLabel";
             dateLabel.Size = new Size(35, 15);
             dateLabel.TabIndex = 0;
@@ -131,16 +132,16 @@
             // 
             dateFilterPicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             dateFilterPicker.Format = DateTimePickerFormat.Short;
-            dateFilterPicker.Location = new Point(44, 17);
+            dateFilterPicker.Location = new Point(44, 15);
             dateFilterPicker.Name = "dateFilterPicker";
-            dateFilterPicker.Size = new Size(186, 23);
+            dateFilterPicker.Size = new Size(325, 23);
             dateFilterPicker.TabIndex = 1;
             // 
             // routeLabel
             // 
             routeLabel.Anchor = AnchorStyles.Left;
             routeLabel.AutoSize = true;
-            routeLabel.Location = new Point(236, 20);
+            routeLabel.Location = new Point(375, 19);
             routeLabel.Name = "routeLabel";
             routeLabel.Size = new Size(63, 15);
             routeLabel.TabIndex = 2;
@@ -151,9 +152,9 @@
             routeFilterComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             routeFilterComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             routeFilterComboBox.FormattingEnabled = true;
-            routeFilterComboBox.Location = new Point(305, 17);
+            routeFilterComboBox.Location = new Point(444, 15);
             routeFilterComboBox.Name = "routeFilterComboBox";
-            routeFilterComboBox.Size = new Size(186, 23);
+            routeFilterComboBox.Size = new Size(325, 23);
             routeFilterComboBox.TabIndex = 3;
             // 
             // applyFilterButton
@@ -161,10 +162,10 @@
             applyFilterButton.Anchor = AnchorStyles.Left;
             applyFilterButton.AutoSize = true;
             applyFilterButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            applyFilterButton.Location = new Point(497, 17);
+            applyFilterButton.Location = new Point(775, 9);
             applyFilterButton.Name = "applyFilterButton";
             applyFilterButton.Padding = new Padding(10, 5, 10, 5);
-            applyFilterButton.Size = new Size(85, 25);
+            applyFilterButton.Size = new Size(100, 35);
             applyFilterButton.TabIndex = 4;
             applyFilterButton.Text = "Применить";
             applyFilterButton.UseVisualStyleBackColor = true;
@@ -174,10 +175,10 @@
             resetFilterButton.Anchor = AnchorStyles.Left;
             resetFilterButton.AutoSize = true;
             resetFilterButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            resetFilterButton.Location = new Point(588, 17);
+            resetFilterButton.Location = new Point(881, 9);
             resetFilterButton.Name = "resetFilterButton";
             resetFilterButton.Padding = new Padding(10, 5, 10, 5);
-            resetFilterButton.Size = new Size(75, 25);
+            resetFilterButton.Size = new Size(90, 35);
             resetFilterButton.TabIndex = 5;
             resetFilterButton.Text = "Сбросить";
             resetFilterButton.UseVisualStyleBackColor = true;
@@ -251,7 +252,6 @@
             buttonsFlowLayout.Controls.Add(deleteButton);
             buttonsFlowLayout.Controls.Add(cancelButton);
             buttonsFlowLayout.Dock = DockStyle.Fill;
-            buttonsFlowLayout.FlowDirection = FlowDirection.LeftToRight;
             buttonsFlowLayout.Location = new Point(10, 10);
             buttonsFlowLayout.Name = "buttonsFlowLayout";
             buttonsFlowLayout.Size = new Size(974, 44);
@@ -315,6 +315,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1000, 600);
             Controls.Add(mainTableLayout);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1016, 639);
             Name = "TripForm";
             StartPosition = FormStartPosition.CenterScreen;

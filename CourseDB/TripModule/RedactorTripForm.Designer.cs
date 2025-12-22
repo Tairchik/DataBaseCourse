@@ -55,6 +55,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RedactorTripForm));
             mainLayout = new TableLayoutPanel();
             upperPanel = new Panel();
             upperTableLayout = new TableLayoutPanel();
@@ -514,12 +515,12 @@
             // btnRemoveSchedule
             // 
             btnRemoveSchedule.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            btnRemoveSchedule.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRemoveSchedule.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
             btnRemoveSchedule.Location = new Point(875, 82);
             btnRemoveSchedule.Name = "btnRemoveSchedule";
             btnRemoveSchedule.Size = new Size(96, 33);
             btnRemoveSchedule.TabIndex = 9;
-            btnRemoveSchedule.Text = "- Удалить";
+            btnRemoveSchedule.Text = "-";
             btnRemoveSchedule.UseVisualStyleBackColor = true;
             btnRemoveSchedule.Click += btnRemoveSchedule_Click;
             // 
@@ -586,6 +587,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1000, 700);
             Controls.Add(mainLayout);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1016, 739);
             Name = "RedactorTripForm";
             StartPosition = FormStartPosition.CenterScreen;

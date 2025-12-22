@@ -356,7 +356,7 @@ namespace EmployeeModule
         private void EditEmployeeButton_Click(object sender, EventArgs e)
         {
             if (employeesDataGridView.SelectedRows.Count > 0)
-            {
+            {  
                 var selectedRow = employeesDataGridView.SelectedRows[0];
                 if (selectedRow.Tag is Employee employee)
                 {

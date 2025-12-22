@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlCommandForm));
             txtSqlQuery = new RichTextBox();
             lstResults = new ListBox();
             btnExecute = new Button();
@@ -115,6 +116,7 @@
             Controls.Add(btnExecute);
             Controls.Add(txtSqlQuery);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 3, 4, 3);
             MinimumSize = new Size(464, 340);
             Name = "SqlCommandForm";
